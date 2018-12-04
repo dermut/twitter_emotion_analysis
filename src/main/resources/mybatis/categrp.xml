@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="categrp"> <!-- 테이블명 사용 -->
+  <!-- 
+  insert: INSERT SQL 실행
+  id: Spring에서 호출시 사용
+  parameterType: 전달받는 데이터 객체
+  return: 등록한 레코드 갯수 리턴
+  SQL선언시 ';'은 삭제
+  #{}: ? 동일
+  #{name}: public String getName(){...
+  -->
+  <insert id="create" parameterType="CategrpVO">
+    INSERT INTO categrp(class, name, rdate)
+    VALUES(#{classification}, #{name}, now())
+  </insert>  
+   
+  <!-- 
+  레코드 갯수 만큼 CategrpVO 객체를 만들어 ArrayList에 저장하여 리턴,
+  List<CategrpVO> list = new ArrayList<CategrpVO>(); 
+  -->
+  <select id="list" resultType="CategrpVO">
+    SELECT categrpno, class, name, rdate 
+    FROM categrp
+    ORDER BY categrpno ASC
+  </select>
+  
+  <select id="read" resultType="CategrpVO" parameterType="int">
+    SELECT categrpno, class, name, rdate 
+    FROM categrp
+    WHERE categrpno = #{categrpno}
+  </select>
+  
+  <update id="update" parameterType="CategrpVO">
+    UPDATE categrp
+    SET class=#{classification}, name=#{name}
+    WHERE categrpno=#{categrpno}
+  </update>
+   
+  <delete id="delete" parameterType="int">
+    DELETE FROM categrp
+    WHERE categrpno = #{categrpno}
+  </delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
