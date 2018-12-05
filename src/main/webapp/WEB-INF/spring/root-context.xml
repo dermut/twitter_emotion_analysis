@@ -18,7 +18,8 @@
     <!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
     <property name="typeAliasesPackage" 
                    value="dev.mvc.tea,
-                          dev.mvc.categrp" />
+                          dev.mvc.categrp,
+                          dev.mvc.board" />
     <property name="mapperLocations" value="classpath:mybatis/*.xml" />
   </bean>
   
