@@ -2,15 +2,13 @@ package dev.mvc.board;
 
 import java.util.List;
 
-import dev.mvc.categrp.CategrpVO;
-
 public interface BoardDAOInter {
   /**
    * 등록
-   * @param categoryVO 등록할 데이터
+   * @param boardVO 등록할 데이터
    * @return 처리된 레코드 갯수
    */
-  public abstract int create(BoardVO categoryVO);
+  public abstract int create(BoardVO boardVO);
   
   /**
    * 목록
@@ -30,35 +28,21 @@ public interface BoardDAOInter {
    * @param categrpno
    * @return
    */
-  public Categrp_BoardVO read(int categoryno);
+  public Categrp_BoardVO read(int boardno);
   
   /**
    * 레코드를 수정합니다.
-   * @param categoryVO 
+   * @param boardVO 
    * @return
    */
-  public int update(BoardVO categoryVO);
+  public int update(BoardVO boardVO);
   
   /**
    * 한건의 레코드 삭제
-   * @param categoryno
+   * @param boardno
    * @return
    */
-  public int delete(int categoryno);
-  
-  /**
-   * 카테고리 그룹에 따른 카운트 산출
-   * @param categrpno
-   * @return
-   */
-  public int count_by_categrp(int categrpno);
-
-  /**
-   * 카테고리 그룹에 따른 삭제
-   * @param categrpno
-   * @return
-   */
-  public int delete_by_categrp(int categrpno);
+  public int delete(int boardno);
 }
 
 

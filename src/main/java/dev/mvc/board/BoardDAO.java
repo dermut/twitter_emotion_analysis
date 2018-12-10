@@ -44,16 +44,6 @@ public class BoardDAO implements BoardDAOInter {
   public int delete(int boardno) {
     return sqlSessionTemplate.delete("board.delete", boardno);
   }
-
-  @Override
-  public int count_by_categrp(int categrpno) {
-    return sqlSessionTemplate.selectOne("board.count_by_categrp", categrpno);
-  }
-
-  @Override
-  public int delete_by_categrp(int categrpno) {
-    return sqlSessionTemplate.delete("board.delete_by_categrp", categrpno);
-  }  
 }
 
 

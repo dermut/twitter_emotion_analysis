@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board"> <!-- 테이블명 사용 -->
+  <!-- 등록 -->
+  <insert id="create" parameterType="BoardVO">
+    INSERT INTO board(name, rdate, categrpno, memberno)
+    VALUES(#{name}, now(), #{categrpno}, #{memberno})
+  </insert>
+
+  <!-- 목록 -->
+  <select id="list" resultType="Categrp_BoardVO">
+    SELECT c.categrpno, c.name as categrp_name,
+           t.boardno, t.name as board_name, t.memberno, t.rdate
+    FROM categrp c, board t
+    WHERE c.categrpno = t.categrpno
+    ORDER BY c.categrpno ASC, t.boardno ASC
+  </select>
+
+  <!-- categrp별 목록 -->
+  <select id="list_by_categrp" resultType="Categrp_BoardVO"
+    parameterType="int">
+    SELECT c.categrpno, c.name as categrp_name,
+    t.boardno, t.categrpno, t.name as board_name, t.memberno, t.rdate
+    FROM categrp c, board t
+    WHERE (c.categrpno = #{categrpno}) AND (c.categrpno = t.categrpno)
+    ORDER BY c.categrpno ASC, t.boardno ASC
+  </select>
+
+  <select id="read" resultType="Categrp_BoardVO" parameterType="int">
+    SELECT   c.categrpno, c.name as categrp_name,
+			          t.boardno, t.categrpno, t.name as board_name, t.memberno
+    FROM categrp c, board t
+    WHERE t.boardno=#{boardno} AND c.categrpno = t.categrpno
+  </select>
+
+  <!-- record update -->
+  <update id="update" parameterType="BoardVO">
+    UPDATE board
+    SET categrpno=#{categrpno}, name=#{name}, memberno=#{memberno}
+    WHERE boardno=#{boardno}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM board 
+    WHERE boardno=#{boardno}
+  </delete>
+
+  <!-- Count by categrpno -->
+  <select id="count_by_categrp" resultType="int" parameterType="int">
+    SELECT COUNT(*) as cnt
+    FROM board
+    WHERE categrpno=#{categrpno}  
+  </select>
+
+  <!-- Delete by categrpno -->
+  <delete id="delete_by_categrp" parameterType="int">
+    DELETE FROM board
+    WHERE categrpno=#{categrpno}  
+  </delete>  
+</mapper>
+
+
+
+
+
+
+
+
+
+

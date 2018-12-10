@@ -24,15 +24,15 @@
     <UL>
       <c:choose>
         <c:when test="${param.count == 1 }">
-          <LI class='li_none'>새로운 카테고리를 등록했습니다.</LI>
+          <LI class='li_none'>새로운 게시판을 등록했습니다.</LI>
         </c:when>
         <c:otherwise>
-          <LI class='li_none'>새로운 카테고리를 등록에 실패했습니다.</LI>
+          <LI class='li_none'>새로운 게시판 등록에 실패했습니다.</LI>
         </c:otherwise>
       </c:choose>
       <LI class='li_none'>
         <br>
-        <button type='button' onclick="location.href='./create.do'">새로운 카테고리 등록</button>
+        <button type='button' onclick="location.href='./create.do'">새로운 게시판 등록</button>
         <button type='button' onclick="location.href='./list.do'">목록</button>
       </LI>
      </UL>

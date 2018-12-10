@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   #{name}: public String getName(){...
   -->
   <insert id="create" parameterType="CategrpVO">
-    INSERT INTO categrp(class, name, rdate)
+    INSERT INTO categrp(classification, name, rdate)
     VALUES(#{classification}, #{name}, now())
   </insert>  
    
@@ -24,20 +24,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   List<CategrpVO> list = new ArrayList<CategrpVO>(); 
   -->
   <select id="list" resultType="CategrpVO">
-    SELECT categrpno, class, name, rdate 
+    SELECT categrpno, classification, name, rdate 
     FROM categrp
     ORDER BY categrpno ASC
   </select>
   
   <select id="read" resultType="CategrpVO" parameterType="int">
-    SELECT categrpno, class, name, rdate 
+    SELECT categrpno, classification, name, rdate 
     FROM categrp
     WHERE categrpno = #{categrpno}
   </select>
   
   <update id="update" parameterType="CategrpVO">
     UPDATE categrp
-    SET class=#{classification}, name=#{name}
+    SET classification=#{classification}, name=#{name}
     WHERE categrpno=#{categrpno}
   </update>
    

@@ -85,7 +85,7 @@
         if (rdata.count_by_categrp > 0) {
           str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos; 카테고리에 [' + rdata.count_by_categrp + '] 건의 데이터가 등록되어있습니다.</span><br>';
           str += '카테고리에 등록된 데이터를 삭제해야 카테고리 그룹 삭제가 가능합니다.<br>';
-          str += '<button type="button" onclick="delete_category_by_categrp('+categrpno+')">카테고리 삭제</button>';
+          str += '<button type="button" onclick="delete_board_by_categrp('+categrpno+')">카테고리 삭제</button>';
           str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>';
         } else {
           str = '[' + rdata.name + "] 카테고리 그룹을 삭제하시겠습니까?<br>";
@@ -110,9 +110,9 @@
   }
   
   // 카테고리 그룹에 등록된 카테고리 모두 삭제
-  function delete_category_by_categrp(categrpno) {
+  function delete_board_by_categrp(categrpno) {
     $.ajax({
-      url: "./delete_category_by_categrp.do", 
+      url: "./delete_board_by_categrp.do", 
       type: "post", // or get
       cache: false,
       async: true, // true: 비동기
@@ -133,7 +133,7 @@
         } else {
           str = '[' + rdata.name + "] 카테고리 그룹 관련 카테고리 삭제에 실패했습니다. 다시 시도하시겠습니까?<br>";
           str += "삭제하면 복구 할 수 없습니다.<br>"
-          str += '<button type="button" onclick="delete_category_by_categrp('+categrpno+')">카테고리 삭제</button>';
+          str += '<button type="button" onclick="delete_board_by_categrp('+categrpno+')">카테고리 삭제</button>';
           str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>'; 
         }
         $('#msg_delete').html(str);
@@ -250,7 +250,7 @@
         </c:when>
       </c:choose>
     </TD>
-    <TD><A href="../category/list_by_categrp.do?categrpno=${categrpVO.categrpno }">${categrpVO.name }</A></TD>
+    <TD><A href="../board/list_by_categrp.do?categrpno=${categrpVO.categrpno }">${categrpVO.name }</A></TD>
     <TD style='text-align: center ;'>${categrpVO.rdate.substring(0, 10) }</TD>
     <TD>
       <A href="javascript:update(${categrpVO.categrpno })"><IMG src='./images/update.png' title='수정'></A>

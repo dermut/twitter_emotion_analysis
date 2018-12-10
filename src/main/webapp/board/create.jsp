@@ -5,7 +5,7 @@
 <html lang="ko"> 
 <head> 
 <meta charset="UTF-8"> 
-<title></title> 
+<name></name> 
  
 <link href="../css/style.css" rel="Stylesheet" type="text/css">
  
@@ -30,7 +30,7 @@
 <jsp:include page="/menu/top.jsp" flush='false' />
 <DIV class='content' style='width: 50%;'>
  
-<DIV class='title_line' style='width: 40%;'>카테고리 등록</DIV>
+<DIV class='name_line' style='width: 40%;'>카테고리 등록</DIV>
  
 <FORM name='frm' method='POST' action='./create.do'>
   <!-- 개발시 임시 값 사용 -->
@@ -39,16 +39,16 @@
   <fieldset class='fieldset_basic'>
     <ul>
       <li class='li_none'>
-        <label>카테고리 그룹 '${categrpVO.name }'에 새로운 그룹을 등록합니다.</label>
+        <label>카테고리 그룹 '${categrpVO.name }'에 새로운 게시판을 등록합니다.</label>
       </li>
     
       <li class='li_none'>
-        <label for='title'>게시판 이름</label>
-        <input type='text' name='title' id='title' value='' required="required" autofocus="autofocus">
+        <label for='name'>게시판 이름</label>
+        <input type='text' name='name' id='name' value='' required="required" autofocus="autofocus">
       </li>
       <li class='li_none'>
-        <label for='ids'>접근 계정</label>
-        <input type='text' name='ids' id='ids' value='${memberVO.memberno }' required="required">
+        <label for='memberno'>접근 계정</label>
+        <input type='text' name='memberno' id='memberno' value='${memberVO.memberno }' required="required">
       </li>
  
       <li class='li_right'>

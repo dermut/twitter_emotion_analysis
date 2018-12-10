@@ -27,7 +27,6 @@ public class CategrpProc  implements CategrpProcInter {
   @Override
   public List<CategrpVO> list() {
     List<CategrpVO> list = categrpDAO.list();
-    
     return list;
   }
 

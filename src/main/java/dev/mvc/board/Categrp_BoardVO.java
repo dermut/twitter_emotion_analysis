@@ -8,20 +8,22 @@ public class Categrp_BoardVO {
   // board table
   private int boardno;
   private String board_name;
-  private int cnt;
   private String rdate;
+  private int memberno;
+  
   
   public Categrp_BoardVO() {
     super();
   }
-  public Categrp_BoardVO(int categrpno, String categrp_name, int boardno, String board_name, int cnt, String rdate) {
+  public Categrp_BoardVO(int categrpno, String categrp_name, int boardno, String board_name, String rdate,
+      int memberno) {
     super();
     this.categrpno = categrpno;
     this.categrp_name = categrp_name;
     this.boardno = boardno;
     this.board_name = board_name;
-    this.cnt = cnt;
     this.rdate = rdate;
+    this.memberno = memberno;
   }
   public int getCategrpno() {
     return categrpno;
@@ -47,17 +49,17 @@ public class Categrp_BoardVO {
   public void setBoard_name(String board_name) {
     this.board_name = board_name;
   }
-  public int getCnt() {
-    return cnt;
-  }
-  public void setCnt(int cnt) {
-    this.cnt = cnt;
-  }
   public String getRdate() {
     return rdate;
   }
   public void setRdate(String rdate) {
     this.rdate = rdate;
+  }
+  public int getMemberno() {
+    return memberno;
+  }
+  public void setMemberno(int memberno) {
+    this.memberno = memberno;
   }
 }
  

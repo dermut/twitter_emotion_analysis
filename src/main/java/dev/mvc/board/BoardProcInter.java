@@ -35,7 +35,7 @@ public interface BoardProcInter {
    * @param boardVO 
    * @return
    */
-  public int update(BoardVO categoryVO);
+  public int update(BoardVO boardVO);
 
   /**
    * 한건의 레코드 삭제
@@ -43,18 +43,4 @@ public interface BoardProcInter {
    * @return
    */
   public int delete(int boardno);
-  
-  /**
-   * 카테고리 그룹에 따른 카운트 산출
-   * @param categrpno
-   * @return
-   */
-  public int count_by_categrp(int categrpno);
-
-  /**
-   * 카테고리 그룹에 따른 삭제
-   * @param categrpno
-   * @return
-   */
-  public int delete_by_categrp(int categrpno);
 }

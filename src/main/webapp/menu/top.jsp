@@ -11,6 +11,7 @@
   <div class="top_right">
     <A class='menu_link'  href='${pageContext.request.contextPath}/categrp/list.do'>카테고리 그룹</A> <span class='top_menu1'> | </span>
     <A class='menu_link'  href='${pageContext.request.contextPath}/board/list.do'>카테고리 목록</A> <span class='top_menu1'> | </span>
+    <A class='menu_link'  href='${pageContext.request.contextPath}/member/list.do'>회원 목록</A> <span class='top_menu1'> | </span>
     <button type="button" class="login_button" id="login" name="login">로그인</button>
   </div>
 </div>

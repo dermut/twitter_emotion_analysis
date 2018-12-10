@@ -45,16 +45,6 @@ public class BoardProc implements BoardProcInter {
   public int delete(int categoryno) {
     return boardDAO.delete(categoryno);
   }
-
-  @Override
-  public int count_by_categrp(int categrpno) {
-    return boardDAO.count_by_categrp(categrpno);
-  }
-
-  @Override
-  public int delete_by_categrp(int categrpno) {
-    return boardDAO.delete_by_categrp(categrpno);
-  }
 }
 
 
