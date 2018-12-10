@@ -12,119 +12,119 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
            #{photo}, #{thumb}, now(), #{boardno}, #{memberno})
   </insert>
   
-  <select id="list_all_category" resultType="ContentsVO">
-    SELECT contentsno, name, content, views, replies, size, 
-           photo, thumb, rdate, boardno, memberno
-    FROM contents
-    ORDER BY contentsno ASC
-  </select>
+<!--   <select id="list_all_category" resultType="ContentsVO"> -->
+<!--     SELECT contentsno, name, content, views, replies, size,  -->
+<!--            photo, thumb, rdate, boardno, memberno -->
+<!--     FROM contents -->
+<!--     ORDER BY contentsno ASC -->
+<!--   </select> -->
   
-  <select id="total_count" resultType="int">
-    SELECT COUNT(*) as count
-    FROM contents
-  </select>
+<!--   <select id="total_count" resultType="int"> -->
+<!--     SELECT COUNT(*) as count -->
+<!--     FROM contents -->
+<!--   </select> -->
   
-  <select id="list_by_board" resultType="ContentsVO" parameterType="int">
-    SELECT contentsno, name, content, views, replies, size, 
-           photo, thumb, rdate, boardno, memberno
-    FROM contents 
-    WHERE boardno=#{boardno}
-    ORDER BY contentsno ASC
-  </select>
+<!--   <select id="list_by_board" resultType="ContentsVO" parameterType="int"> -->
+<!--     SELECT contentsno, name, content, views, replies, size,  -->
+<!--            photo, thumb, rdate, boardno, memberno -->
+<!--     FROM contents  -->
+<!--     WHERE boardno=#{boardno} -->
+<!--     ORDER BY contentsno ASC -->
+<!--   </select> -->
   
-  <select id="read" resultType="ContentsVO" parameterType="int">
-    SELECT contentsno, name, content, views, replies, size, 
-           photo, thumb, rdate, boardno, memberno
-    FROM contents
-    WHERE contentsno=#{contentsno}
-  </select>
+<!--   <select id="read" resultType="ContentsVO" parameterType="int"> -->
+<!--     SELECT contentsno, name, content, views, replies, size,  -->
+<!--            photo, thumb, rdate, boardno, memberno -->
+<!--     FROM contents -->
+<!--     WHERE contentsno=#{contentsno} -->
+<!--   </select> -->
   
-  <update id="update" parameterType="ContentsVO">
-    UPDATE contents
-    SET name=#{name}, content=#{content},
-        thumb=#{thumb}, photo=#{photo}, size=#{size}
-    WHERE contentsno=#{contentsno}
-  </update>
+<!--   <update id="update" parameterType="ContentsVO"> -->
+<!--     UPDATE contents -->
+<!--     SET name=#{name}, content=#{content}, -->
+<!--         thumb=#{thumb}, photo=#{photo}, size=#{size} -->
+<!--     WHERE contentsno=#{contentsno} -->
+<!--   </update> -->
   
-  <delete id="delete" parameterType="int">
-    DELETE FROM contents
-    WHERE contentsno=#{contentsno}
-  </delete>
+<!--   <delete id="delete" parameterType="int"> -->
+<!--     DELETE FROM contents -->
+<!--     WHERE contentsno=#{contentsno} -->
+<!--   </delete> -->
 
-  <!-- category별 검색된 레코드 목록 -->
-  <select id="list_by_category_search" resultType="ContentsVO" parameterType="HashMap">
-    SELECT contentsno, name, content, views, replies, size, 
-           photo, thumb, rdate, boardno, memberno
-    FROM contents
-    <choose>
-      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
-        WHERE boardno=#{boardno}
-      </when>
-      <otherwise>
-        WHERE boardno=#{boardno} AND word LIKE '%' || #{word} || '%'  
-      </otherwise>
-    </choose>
-    ORDER BY contentsno DESC
-  </select>
+       <!-- category별 검색된 레코드 목록 -->
+<!--   <select id="list_by_category_search" resultType="ContentsVO" parameterType="HashMap"> -->
+<!--     SELECT contentsno, name, content, views, replies, size,  -->
+<!--            photo, thumb, rdate, boardno, memberno -->
+<!--     FROM contents -->
+<!--     <choose> -->
+<!--       <when test="word == null or word == ''"> 검색하지 않는 경우 -->
+<!--         WHERE boardno=#{boardno} -->
+<!--       </when> -->
+<!--       <otherwise> -->
+<!--         WHERE boardno=#{boardno} AND word LIKE '%' || #{word} || '%'   -->
+<!--       </otherwise> -->
+<!--     </choose> -->
+<!--     ORDER BY contentsno DESC -->
+<!--   </select> -->
 
   <!-- category별 검색된 레코드 갯수 -->
-  <select id="search_count" resultType="int" parameterType="HashMap">
-    SELECT COUNT(*) as cnt
-    FROM contents
-    <choose>
-      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
-        WHERE categoryno=#{categoryno}
-      </when>
-      <otherwise>
-        WHERE categoryno=#{categoryno} AND word LIKE '%' || #{word} || '%'  
-      </otherwise>
-    </choose>
-  </select>
+<!--   <select id="search_count" resultType="int" parameterType="HashMap"> -->
+<!--     SELECT COUNT(*) as cnt -->
+<!--     FROM contents -->
+<!--     <choose> -->
+<!--       <when test="word == null or word == ''"> 검색하지 않는 경우 -->
+<!--         WHERE categoryno=#{categoryno} -->
+<!--       </when> -->
+<!--       <otherwise> -->
+<!--         WHERE categoryno=#{categoryno} AND word LIKE '%' || #{word} || '%'   -->
+<!--       </otherwise> -->
+<!--     </choose> -->
+<!--   </select> -->
 
   <!-- category별 검색된 레코드 목록 + 페이징 -->
-  <select id="list_by_category_search_paging2" resultType="ContentsVO" parameterType="HashMap">
-    SELECT memberno, contentsno,  name, content, views, replies, size, 
-           photo, thumb, rdate, boardno, memberno, r
-    FROM (
-              SELECT memberno, contentsno,  name, content, views, replies, size, 
-                     photo, thumb, rdate, boardno, memberno, rownum as r
-              FROM (
-                        SELECT m.memberno, c.contentsno, c.name, c.content, c.views, c.replies,
-                               c.size, c.photo, c.thumb, c.rdate, c.boardno, c.memberno
-                        FROM member m, contents c
-                        <choose>
-                          <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
-                            WHERE m.memberno = c.memberno AND categoryno=#{categoryno}
-                          </when>
-                          <otherwise> <!-- 검색하는 경우 -->
-                            WHERE m.memberno = c.memberno AND categoryno=#{categoryno} AND word LIKE '%' || #{word} || '%'  
-                          </otherwise>
-                        </choose>
-                        ORDER BY c.contentsno ASC
-              )            
-    )
-    WHERE <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]> 
-    <!--     WHERE r >= #{startNum} AND r <= #{endNum} -->
+<!--   <select id="list_by_category_search_paging2" resultType="ContentsVO" parameterType="HashMap"> -->
+<!--     SELECT memberno, contentsno,  name, content, views, replies, size,  -->
+<!--            photo, thumb, rdate, boardno, memberno, r -->
+<!--     FROM ( -->
+<!--               SELECT memberno, contentsno,  name, content, views, replies, size,  -->
+<!--                      photo, thumb, rdate, boardno, memberno, rownum as r -->
+<!--               FROM ( -->
+<!--                         SELECT m.memberno, c.contentsno, c.name, c.content, c.views, c.replies, -->
+<!--                                c.size, c.photo, c.thumb, c.rdate, c.boardno, c.memberno -->
+<!--                         FROM member m, contents c -->
+<!--                         <choose> -->
+<!--                           <when test="word == null or word == ''"> 검색하지 않는 경우 -->
+<!--                             WHERE m.memberno = c.memberno AND categoryno=#{categoryno} -->
+<!--                           </when> -->
+<!--                           <otherwise> 검색하는 경우 -->
+<!--                             WHERE m.memberno = c.memberno AND categoryno=#{categoryno} AND word LIKE '%' || #{word} || '%'   -->
+<!--                           </otherwise> -->
+<!--                         </choose> -->
+<!--                         ORDER BY c.contentsno ASC -->
+<!--               )             -->
+<!--     ) -->
+<!--     WHERE <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]>  -->
+<!--         WHERE r >= #{startNum} AND r <= #{endNum} -->
     
-  </select>
+<!--   </select> -->
 
   <!-- ******************** 답변 관련 시작 ******************** -->
   <!-- 신규 답변을 최우선으로 출력하기위한 답변 순서 조절 -->
-  <update id='updateAnsnum' parameterType="ContentsVO">
-    UPDATE contents
-    SET ansnum = ansnum + 1
-    WHERE grpno = #{grpno} AND ansnum > #{ansnum}
-  </update>  
+<!--   <update id='updateAnsnum' parameterType="ContentsVO"> -->
+<!--     UPDATE contents -->
+<!--     SET ansnum = ansnum + 1 -->
+<!--     WHERE grpno = #{grpno} AND ansnum > #{ansnum} -->
+<!--   </update>   -->
    
-  <!-- 답변 --> 
-  <insert id="reply" parameterType="ContentsVO">
-    INSERT INTO contents(contentsno,
-                      categoryno, mno, title, content, good, thumbs, files, sizes, cnt, replycnt, rdate, 
-                      grpno, indent, ansnum, word)  
-    VALUES((SELECT NVL(MAX(contentsno), 0) + 1 as contentsno FROM contents),
-                #{categoryno}, #{mno}, #{title}, #{content:VARCHAR}, 0, #{thumbs}, #{files}, #{sizes}, 0, 0, sysdate,
-                #{grpno}, #{indent}, #{ansnum}, #{word})
-  </insert>
+  <!-- 답변  -->
+<!--   <insert id="reply" parameterType="ContentsVO"> -->
+<!--     INSERT INTO contents(contentsno, -->
+<!--                       categoryno, mno, title, content, good, thumbs, files, sizes, cnt, replycnt, rdate,  -->
+<!--                       grpno, indent, ansnum, word)   -->
+<!--     VALUES((SELECT NVL(MAX(contentsno), 0) + 1 as contentsno FROM contents), -->
+<!--                 #{categoryno}, #{mno}, #{title}, #{content:VARCHAR}, 0, #{thumbs}, #{files}, #{sizes}, 0, 0, sysdate, -->
+<!--                 #{grpno}, #{indent}, #{ansnum}, #{word}) -->
+<!--   </insert> -->
   
   <!-- ******************** 답변 관련 종료 ******************** -->
     

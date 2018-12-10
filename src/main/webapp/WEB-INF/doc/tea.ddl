@@ -7,6 +7,10 @@ DROP TABLE crawling_data;
 DROP TABLE word;
 DROP TABLE log;
 DROP TABLE member;
+DROP TABLE freshtomato;
+DROP TABLE word_crawling;
+DROP TABLE word_time_graph;
+DROP TABLE word_sentiment;
 
 /**********************************/
 /* Table Name: 회원 */
@@ -826,3 +830,269 @@ ALTER TABLE reply MODIFY contentsno INT COMMENT '게시글번호';
 ALTER TABLE reply MODIFY memberno INT COMMENT '회원번호';
 
 SHOW FULL COLUMNS FROM reply;
+
+
+
+
+/**********************************/
+/* Table Name: 프레시토마토 */
+/**********************************/
+CREATE TABLE freshtomato(
+    ftno INT NOT NULL AUTO_INCREMENT,
+    ftrate INT NOT NULL,
+    rdate DATETIME NOT NULL,
+    wordno INT NOT NULL,
+    PRIMARY KEY(ftno),
+    FOREIGN KEY(wordno) REFERENCES word(wordno)
+);
+
+
+
+/********************* DML 시작 *********************/
+
+/* 한 개의 레코드 등록 */
+INSERT INTO freshtomato(ftrate, rdate)
+VALUES(80, now());
+
+/* 모든 레코드 검색 */
+SELECT ftno, ftrate, rdate, wordno
+FROM freshtomato
+ORDER BY ftno ASC;
+
+/* 한 건 조회 */
+SELECT ftno, ftrate, rdate, wordno
+FROM freshtomato
+WHERE ftno=1;
+
+/* 전체 레코드 수 */
+SELECT COUNT(*) as cnt
+FROM freshtomato
+
+/* 수정 */
+UPDATE freshtomato
+SET ftrate=50
+WHERE ftno=1;
+
+/* 한 건 삭제 */
+DELETE FROM freshtomato
+WHERE ftno=1;
+
+/********************* DML 종료 *********************/
+
+
+
+ALTER TABLE freshtomato COMMENT = '댓글';
+ALTER TABLE freshtomato MODIFY ftno INT COMMENT '프레시토마토번호';
+ALTER TABLE freshtomato MODIFY ftrate INT COMMENT '프레시토마토지수';
+ALTER TABLE freshtomato MODIFY rdate DATETIME COMMENT '등록시간';
+ALTER TABLE freshtomato MODIFY wordno INT COMMENT '검색어번호';
+
+SHOW FULL COLUMNS FROM freshtomato;
+
+
+
+
+
+
+/**********************************/
+/* Table Name: 검색_크롤링 긍정/부정 */
+/**********************************/
+CREATE TABLE word_crawling (
+    wcno INT NOT NULL AUTO_INCREMENT,
+    posi_nega INT NOT NULL,
+    crawling_data DATETIME NOT NULL,
+    rdate INT NOT NULL,
+    wordno INT NOT NULL,
+    PRIMARY KEY(wcno),
+    FOREIGN KEY(wordno) REFERENCES word(wordno)
+);
+
+
+
+/********************* DML 시작 *********************/
+
+/* 한 개의 레코드 등록 */
+INSERT INTO word_crawling(posi_nega, crawling_data, rdate, wordno)
+VALUES('P', "스테이크 맛있어요", now(), 1);
+
+INSERT INTO word_crawling(posi_nega, crawling_data, rdate, wordno)
+VALUES('N', "스테이크 맛없어요", now(), 1);
+
+/* 모든 레코드 검색 */
+SELECT wcno, posi_nega, crawling_data, rdate, wordno
+FROM word_crawling
+ORDER BY wcno ASC;
+
+/* 검색 */
+SELECT wcno, posi_nega, crawling_data, rdate, wordno
+FROM word_crawling
+WHERE crawling_data like '%스테이크%';
+
+/* 한 건 조회 */
+SELECT wcno, posi_nega, crawling_data, rdate, wordno
+FROM word_crawling
+WHERE wcno=1;
+
+/* 전체 레코드 수 */
+SELECT COUNT(*) as cnt
+FROM word_crawling
+
+/* 수정 */
+UPDATE word_crawling
+SET posi_nega='N'
+WHERE wcno=1;
+
+/* 한 건 삭제 */
+DELETE FROM word_crawling
+WHERE wcno=1;
+
+/********************* DML 종료 *********************/
+
+
+
+ALTER TABLE word_crawling COMMENT = '검색_크롤링 긍정/부정';
+ALTER TABLE word_crawling MODIFY wcno INT COMMENT '검색크롤링번호';
+ALTER TABLE word_crawling MODIFY posi_nega INT COMMENT '긍정/부정';
+ALTER TABLE word_crawling MODIFY crawling_data DATETIME COMMENT '크롤링데이터내용';
+ALTER TABLE word_crawling MODIFY rdate INT COMMENT '등록시간';
+ALTER TABLE word_crawling MODIFY wordno INT COMMENT '검색어번호';
+
+SHOW FULL COLUMNS FROM word_crawling;
+
+
+
+
+
+
+/**********************************/
+/* Table Name: 검색어 동향 */
+/**********************************/
+CREATE TABLE word_time_graph (
+    word_time_no INT NOT NULL AUTO_INCREMENT,
+    freq INT NOT NULL,
+    rdate INT NOT NULL,
+    wordno INT NOT NULL,
+    PRIMARY KEY(word_time_no),
+    FOREIGN KEY(word_time_no) REFERENCES word(wordno)
+);
+
+
+
+/********************* DML 시작 *********************/
+
+/* 한 개의 레코드 등록 */
+INSERT INTO word_time_graph(freq, rdate, wordno)
+VALUES(10, now(), 1);
+
+/* 모든 레코드 검색 */
+SELECT word_time_no, freq, rdate, wordno
+FROM word_time_graph
+ORDER BY word_time_no ASC;
+
+/* 검색 */
+SELECT word_time_no, freq, rdate, wordno
+FROM word_time_graph
+WHERE freq=0;
+
+/* 한 건 조회 */
+SELECT word_time_no, freq, rdate, wordno
+FROM word_time_graph
+WHERE word_time_no=1;
+
+/* 전체 레코드 수 */
+SELECT COUNT(*) as cnt
+FROM word_time_graph
+
+/* 수정 */
+UPDATE word_time_graph
+SET freq=20
+WHERE word_time_no=1;
+
+/* 한 건 삭제 */
+DELETE FROM word_time_graph
+WHERE word_time_no=1;
+
+/********************* DML 종료 *********************/
+
+
+
+ALTER TABLE word_time_graph COMMENT = '검색어 동향';
+ALTER TABLE word_time_graph MODIFY word_time_no INT COMMENT '검색어동향번호';
+ALTER TABLE word_time_graph MODIFY freq INT COMMENT '빈도';
+ALTER TABLE word_time_graph MODIFY rdate INT COMMENT '등록시간';
+ALTER TABLE word_time_graph MODIFY wordno INT COMMENT '검색어번호';
+
+SHOW FULL COLUMNS FROM word_time_graph;
+
+
+
+
+
+
+
+/**********************************/
+/* Table Name: 검색어 감성분석 */
+/**********************************/
+CREATE TABLE word_sentiment (
+    word_sentiment_no INT NOT NULL AUTO_INCREMENT,
+    posi_nega INT NOT NULL,
+    percentage INT NOT NULL,
+    freq INT NOT NULL,
+    rdate DATETIME NOT NULL,
+    wordno INT NOT NULL,
+    PRIMARY KEY(word_sentiment_no),
+    FOREIGN KEY(wordno) REFERENCES word(wordno)
+);
+
+
+
+/********************* DML 시작 *********************/
+
+/* 한 개의 레코드 등록 */
+INSERT INTO word_time_graph(posi_nega, percentage, freq, rdate, wordno)
+VALUES('P', 100, 5, now(), 1);
+
+INSERT INTO word_time_graph(posi_nega, percentage, freq, rdate, wordno)
+VALUES('N', 100, 5, now(), 1);
+
+/* 모든 레코드 검색 */
+SELECT word_sentiment_no, posi_nega, percentage, freq, rdate, wordno
+FROM word_sentiment
+ORDER BY word_sentiment_no ASC;
+
+/* 검색 */
+SELECT word_sentiment_no, posi_nega, percentage, freq, rdate, wordno
+FROM word_sentiment
+WHERE percentage=100;
+
+/* 한 건 조회 */
+SELECT word_sentiment_no, posi_nega, percentage, freq, rdate, wordno
+FROM word_sentiment
+WHERE word_sentiment_no=1;
+
+/* 전체 레코드 수 */
+SELECT COUNT(*) as cnt
+FROM word_sentiment
+
+/* 수정 */
+UPDATE word_sentiment
+SET posi_nega='N'
+WHERE word_sentiment_no=1;
+
+/* 한 건 삭제 */
+DELETE FROM word_sentiment
+WHERE word_sentiment_no=1;
+
+/********************* DML 종료 *********************/
+
+
+
+ALTER TABLE word_sentiment COMMENT = '검색어 감성분석';
+ALTER TABLE word_sentiment MODIFY word_sentiment_no INT COMMENT '검색어감성분석번호';
+ALTER TABLE word_sentiment MODIFY posi_nega INT COMMENT '긍정/부정';
+ALTER TABLE word_sentiment MODIFY percentage INT COMMENT '퍼센티지';
+ALTER TABLE word_sentiment MODIFY freq INT COMMENT '빈도';
+ALTER TABLE word_sentiment MODIFY rdate INT COMMENT '날짜';
+ALTER TABLE word_sentiment MODIFY wordno INT COMMENT '검색어번호';
+
+SHOW FULL COLUMNS FROM word_sentiment;
