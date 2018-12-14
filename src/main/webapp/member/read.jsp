@@ -94,7 +94,7 @@
       <label for="phone" class="col-md-2 control-label">전화번호</label>    
       <div class="col-md-10">
         <input type='text' class="form-control input-md" name='phone' id='phone' 
-                   value='${memberVO.phone }' required="required" style='width: 30%;' placeholder="전화번호"> 예) 010-0000-0000
+                   value='${memberVO.phone }' required="required" style='width: 30%;' placeholder="전화번호"> 예) 01000000000
       </div>
     </div>   
  

@@ -43,7 +43,7 @@
           // panel += "<TD style='text-align: center ;'>"+rdata[index].boardno+"</TD>";
           panel += "<TD style='text-align: center ;'>"+(index+1)+"</TD>";
           panel += "<TD>"+rdata[index].categrp_name+"</TD>";
-          panel += "<TD><A href='../contents/list_by_board_search_paging.do?boardno="+rdata[index].boardno+"'>"+rdata[index].board_name+"</A></TD>";
+          panel += "<TD><A href='../contents/list_by_board.do?boardno="+rdata[index].boardno+"'>"+rdata[index].board_name+"</A></TD>";
           panel += "<TD>"+rdata[index].memberno+"</TD>";
           panel += "<TD>"+rdata[index].rdate.substring(0, 10)+"</TD>";
           panel += "<TD style='text-align: center;'>"; 

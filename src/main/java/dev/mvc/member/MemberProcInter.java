@@ -35,6 +35,13 @@ public interface MemberProcInter {
   public boolean isMember(HttpSession session);
   
   /**
+   * 로그인된 회원 계정인지 검사합니다.
+   * @param request
+   * @return true: 관리자
+   */
+  public boolean isMaster(HttpSession session);
+  
+  /**
    * 조회
    * @param mno
    * @return
@@ -71,5 +78,24 @@ public interface MemberProcInter {
   */
  public int delete(int memberno);
  
+ /**
+  * 로그인
+  * @param id
+  * @param passwd
+  * @return
+  */
+ public int login(String id, String passwd);
  
+ /**
+  * 로그인 내역 생성
+  * @param logVO
+  * @return
+  */
+ public int create_login_list(String ip, String sf, int memberno);
+ 
+ /**
+  * 로그인 내역 조회(호출)
+  * @return
+  */
+ public List<LogVO> login_list();
 }

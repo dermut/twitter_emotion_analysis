@@ -61,5 +61,24 @@ public int passwd_update(Map<String, Object> map);
   */
  public int delete(int memberno);
  
+ /**
+  * 로그인
+  * @param map
+  * @return
+  */
+ public int login(Map map);
+ 
+ /**
+  * 로그인 내역 생성
+  * @param logVO
+  * @return
+  */
+ public int create_login_list(Map map);
+ 
+ /**
+  * 로그인 내역 조회(호출)
+  * @return
+  */
+ public List<LogVO> login_list();
  
 }

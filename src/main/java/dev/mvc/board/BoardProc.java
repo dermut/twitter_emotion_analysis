@@ -17,8 +17,8 @@ public class BoardProc implements BoardProcInter {
   }
 
   @Override
-  public int create(BoardVO categoryVO) {
-    return boardDAO.create(categoryVO);
+  public int create(BoardVO boardVO) {
+    return boardDAO.create(boardVO);
   }
 
   @Override

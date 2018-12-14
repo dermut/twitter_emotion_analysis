@@ -51,6 +51,18 @@ public class MemberProc implements MemberProcInter {
     }
     return sw;
   }
+  
+  @Override
+  public boolean isMaster(HttpSession session){
+    boolean sw = false;
+    
+    String grade = (String)session.getAttribute("grade");
+    
+    if (grade.equals("M")){
+      sw = true;
+    }
+    return sw;
+  }
 
   @Override
   public MemberVO read(int memberno) {
@@ -86,6 +98,33 @@ public class MemberProc implements MemberProcInter {
     int count = memberDAO.delete(memberno);
     return count;
   }
+
+  @Override
+  public int login(String id, String passwd) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("id", id);
+    map.put("passwd", passwd);
+    int count = memberDAO.login(map);
+    return count;
+  }
+
+  @Override
+  public int create_login_list(String ip, String sf, int memberno) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("ip", ip);
+    map.put("sf", sf);
+    map.put("memberno", memberno);
+    int count = memberDAO.create_login_list(map);
+    return count;
+  }
+
+  @Override
+  public List<LogVO> login_list() {
+    List<LogVO> list = memberDAO.login_list();
+    return list;
+  }
+
+  
 
   
 }

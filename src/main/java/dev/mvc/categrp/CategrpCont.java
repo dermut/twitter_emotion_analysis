@@ -25,7 +25,7 @@ public class CategrpCont {
     System.out.println("--> CategrpCont crated.");
   }
 
-  // http://localhost:9090/ojt/categrp/create.do
+  // http://localhost:9090/tea/categrp/create.do
   @RequestMapping(value="/categrp/create.do", method=RequestMethod.GET)
   public ModelAndView create() {
     ModelAndView mav = new ModelAndView();
@@ -37,7 +37,7 @@ public class CategrpCont {
   // request.getParameter() 자동 실행
   // 형변환 자동 실행
   // CategrpVO 객체 자동 생성
-  // http://localhost:9090/ojt/categrp/create.do
+  // http://localhost:9090/tea/categrp/create.do
   @RequestMapping(value="/categrp/create.do", method=RequestMethod.POST)
   public ModelAndView create(CategrpVO categrpVO) {
     ModelAndView mav = new ModelAndView();
@@ -48,7 +48,7 @@ public class CategrpCont {
     return mav;
   }
   
-  // http://localhost:9090/ojt/categrp/list.do
+  // http://localhost:9090/tea/categrp/list.do
   @RequestMapping(value="/categrp/list.do", method=RequestMethod.GET)
   public ModelAndView list() {
     ModelAndView mav = new ModelAndView();
@@ -60,7 +60,7 @@ public class CategrpCont {
     return mav;
   }
   
-  // http://localhost:9090/ojt/categrp/update.do?categrpno=1
+  // http://localhost:9090/tea/categrp/update.do?categrpno=1
   //  일반 텍스트 출력
   /*
   {
@@ -90,7 +90,7 @@ public class CategrpCont {
   // request.getParameter() 자동 실행
   // 형변환 자동 실행
   // CategrpVO 객체  자동 생성
-  // http://localhost:9090/ojt/categrp/update.do -> 실행 주소
+  // http://localhost:9090/tea/categrp/update.do -> 실행 주소
   @RequestMapping(value="/categrp/update.do", method=RequestMethod.POST)
   public ModelAndView update(CategrpVO categrpVO) {
     ModelAndView mav = new ModelAndView();
@@ -101,7 +101,7 @@ public class CategrpCont {
     return mav;
   }
   
-  // http://localhost:9090/ojt/categrp/delete.do?categrpno=1
+  // http://localhost:9090/tea/categrp/delete.do?categrpno=1
   // {"categrpno":1,"name":"여행2"}
   @ResponseBody
   @RequestMapping(value="/categrp/delete.do", 
@@ -121,7 +121,7 @@ public class CategrpCont {
     return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
   }
 
-  // http://localhost:9090/ojt/categrp/delete.do -> 실행 주소
+  // http://localhost:9090/tea/categrp/delete.do -> 실행 주소
   @RequestMapping(value="/categrp/delete.do", method=RequestMethod.POST)
   public ModelAndView delete_proc(int categrpno) {
     ModelAndView mav = new ModelAndView();

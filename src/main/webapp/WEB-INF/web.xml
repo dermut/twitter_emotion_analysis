@@ -2,7 +2,12 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
+  <display-name>tea</display-name>
+  <welcome-file-list>
+    <welcome-file>index.do</welcome-file>
+    <welcome-file>home.do</welcome-file>
+  </welcome-file-list>
+  
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -59,5 +64,5 @@
     <servlet-name>Download</servlet-name>
     <url-pattern>/download</url-pattern>     
   </servlet-mapping>
-
+      
 </web-app>

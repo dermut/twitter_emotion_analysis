@@ -45,27 +45,27 @@
   <div class='menu_line'></div>
   
  
-  <table class="table table-striped" style='width: 100%;'>
+  <table class="table table-striped" style='width: 100%; text-align: center;'>
   <caption>관리자만 접근가능합니다.</caption>
   <colgroup>
+    <col style='width: 5%;'/>
     <col style='width: 10%;'/>
     <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
+    <col style='width: 5%;'/>
+    <col style='width: 5%;'/>
+    <col style='width: 15%;'/>
+    <col style='width: 20%;'/>
     <col style='width: 15%;'/>
     <col style='width: 15%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
   </colgroup>
-  <TR>
+  <TR >
     <TH class='th'>번호</TH>
     <TH class='th'>ID</TH>
     <TH class='th'>성명</TH>
     <TH class='th'>성별</TH>
+    <TH class='th'>등급</TH>
     <TH class='th'>전화번호</TH>
     <TH class='th'>이메일</TH>
-    <TH class='th'>등급</TH>
     <TH class='th'>등록일</TH>
     <TH class='th'>기타</TH>
   </TR>
@@ -77,9 +77,9 @@
     <TD class='td'><A href="./read.do?memberno=${memberno}">${memberVO.id}</A></TD>
     <TD class='td'><A href="./read.do?memberno=${memberno}">${memberVO.name}</A></TD>
     <TD class='td'><A href="./read.do?memberno=${memberno}">${memberVO.sex}</A></TD>
+    <TD class='td'>${memberVO.grade}</TD> <!-- 등급 -->
     <TD class='td'>${memberVO.phone}</TD>
     <TD class='td'>${memberVO.email}</TD>
-    <TD class='td'>${memberVO.grade}</TD> <!-- 등급 -->
     <TD class='td'>${memberVO.rdate.substring(0, 10)}</TD> <!-- 년월일 -->
     <TD class='td'>
       <A href="./passwd_update.do?memberno=${memberno}"><IMG src='./images/passwd.png' title='패스워드 변경'></A>

@@ -20,21 +20,21 @@
     imgResize()
   });
 
-  //<div id='file1Panel'> 태그의 width에 맞추어 자동 축소
+  //<div id='photoPanel'> 태그의 width에 맞추어 자동 축소
   function imgResize() {
-    var file1 = $('#file1');
-    var width = file1.width();
+    var photo = $('#photo');
+    var width = photo.width();
     // alert(width);
     // console.log("loading - width:" + loading + " - " + width);
     // console.log("screen.width-(screen.width * 0.3): " + screen.width-(screen.width * 0.3));
         
-    if (file1 != null) {
+    if (photo != null) {
       // 이미지 width가 화면의 70%보다 크다면
       if (width > screen.width-(screen.width * 0.4)) {
         // console.log("loading - width:" + loading + " - " + width);
-        // file1.width(600); // 이미지 축소
-        $('#file1Panel').attr('width', '100%');  // 할당된 영역을 100%로 설정함.
-        file1.css('width', '900'); // <div id='file1Panel'> 태그의 width에 맞추어 자동 축소
+        // photo.width(600); // 이미지 축소
+        $('#photoPanel').attr('width', '100%');  // 할당된 영역을 100%로 설정함.
+        photo.css('width', '900'); // <div id='photoPanel'> 태그의 width에 맞추어 자동 축소
       } else {
         // 작은 이미지는 그대로 출력
       }
@@ -61,26 +61,26 @@
 <DIV class='content'>   
 
   <ASIDE style='float: left;'>
-    <A href='../category/list.do?categrpno=${categoryVO.categrpno }'>카테고리</A>
+    <A href='../board/list.do?categrpno=${boardVO.categrpno }'>카테고리</A>
     <span style='font-size: 1.2em;'>></span>  
-    <A href='./list_by_category.do?categoryno=${categoryVO.categoryno }&word=${param.word}'>${categoryVO.title }</A>
+    <A href='./list_by_board.do?boardno=${boardVO.boardno }'>${boardVO.board_name }</A>
   </ASIDE>
   <ASIDE style='float: right;'>
-    <c:if test="${contentsVO.files.length() > 0 }">
+    <c:if test="${contentsVO.photo.length() > 0 }">
       <A href='./download.do?contentsno=${contentsVO.contentsno}'>다운로드</A>
       <span class='menu_divide' >│</span> 
     </c:if>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span> 
-    <A href='./create.do?categoryno=${categoryVO.categoryno }'>등록</A>
+    <A href='./create.do?boardno=${boardVO.boardno }'>등록</A>
     <span class='menu_divide' >│</span> 
-    <A href='./reply.do?categoryno=${categoryVO.categoryno }&contentsno=${contentsVO.contentsno }&word=${param.word}&nowPage=${param.nowPage}'>답변</A>
+    <A href='./reply.do?boardno=${boardVO.boardno }&contentsno=${contentsVO.contentsno }&word=${param.word}&nowPage=${param.nowPage}'>답변</A>
     <span class='menu_divide' >│</span> 
-    <A href='./list_by_category_search_paging.do?categoryno=${categoryVO.categoryno }&word=${param.word}&nowPage=${param.nowPage}'>목록</A>
+    <A href='./list_by_board_search_paging.do?boardno=${boardVO.boardno }&nowPage=${param.nowPage}'>목록</A>
     <span class='menu_divide' >│</span> 
     <A href='./update.do?contentsno=${contentsVO.contentsno }&word=${param.word}&nowPage=${param.nowPage}'>수정</A>
     <span class='menu_divide' >│</span> 
-    <A href='./delete.do?contentsno=${contentsVO.contentsno }&categoryno=${categoryVO.categoryno }&word=${param.word}&nowPage=${param.nowPage}'>삭제</A>
+    <A href='./delete.do?contentsno=${contentsVO.contentsno }&boardno=${boardVO.boardno }&word=${param.word}&nowPage=${param.nowPage}'>삭제</A>
   </ASIDE> 
   
   <div class='menu_line'></div>
@@ -92,8 +92,7 @@
       <fieldset class="fieldset">
         <ul>
           <li class="li_none">
-            <span>${contentsVO.title}</span>
-            (<span>${contentsVO.good}</span>)
+            <span>${contentsVO.name}</span>
             <span>${contentsVO.rdate.substring(0, 16)}</span>
             <DIV>
               <c:forEach var ="fileVO"  items="${file_list }">
@@ -103,9 +102,6 @@
           </li>
           <li class="li_none">
             <DIV>${contentsVO.content }</DIV>
-          </li>
-          <li class="li_none">
-            <DIV style='text-decoration: underline;'>검색어:(키워드) ${contentsVO.word }</DIV>
           </li>
         </ul>
       </fieldset>

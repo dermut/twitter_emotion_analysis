@@ -11,10 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE id=#{id}
   </select>
   
-  <select id="create" resultType="int" parameterType="MemberVO">
+  <insert id="create" parameterType="MemberVO" useGeneratedKeys="true" keyProperty="memberno"> 
     INSERT INTO member(id, name, passwd, phone, email, birth, sex, grade, rdate)
-    VALUES (#{id}, #{name}, #{passwd}, #{phone}, #{email}, #{birth}, #{sex}, #{grade}, now())
-  </select>
+    VALUES (#{id}, #{name}, #{passwd}, #{phone}, #{email}, #{birth}, #{sex}, 'N', now())
+  </insert>
   
   <select id="list" resultType="MemberVO">
     SELECT memberno, id, name, passwd, phone, email, birth, sex, grade, rdate
@@ -51,6 +51,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE memberno=#{memberno}
   </delete>
   
+  <!-- 만들어야하는 것 -->
+  <!-- login  create_login_list login_list -->
+  <select id="login" resultType="int" parameterType="MemberVO">
+     SELECT COUNT(*) as cnt
+     FROM member
+     WHERE id=#{id} AND passwd=#{passwd}
+  </select>
+  
+  <insert id="create_login_list" parameterType="LogVO" useGeneratedKeys="true" keyProperty="logno">
+    INSERT INTO log(ip, sf, memberno, rdate) 
+    VALUES(#{ip}, #{sf}, #{memberno}, now())
+  </insert>
+  
+  <select id="login_list" resultType="LogVO">
+    SELECT logno, memberno, ip, rdate, sf
+    FROM log
+    ORDER BY logno DESC
+  </select>
   
 
 </mapper> 

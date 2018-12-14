@@ -39,7 +39,7 @@
           <li class='li_none'>
             <br>
             <button type='button' onclick='history.back()'>다시 시도</button>
-            <button type='button' onclick="location.href='./list_by_category.do?categoryno=${param.categoryno}&word=${param.word }&nowPage=${param.nowPage }'">목록</button>
+            <button type='button' onclick="location.href='./list_by_board.do?boardno=${param.boardno}&word=${param.word }&nowPage=${param.nowPage }'">목록</button>
           </li>
                      
         </c:when>
@@ -47,7 +47,7 @@
           <li class='li_none'>글 삭제에 성공했습니다.</li>
           <li class='li_none'>
             <br>
-            <button type='button' onclick="location.href='./list_by_category_search_paging.do?categoryno=${param.categoryno}&word=${param.word }&nowPage=${param.nowPage }'">목록</button>
+            <button type='button' onclick="location.href='./list_by_board_search_paging.do?boardno=${param.boardno}&word=${param.word }&nowPage=${param.nowPage }'">목록</button>
           </li>          
         </c:when>
       </c:choose>    

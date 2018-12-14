@@ -65,6 +65,24 @@ public class MemberDAO implements MemberDAOInter {
   public int delete(int memberno) {
     int count = sqlSessionTemplate.delete("member.delete", memberno);
     return count;
+  }
+
+  @Override
+  public int login(Map map) {
+    int count = sqlSessionTemplate.selectOne("member.login", map);
+    return count;
+  }
+
+  @Override
+  public int create_login_list(Map map) {
+    int count = sqlSessionTemplate.insert("member.create_login_list", map);
+    return count;
+  }
+
+  @Override
+  public List<LogVO> login_list() {
+    List<LogVO> list = sqlSessionTemplate.selectList("member.login_list");
+    return list; 
   } 
   
   

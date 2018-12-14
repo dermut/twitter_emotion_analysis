@@ -31,29 +31,29 @@
 <DIV class='content'>     
 
   <ASIDE style='float: left;'>
-    <A href='../category/list.do'>게시판 목록</A>
+    <A href='../board/list.do'>게시판 목록</A>
     <span style='font-size: 1.2em;'>></span>   
-    <A href='./list_by_categoryno.do?categoryno=${categoryVO.categoryno }'>${categoryVO.title }</A>
+    <A href='./list_by_boardno.do?boardno=${boardVO.boardno }'>${boardVO.board_name }</A>
   </ASIDE>
   <ASIDE style='float: right;'>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span> 
-    <A href='./create.do?categoryno=${categoryVO.categoryno }'>등록</A>
+    <A href='./create.do?boardno=${boardVO.boardno }'>등록</A>
     <span class='menu_divide' >│</span> 
-    <A href='./create.do?categoryno=${categoryVO.categoryno }'>등록</A>
+    <A href='./create.do?boardno=${boardVO.boardno }'>등록</A>
 
   </ASIDE> 
 
   <div class='menu_line'></div>
   <FORM name='frm' method='POST' action='./update.do'
              enctype="multipart/form-data" class="form-horizontal">
-      <input type='hidden' name='categoryno' id='categoryno' value='${categoryVO.categoryno }'>
+      <input type='hidden' name='boardno' id='boardno' value='${boardVO.boardno }'>
       <input type='hidden' name='contentsno' id='contentsno' value='${contentsVO.contentsno }'>
       
       <div class="form-group">   
-        <label for="title" class="col-md-1 control-label">제목</label>
+        <label for="name" class="col-md-1 control-label">제목</label>
         <div class="col-md-11">
-          <input type='text' class="form-control input-md" name='title' id='title' value='${contentsVO.title}' required="required" style='width: 80%;'>
+          <input type='text' class="form-control input-md" name='name' id='name' value='${contentsVO.name}' required="required" style='width: 80%;'>
         </div>
       </div>   
       <div class="form-group">   
@@ -63,14 +63,7 @@
         </div>
       </div>
       
-      <div class="form-group">   
-        <label for="content" class="col-md-1 control-label"><span style='font-size: 0.99em;'>검색어</span></label>
-        <div class="col-md-11">
-          <input type='text' class="form-control input-lg" name='word' id='word' value='${contentsVO.word }' placeholder="검색어">
-        </div>
-      </div>
-      
-      <div id='file1Panel' class="form-group">
+      <div id='photoPanel' class="form-group">
         <label class="col-md-2 control-label"></label>
         <div class="col-md-10">
           <c:if test="${file_list.size() > 0 }">
@@ -83,9 +76,9 @@
         </div>
       </div>
       <div class="form-group">   
-        <label for="filesMF" class="col-md-1 control-label">파일</label>
+        <label for="photoMF" class="col-md-1 control-label">파일</label>
         <div class="col-md-11">
-          <input type="file" class="form-control input-md" name='filesMF' id='filesMF' size='40' multiple="multiple">
+          <input type="file" class="form-control input-md" name='photoMF' id='photoMF' size='40' multiple="multiple">
           <br>
           Preview(미리보기) 이미지는 자동 생성됩니다.
         </div>
@@ -93,7 +86,7 @@
 
       <DIV style='text-align: right;'>
         <button type="submit">변경된 내용 저장</button>
-        <button type="button" onclick="location.href='./list.do?categoryno=${categoryVO.categoryno}'">취소[목록]</button>
+        <button type="button" onclick="location.href='./list.do?boardno=${boardVO.boardno}'">취소[목록]</button>
       </DIV>
   </FORM>
 

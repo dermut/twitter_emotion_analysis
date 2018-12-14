@@ -190,7 +190,15 @@
       <label for="name" class="col-md-2 control-label">성명</label>    
       <div class="col-md-10">
         <input type='text' class="form-control input-md" name='name' id='name' 
-                   value='개발자' required="required" style='width: 30%;' placeholder="성명">
+                   required="required" style='width: 30%;' placeholder="성명">
+      </div>
+    </div>   
+    
+    <div class="form-group">
+      <label for="email" class="col-md-2 control-label">이메일</label>    
+      <div class="col-md-10">
+        <input type='text' class="form-control input-md" name='email' id='email' 
+                   required="required" style='width: 30%;' placeholder="이메일">
       </div>
     </div>   
  

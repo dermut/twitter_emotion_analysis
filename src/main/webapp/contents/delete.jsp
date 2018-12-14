@@ -27,16 +27,16 @@
 <DIV class='content'>   
      
   <ASIDE style='float: left;'>
-    <A href='../category/list.do'>게시판 목록</A>
+    <A href='../board/list.do'>게시판 목록</A>
     >  
-    <A href='./list_by_categoryno.do?categoryno=${categoryVO.categoryno }'>${categoryVO.title }</A>
+    <A href='./list_by_boardno.do?boardno=${boardVO.boardno }'>${boardVO.board_name }</A>
   </ASIDE>
   <ASIDE style='float: right;'>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span> 
-    <A href='./create.do?categoryno=${categoryVO.categoryno }'>등록</A>
+    <A href='./create.do?boardno=${boardVO.boardno }'>등록</A>
     <span class='menu_divide' >│</span> 
-    <A href='./list_by_categoryno.do?categoryno=${categoryVO.categoryno }&word_find=${word_find}'>목록</A>
+    <A href='./list_by_boardno.do?boardno=${boardVO.boardno }&word_find=${word_find}'>목록</A>
 
   </ASIDE> 
   
@@ -44,13 +44,12 @@
 
   <FORM name='frm' method='POST' action='./delete.do'>
       <input type='hidden' name='contentsno' value='${contentsVO.contentsno}'>
-      <input type="hidden" name="categoryno" value="${categoryVO.categoryno }">
-      <input type="hidden" name="word" value="${param.word }">
+      <input type="hidden" name="boardno" value="${boardVO.boardno }">
       <input type="hidden" name="nowPage" value="${param.nowPage }">
             
       <div class="form-group">   
         <div class="col-md-12" style='text-align: center; margin: 30px;'>
-          삭제 되는글: ${contentsVO.title }<br><br>
+          삭제 되는글: ${contentsVO.name }<br><br>
           삭제하시겠습니까? 삭제하시면 복구 할 수 없습니다.<br>
           <button type = "submit">삭제 진행</button>
           <button type = "button" onclick = "history.back()">취소</button>

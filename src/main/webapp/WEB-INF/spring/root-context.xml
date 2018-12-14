@@ -19,8 +19,8 @@
     <property name="typeAliasesPackage" 
                    value="dev.mvc.tea,
                           dev.mvc.categrp,
-                          dev.mvc.board,
                           dev.mvc.contents,
+                          dev.mvc.board,
                           dev.mvc.member" />
     <property name="mapperLocations" value="classpath:mybatis/*.xml" />
   </bean>

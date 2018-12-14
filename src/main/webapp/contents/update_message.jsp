@@ -38,8 +38,8 @@
       </c:choose>
       <LI class='li_none'>
         <br>
-        <button type='button' onclick="location.href='./read.do?contentsno=${param.contentsno}&categoryno=${param.categoryno}'">수정된 컨텐츠 확인</button>
-        <button type='button' onclick="location.href='./list_by_category_search_paging.do?categoryno=${param.categoryno}'">목록</button>
+        <button type='button' onclick="location.href='./read.do?contentsno=${param.contentsno}&boardno=${param.boardno}'">수정된 컨텐츠 확인</button>
+        <button type='button' onclick="location.href='./list_by_board_search_paging.do?boardno=${param.boardno}'">목록</button>
       </LI>
      </UL>
   </fieldset>

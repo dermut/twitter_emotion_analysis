@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import dev.mvc.board.BoardDAOInter;
 import nation.web.tool.Tool;
 
 @Component("dev.mvc.contents.ContentsProc")
@@ -28,7 +27,7 @@ public class ContentsProc implements ContentsProcInter {
   }
 
   @Override
-  public List<ContentsVO> list_all_board() {
+  public List<ContentsVO>  list_all_board() {
     return contentsDAO.list_all_board();
   }
 
@@ -50,7 +49,7 @@ public class ContentsProc implements ContentsProcInter {
     return list;
   }
   
- /**
+  /**
    * 이미지 목록중에 첫번째 이미지 파일명을 추출하여 리턴
    * @param contentsVO
    * @return
@@ -135,24 +134,24 @@ public class ContentsProc implements ContentsProcInter {
 
   @Override
   public List<ContentsVO> list_by_board_search_paging(HashMap<String, Object> hashMap) {
-     
-//     페이지에서 출력할 시작 레코드 번호 계산 기준값, nowPage는 1부터 시작
-//     1 페이지: nowPage = 1, (1 - 1) * 10 --> 0 
-//     2 페이지: nowPage = 2, (2 - 1) * 10 --> 10
-//     3 페이지: nowPage = 3, (3 - 1) * 10 --> 20
-     
+    /* 
+     페이지에서 출력할 시작 레코드 번호 계산 기준값, nowPage는 1부터 시작
+     1 페이지: nowPage = 1, (1 - 1) * 10 --> 0 
+     2 페이지: nowPage = 2, (2 - 1) * 10 --> 10
+     3 페이지: nowPage = 3, (3 - 1) * 10 --> 20
+     */
     int beginOfPage = ((Integer)hashMap.get("nowPage") - 1) * Contents.RECORD_PER_PAGE;
     
      // 시작 rownum, 1 페이지: 1 / 2 페이지: 11 / 3 페이지: 21 
     int startNum = beginOfPage + 1; 
     //  종료 rownum, 1 페이지: 10 / 2 페이지: 20 / 3 페이지: 30
     int endNum = beginOfPage + Contents.RECORD_PER_PAGE;   
-    
-//     1 페이지: WHERE r >= 1 AND r <= 10
-//     2 페이지: WHERE r >= 11 AND r <= 20
-//     3 페이지: WHERE r >= 21 AND r <= 30
-     
-    hashMap.put("startNum", startNum);
+    /*
+     1 페이지: WHERE r >= 1 AND r <= 10
+     2 페이지: WHERE r >= 11 AND r <= 20
+     3 페이지: WHERE r >= 21 AND r <= 30
+     */
+    hashMap.put("s3tartNum", startNum);
     hashMap.put("endNum", endNum);
     
     List<ContentsVO> list = contentsDAO.list_by_board_search_paging(hashMap); 
@@ -160,9 +159,9 @@ public class ContentsProc implements ContentsProcInter {
     
     while(iter.hasNext() == true) {
       ContentsVO contentsVO = iter.next();
-      String name = Tool.textLength(contentsVO.getName(), 90);
-      name = Tool.convertChar(name); // 태그 처리
-      contentsVO.setName(name);
+      String title = Tool.textLength(contentsVO.getName(), 90);
+      title = Tool.convertChar(title); // 태그 처리
+      contentsVO.setName(title);
       
       String thumbs = contentsVO.getThumb();
       if (thumbs.length() > 0) { // preview 이미지가 있는지 검사
@@ -184,7 +183,7 @@ public class ContentsProc implements ContentsProcInter {
    * @param nowPage     현재 페이지
    * @param word 검색어
    * @return 페이징 생성 문자열
-   */
+   */ 
   @Override
   public String paging(int boardno, int search_count, int nowPage, String word){ 
     int totalPage = (int)(Math.ceil((double)search_count/Contents.RECORD_PER_PAGE)); // 전체 페이지  
@@ -206,7 +205,7 @@ public class ContentsProc implements ContentsProcInter {
     str.append("    border: 1px;"); 
     str.append("    border-style: solid;"); 
     str.append("    border-color: #cccccc;"); 
-    str.append("    padding:1px 6px 1px 6px; /*위, 오른쪽, 아래, 왼쪽"); 
+    str.append("    padding:1px 6px 1px 6px; /*위, 오른쪽, 아래, 왼쪽*/"); 
     str.append("    margin:1px 2px 1px 2px; /*위, 오른쪽, 아래, 왼쪽*/"); 
     str.append("  }"); 
     str.append("  .span_box_2{"); 
@@ -277,4 +276,13 @@ public class ContentsProc implements ContentsProcInter {
 
   
 }
+
+
+
+
+
+
+
+
+
 

@@ -80,8 +80,9 @@ UPDATE member
 SET member.email='GPARK@naver.com'
 WHERE memberno=2;
 
-SELECT memberno, id, name, passwd, phone, email, birth, sex, grade
-FROM member;
+UPDATE member
+SET member.grade='M'
+WHERE memberno=2;
 
 /* 한 건 삭제 */
 DELETE FROM member
@@ -780,7 +781,7 @@ CREATE TABLE reply(
 		memberno INT NOT NULL,
 		PRIMARY KEY(replyno),
     FOREIGN KEY(memberno) REFERENCES member(memberno),
-    FOREIGN KEY(contentsno) REFERENCES member(contentsno)
+    FOREIGN KEY(contentsno) REFERENCES contents(contentsno)
 );
 
 

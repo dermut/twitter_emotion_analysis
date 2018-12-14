@@ -22,7 +22,12 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="dev" />
+  
+  <context:component-scan base-package="nation.web.tool" />   
 	
-	
+	<!-- FORM의 FILE 태그를 읽어 MultipartFile 객체로 변환 -->
+  <beans:bean id="multipartResolver"
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+  </beans:bean>
 	
 </beans:beans>
