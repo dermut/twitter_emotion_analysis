@@ -22,7 +22,7 @@ public class CategrpCont {
   private CategrpProcInter categrpProc = null;
  
   public CategrpCont() {
-    System.out.println("--> CategrpCont crated.");
+    System.out.println("--> CategrpCont created.");
   }
 
   // http://localhost:9090/tea/categrp/create.do

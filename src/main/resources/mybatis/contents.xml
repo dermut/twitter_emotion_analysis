@@ -109,22 +109,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--   </select> -->
 
   <!-- ******************** 답변 관련 시작 ******************** -->
-  <!-- 신규 답변을 최우선으로 출력하기위한 답변 순서 조절 -->
-<!--   <update id='updateAnsnum' parameterType="ContentsVO"> -->
-<!--     UPDATE contents -->
-<!--     SET ansnum = ansnum + 1 -->
-<!--     WHERE grpno = #{grpno} AND ansnum > #{ansnum} -->
-<!--   </update>   -->
-   
+  
   <!-- 답변  -->
-<!--   <insert id="reply" parameterType="ContentsVO"> -->
-<!--     INSERT INTO contents(contentsno, -->
-<!--                       boardno, mno, title, content, good, thumbs, files, sizes, cnt, replycnt, rdate,  -->
-<!--                       grpno, indent, ansnum, word)   -->
-<!--     VALUES((SELECT NVL(MAX(contentsno), 0) + 1 as contentsno FROM contents), -->
-<!--                 #{boardno}, #{mno}, #{title}, #{content:VARCHAR}, 0, #{thumbs}, #{files}, #{sizes}, 0, 0, sysdate, -->
-<!--                 #{grpno}, #{indent}, #{ansnum}, #{word}) -->
-<!--   </insert> -->
+  <insert id="reply" parameterType="Contents_ReplyVO">
+    INSERT INTO reply(content, contentsno, memberno)
+    VALUES(#{content}, #{contentsno}, #{memberno})
+  </insert>
   
   <!-- ******************** 답변 관련 종료 ******************** -->
     

@@ -100,11 +100,11 @@ public interface ContentsProcInter {
   public int updateAnsnum(ContentsVO contentsVO);
   
   /**
-   * ´äº¯
-   * @param contentsVO
+   * 
+   * @param contentsno
    * @return
    */
-  public int reply(ContentsVO contentsVO);
+  public Contents_ReplyVO reply(int contentsno);
   
 }
 

@@ -7,13 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import dev.mvc.board.Categrp_BoardVO;
+import dev.mvc.contents.ContentsProcInter;
+import dev.mvc.contents.Contents_ReplyVO;
 
 @Controller
 public class ReplyCont {
   @Autowired
   @Qualifier("dev.mvc.reply.ReplyProc")
   private ReplyProcInter replyProc = null;
+  
+  @Autowired
+  @Qualifier("dev.mvc.contents.ContentsProc")
+  private ContentsProcInter contentsProc = null;
   
   public ReplyCont() {
     System.out.println("--> ReplyCont crated.");
@@ -29,11 +34,24 @@ public class ReplyCont {
     System.out.println("--> create() GET executed");
     ModelAndView mav = new ModelAndView();
     
-    Contents_Reply replyVO = replyProc.read(contentsno);
-    mav.addObject("replyVO", replyVO);
-    
+    Contents_ReplyVO contentsVO = contentsProc.reply(contentsno);
+    mav.addObject("contentsVO", contentsVO);
     mav.setViewName("/reply/create"); // /webapp/contents/create.jsp
 
+    return mav;
+  }
+  
+  // request.getParameter() 자동 실행
+  // 형변환 자동 실행
+  // ReplyVO 객체 자동 생성
+  // http://localhost:9090/tea/reply/create.do
+  @RequestMapping(value="/reply/create.do", method=RequestMethod.POST)
+  public ModelAndView create(ReplyVO replyVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    int count = replyProc.create(replyVO);
+    mav.setViewName("redirect:/reply/create_message.jsp?count=" + count); // /webapp/categrp/create_message.jsp
+    
     return mav;
   }
 }

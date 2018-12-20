@@ -84,7 +84,7 @@ public interface ContentsDAOInter{
    * @param contentsVO
    * @return
    */
-  public int reply(ContentsVO contentsVO);
+  public Contents_ReplyVO reply(int contentsno);
 
    
 }

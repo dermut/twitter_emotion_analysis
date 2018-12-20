@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "word">
+
+  <insert id="create" parameterType="String">
+    INSERT INTO word(wordno, word, rdate) 
+    VALUES((SELECT NVL(MAX(wordno), 0)+1 as wordno FROM word), #{word}, sysdate)
+  </insert>
+  
+  <!-- 검색어 별 갯수 -->  
+  <select id="count_by_word" parameterType="String" resultType="int">
+      SELECT COUNT(*) as cnt
+      FROM word
+      WHERE word = #{word}
+  </select>
+  
+  <!-- 총 검색어 갯수 -->
+  <select id="count" resultType="int">
+    SELECT COUNT(*) as cnt
+    FROM word
+  </select>
+  
+  <select id="word_list" resultType="WordVO">
+    SELECT wordno, word, rdate
+    FROM word
+    ORDER BY wordno DESC
+  </select>
+
+</mapper> 

@@ -24,15 +24,10 @@
   function imgResize() {
     var photo = $('#photo');
     var width = photo.width();
-    // alert(width);
-    // console.log("loading - width:" + loading + " - " + width);
-    // console.log("screen.width-(screen.width * 0.3): " + screen.width-(screen.width * 0.3));
         
     if (photo != null) {
       // 이미지 width가 화면의 70%보다 크다면
       if (width > screen.width-(screen.width * 0.4)) {
-        // console.log("loading - width:" + loading + " - " + width);
-        // photo.width(600); // 이미지 축소
         $('#photoPanel').attr('width', '100%');  // 할당된 영역을 100%로 설정함.
         photo.css('width', '900'); // <div id='photoPanel'> 태그의 width에 맞추어 자동 축소
       } else {
@@ -87,27 +82,36 @@
 
   <DIV id='main_panel'></DIV>
   
-  <FORM name='frm' method="get" action='./update.do'>
-      <input type="hidden" name="contentsno" value="${contentsVO.contentsno}">
-      <fieldset class="fieldset">
-        <ul>
-          <li class="li_none">
-            <span>${contentsVO.name}</span>
-            <span>${contentsVO.rdate.substring(0, 16)}</span>
-            <DIV>
-              <c:forEach var ="fileVO"  items="${file_list }">
-                <A href="javascript: panel_img('${fileVO.file }')"><IMG src='./storage/${fileVO.thumb }' style='margin-top: 2px;'></A>
-              </c:forEach>
-            </DIV>
-          </li>
-          <li class="li_none">
-            <DIV>${contentsVO.content }</DIV>
-          </li>
-        </ul>
-      </fieldset>
+  <fieldset class="fieldset">
+    <ul>
+      <li class="li_none">
+        <span>${contentsVO.name}</span>
+        <span>${contentsVO.rdate.substring(0, 16)}</span>
+        <DIV>
+          <c:forEach var ="fileVO"  items="${file_list }">
+            <A href="javascript: panel_img('${fileVO.file }')"><IMG src='./storage/${fileVO.thumb }' style='margin-top: 2px;'></A>
+          </c:forEach>
+        </DIV>
+      </li>
+      <li class="li_none">
+        <DIV>${contentsVO.content }</DIV>
+      </li>
+    </ul>
+  </fieldset>
+  
+  <FORM name='reply' method="post" action='./reply.do'>
+    <input type="hidden" name="contentsno" value="${contentsVO.contentsno }">
+    <ul>
+      <li>
+	     <strong>왕눈이</strong>
+	    </li>
+	    <li>
+		    <textarea name="replyarea" rows="5" cols="30"></textarea>
+	    </li>
+    </ul>
+  <input type="submit">
   </FORM>
-
-
+  
 </DIV> <!-- content END -->
 <jsp:include page="/menu/bottom.jsp" flush='false' />
 </DIV> <!-- container END -->

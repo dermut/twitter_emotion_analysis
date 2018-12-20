@@ -18,4 +18,8 @@ public class ReplyDAO implements ReplyDAOInter{
     return sqlSessionTemplate.insert("reply.create", replyVO);
   }
 
+  @Override
+  public ReplyVO read(int contentsno) {
+    return null;
+  }
 }

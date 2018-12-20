@@ -11,9 +11,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE id=#{id}
   </select>
   
-  <insert id="create" parameterType="MemberVO" useGeneratedKeys="true" keyProperty="memberno"> 
-    INSERT INTO member(id, name, passwd, phone, email, birth, sex, grade, rdate)
-    VALUES (#{id}, #{name}, #{passwd}, #{phone}, #{email}, #{birth}, #{sex}, 'N', now())
+  <insert id="create" parameterType="MemberVO" > 
+    INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, rdate)
+    VALUES ((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), #{id}, #{name}, #{passwd}, #{phone}, #{email}, #{birth}, #{sex}, 'N', sysdate)
   </insert>
   
   <select id="list" resultType="MemberVO">
@@ -59,9 +59,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      WHERE id=#{id} AND passwd=#{passwd}
   </select>
   
-  <insert id="create_login_list" parameterType="LogVO" useGeneratedKeys="true" keyProperty="logno">
-    INSERT INTO log(ip, sf, memberno, rdate) 
-    VALUES(#{ip}, #{sf}, #{memberno}, now())
+  <insert id="create_login_list" parameterType="LogVO" >
+    INSERT INTO log(logno, ip, sf, memberno, rdate) 
+    VALUES((SELECT NVL(MAX(logno), 0)+1 as logno FROM log), #{ip}, #{sf}, #{memberno}, sysdate)
   </insert>
   
   <select id="login_list" resultType="LogVO">

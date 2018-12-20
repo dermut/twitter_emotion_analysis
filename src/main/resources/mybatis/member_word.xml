@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "member_word">
+
+<!--   <insert id="create" parameterType="int">
+    INSERT INTO member_word(mwno, memberno, wordno) 
+    VALUES((SELECT NVL(MAX(mwno), 0)+1 as mwno FROM member_word), #{memberno}, #{wordno})
+  </insert>
+  
+  회원 별 검색어번호 목록  
+  <select id="wordno_by_member" parameterType="int" resultType="Member_Word">
+      SELECT DISTINCT mwno, wordno
+      FROM member_word
+      WHERE memberno = #{memberno}
+  </select>
+  
+  특정 검색어를 어떤 회원이 검색했는지
+  <select id="member_by_wordno" resultType="Member_WordVO">
+    SELECT DISTINCT mwno, memberno
+    FROM member_word
+    WHERE wordno = #{wordno}    
+  </select> -->
+
+</mapper> 

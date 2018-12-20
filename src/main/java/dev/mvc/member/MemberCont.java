@@ -286,6 +286,10 @@ public class MemberCont {
    // System.out.println("--> login() POST called.");
    ModelAndView mav = new ModelAndView();
    
+   
+   if(memberProc.readById(id) != null ){  // 로그인 시 아이디가 검색되었을 때
+    
+   
    if (memberProc.login(id, passwd) != 1) { // 로그인 실패시
      // 로그인내역 실패 create
      MemberVO old_memberVO = memberProc.readById(id);
@@ -349,6 +353,9 @@ public class MemberCont {
      
      mav.setViewName("redirect:/index.do"); // 확장자 명시 
      
+     } // else 문 끝
+   } else{
+     mav.setViewName("redirect:/member/login_message.jsp");
    }
    
    return mav;

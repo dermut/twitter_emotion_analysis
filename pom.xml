@@ -203,11 +203,12 @@
       <version>2.4</version>
     </dependency>
     
-   <dependency>
-     <groupId>mysql</groupId>
-     <artifactId>mysql-connector-java</artifactId>
-     <version>5.1.47</version>
-   </dependency>
+   <!-- https://mvnrepository.com/artifact/com.oracle/ojdbc6 -->
+    <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>ojdbc6</artifactId>
+      <version>12.1.0.1-atlassian-hosted</version>
+    </dependency>
     
    <!-- ******************** 개발자 추가 선언 영역 종료 ******************** -->
 
@@ -253,6 +254,14 @@
       </plugin>
     </plugins>
   </build>
+   <!-- 저장소 추가 -->
+  <repositories>
+    <repository>
+      <id>oracle</id>
+      <name>ORACLE JDBC Repository</name>
+      <url>https://maven.atlassian.com/3rdparty/</url>
+    </repository>
+    </repositories>
 </project>
 
 

@@ -30,16 +30,16 @@
     <UL>
       <c:choose>
         <c:when test="${param.count == 1 }">
-          <LI class='li_none'>새로운 컨텐츠를 등록했습니다.</LI>
+          <LI class='li_none'>새로운 댓글을 등록했습니다.</LI>
         </c:when>
         <c:otherwise>
-          <LI class='li_none'>새로운 컨텐츠 등록에 실패했습니다.</LI>
+          <LI class='li_none'>새로운 댓글 등록에 실패했습니다.</LI>
         </c:otherwise>
       </c:choose>
       <LI class='li_none'>
         <br>
-        <button type='button' onclick="location.href='./create.do'">새로운 컨텐츠 등록</button>
-        <button type='button' onclick="location.href='./list_by_board_search_paging.do?boardno=${param.boardno}'">목록</button>
+        <button type='button' onclick="location.href='./create.do'">새로운 댓글 등록</button>
+        <button type='button' onclick="location.href='../contents/read.do?contentsno=${param.contentsno}'">확인</button>
       </LI>
      </UL>
   </fieldset>

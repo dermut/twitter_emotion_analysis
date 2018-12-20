@@ -267,14 +267,9 @@ public class ContentsProc implements ContentsProcInter {
   }
 
   @Override
-  public int reply(ContentsVO contentsVO) {
-    int count = 0;
-    count = contentsDAO.reply(contentsVO);
-    
-    return count;
+  public Contents_ReplyVO reply(int contentsno) {
+    return contentsDAO.reply(contentsno);
   }
-
-  
 }
 
 

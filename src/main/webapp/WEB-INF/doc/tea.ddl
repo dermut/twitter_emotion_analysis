@@ -16,31 +16,31 @@ DROP TABLE word_sentiment;
 /* Table Name: 회원 */
 /**********************************/
 CREATE TABLE member(
-		memberno INT NOT NULL AUTO_INCREMENT,
-		id VARCHAR(15) NOT NULL,
-		name VARCHAR(15) NOT NULL,
-		passwd VARCHAR(15) NOT NULL,
-		phone VARCHAR(15),
-		email VARCHAR(25) NOT NULL,
-		birth VARCHAR(20) NOT NULL,
-		sex CHAR(1) NOT NULL,
-		grade CHAR(1) NOT NULL,
-		rdate DATETIME NOT NULL,
-		PRIMARY KEY(memberno)
+memberno INT NOT NULL,
+id VARCHAR(15) NOT NULL,
+name VARCHAR(15) NOT NULL,
+passwd VARCHAR(15) NOT NULL,
+phone VARCHAR(15),
+email VARCHAR(25) NOT NULL,
+birth VARCHAR(20) NOT NULL,
+sex CHAR(1) NOT NULL,
+grade CHAR(1) NOT NULL,
+rdate DATE NOT NULL,
+PRIMARY KEY(memberno)
 );
 
 
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO member(id, name, passwd, phone, email, birth, sex, grade, rdate) 
-VALUES('admin', '김지민', '1234', '01021205548', 'ultimate1994@naver.com', '1994-03-17', 'M', 'A', now());
+INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, rdate) 
+VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member),'admin', '김지민', '1234', '01021205548', 'ultimate1994@naver.com', '1994-03-17', 'M', 'A', sysdate);
 
-INSERT INTO member(id, name, passwd, phone, email, birth, sex, grade, rdate) 
-VALUES('root', '박우진', '1234', '01000000000', 'park@naver.com', '1993-00-00', 'M', 'A', now());
+INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, rdate) 
+VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'root', '박우진', '1234', '01000000000', 'park@naver.com', '1993-00-00', 'M', 'A', sysdate);
 
-INSERT INTO member(id, name, passwd, phone, email, birth, sex, grade, rdate) 
-VALUES('root2', 'girl', '1234', '01000000000', 'girl@gmail.com', '1993-00-00', 'F', 'A', now());
+INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, rdate) 
+VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'root2', 'girl', '1234', '01000000000', 'girl@gmail.com', '1993-00-00', 'F', 'A', sysdate);
 
 /* 모든 레코드 검색 */
 SELECT memberno, id, name, passwd, phone, email, birth, sex, grade
@@ -80,9 +80,8 @@ UPDATE member
 SET member.email='GPARK@naver.com'
 WHERE memberno=2;
 
-UPDATE member
-SET member.grade='M'
-WHERE memberno=2;
+SELECT memberno, id, name, passwd, phone, email, birth, sex, grade
+FROM member;
 
 /* 한 건 삭제 */
 DELETE FROM member
@@ -114,16 +113,17 @@ WHERE memberno=3;
 /********************* DML 종료 *********************/
 
 
-ALTER TABLE member COMMENT = '회원';
-ALTER TABLE member MODIFY memberno INT COMMENT '멤버번호';
-ALTER TABLE member MODIFY id VARCHAR(15) COMMENT '아이디';
-ALTER TABLE member MODIFY name VARCHAR(15) COMMENT '이름';
-ALTER TABLE member MODIFY passwd VARCHAR(15) COMMENT '비밀번호';
-ALTER TABLE member MODIFY phone VARCHAR(15) COMMENT '전화번호';
-ALTER TABLE member MODIFY email VARCHAR(25) COMMENT '이메일';
-ALTER TABLE member MODIFY birth VARCHAR(20) COMMENT '생년월일';
-ALTER TABLE member MODIFY sex CHAR(1) COMMENT '성별';
-ALTER TABLE member MODIFY grade CHAR(1) COMMENT '등급';
+COMMENT ON TABLE member is '회원';
+COMMENT ON COLUMN member.memberno is '회원번호';
+COMMENT ON COLUMN member.id is '아이디';
+COMMENT ON COLUMN member.name is '이름';
+COMMENT ON COLUMN member.passwd is '비밀번호';
+COMMENT ON COLUMN member.phone is '전화번호';
+COMMENT ON COLUMN member.email is '이메일';
+COMMENT ON COLUMN member.birth is '생년월일';
+COMMENT ON COLUMN member.sex is '성별';
+COMMENT ON COLUMN member.grade is '등급';
+COMMENT ON COLUMN member.rdate is '가입일';
 
 SHOW FULL COLUMNS FROM member;
 
@@ -131,12 +131,12 @@ SHOW FULL COLUMNS FROM member;
 /* Table Name: 로그인 내역 */
 /**********************************/
 CREATE TABLE log(
-		logno INT NOT NULL AUTO_INCREMENT,
-		ip VARCHAR(20),
-		rdate DATETIME NOT NULL,
-		sf CHAR(1) NOT NULL,
-		memberno INT NOT NULL, 
-		PRIMARY KEY(logno),
+logno INT NOT NULL,
+ip VARCHAR(20),
+rdate DATE NOT NULL,
+sf CHAR(1) NOT NULL,
+memberno INT NOT NULL, 
+PRIMARY KEY(logno),
     FOREIGN KEY(memberno) REFERENCES member(memberno)
 );
 
@@ -144,11 +144,11 @@ CREATE TABLE log(
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO log(ip, rdate, sf, memberno) 
-VALUES('172.16.12.17', now(), 'T', 1);
+INSERT INTO log(logno, ip, rdate, sf, memberno) 
+VALUES((SELECT NVL(MAX(logno), 0)+1 as logno FROM log), '172.16.12.17', sysdate, 'T', 1);
 
-INSERT INTO log(ip, rdate, sf, memberno)
-VALUES('172.16.12.116', now(), 'F', 2);
+INSERT INTO log(logno, ip, rdate, sf, memberno)
+VALUES((SELECT NVL(MAX(logno), 0)+1 as logno FROM log), '172.16.12.116', sysdate, 'F', 2);
 
 /* 모든 레코드 검색 */
 SELECT logno, ip, rdate, sf, memberno
@@ -196,14 +196,12 @@ WHERE logno=1
 /********************* DML 종료 *********************/
 
 
-ALTER TABLE log COMMENT = '로그인 내역';
-ALTER TABLE log MODIFY logno INT COMMENT '로그인번호';
-ALTER TABLE log MODIFY ip VARCHAR(20) COMMENT '아이피';
-ALTER TABLE log MODIFY rdate DATETIME COMMENT '로그인시간';
-ALTER TABLE log MODIFY sf CHAR(1) COMMENT '성공여부';
-ALTER TABLE log MODIFY memberno INT COMMENT '멤버번호';
-
-SHOW FULL COLUMNS FROM log;
+COMMENT ON TABLE log is '로그인 내역';
+COMMENT ON COLUMN log.logno is '로그인번호';
+COMMENT ON COLUMN log.ip is '아이피';
+COMMENT ON COLUMN log.rdate is '로그인시간';
+COMMENT ON COLUMN log.sf is '성공여부';
+COMMENT ON COLUMN log.memberno is '회원번호';
 
 
 
@@ -213,39 +211,39 @@ SHOW FULL COLUMNS FROM log;
 /* Table Name: 검색어 */
 /**********************************/
 CREATE TABLE word(
-		wordno INT NOT NULL AUTO_INCREMENT,
-		word VARCHAR(20) NOT NULL,
-		rdate DATETIME NOT NULL,
-		PRIMARY KEY(wordno)
+wordno INT NOT NULL,
+word VARCHAR(20) NOT NULL,
+rdate DATE NOT NULL,
+PRIMARY KEY(wordno)
 );
 
 
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO word(word, rdate) 
-VALUES('점심', now());
+INSERT INTO word(wordno, word, rdate) 
+VALUES((SELECT NVL(MAX(wordno), 0)+1 as wordno FROM word), '점심', sysdate);
 
-INSERT INTO word(word, rdate)
-VALUES('저녁', now());
+INSERT INTO word(wordno, word, rdate)
+VALUES((SELECT NVL(MAX(wordno), 0)+1 as wordno FROM word), '저녁', sysdate);
 
-INSERT INTO word(word, rdate) 
-VALUES('식사', now());
+INSERT INTO word(wordno, word, rdate) 
+VALUES((SELECT NVL(MAX(wordno), 0)+1 as wordno FROM word), '식사', sysdate);
 
-INSERT INTO word(word, rdate)
-VALUES('월급', now());
+INSERT INTO word(wordno, word, rdate)
+VALUES((SELECT NVL(MAX(wordno), 0)+1 as wordno FROM word), '월급', sysdate);
 
-INSERT INTO word(word, rdate) 
-VALUES('친구', now());
+INSERT INTO word(wordno, word, rdate) 
+VALUES((SELECT NVL(MAX(wordno), 0)+1 as wordno FROM word), '친구', sysdate);
 
-INSERT INTO word(word, rdate)
-VALUES('술', now());
+INSERT INTO word(wordno, word, rdate)
+VALUES((SELECT NVL(MAX(wordno), 0)+1 as wordno FROM word), '술', sysdate);
 
-INSERT INTO word(word, rdate) 
-VALUES('운동', now());
+INSERT INTO word(wordno, word, rdate) 
+VALUES((SELECT NVL(MAX(wordno), 0)+1 as wordno FROM word), '운동', sysdate);
 
-INSERT INTO word(word, rdate)
-VALUES('키워드', now());
+INSERT INTO word(wordno, word, rdate)
+VALUES((SELECT NVL(MAX(wordno), 0)+1 as wordno FROM word), '키워드', sysdate);
 
 
 /* 모든 레코드 검색 */
@@ -301,13 +299,11 @@ WHERE wordno=1;
 
 /********************* DML 종료 *********************/
 
+COMMENT ON TABLE word is '검색어 내역';
+COMMENT ON COLUMN word.wordno is '검색어번호';
+COMMENT ON COLUMN word.word is '검색어';
+COMMENT ON COLUMN word.rdate is '검색시간';
 
-ALTER TABLE word COMMENT = '검색어';
-ALTER TABLE word MODIFY wordno INT COMMENT '검색어번호';
-ALTER TABLE word MODIFY word VARCHAR(20) COMMENT '검색어';
-ALTER TABLE word MODIFY rdate DATETIME COMMENT '검색어등록시간';
-
-SHOW FULL COLUMNS FROM word;
 
 
 
@@ -316,12 +312,12 @@ SHOW FULL COLUMNS FROM word;
 /* Table Name: 크롤링데이터 */
 /**********************************/
 CREATE TABLE crawling_data(
-		crno INT NOT NULL AUTO_INCREMENT,
-		content VARCHAR(280) NOT NULL,
-		rdate DATETIME NOT NULL,
-		wordno INT NOT NULL,
-		PRIMARY KEY(crno),
-		FOREIGN KEY(wordno) REFERENCES word(wordno)
+crno INT NOT NULL,
+content VARCHAR(280) NOT NULL,
+rdate DATE NOT NULL,
+wordno INT NOT NULL,
+PRIMARY KEY(crno),
+FOREIGN KEY(wordno) REFERENCES word(wordno)
 );
 
 
@@ -329,8 +325,8 @@ CREATE TABLE crawling_data(
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO crawling_data(content, rdate, wordno)
-VALUES('내용입니다', now(), 1);
+INSERT INTO crawling_data(crno, content, rdate, wordno)
+VALUES((SELECT NVL(MAX(crno), 0)+1 as crno FROM crawling_data), '내용입니다', sysdate, 1);
 
 
 /* 모든 레코드 검색 */
@@ -357,27 +353,20 @@ WHERE crno=1;
 
 /********************* DML 종료 *********************/
 
-
-
-ALTER TABLE crawling_data COMMENT = '크롤링데이터';
-ALTER TABLE crawling_data MODIFY crno INT COMMENT '크롤링번호';
-ALTER TABLE crawling_data MODIFY content VARCHAR(280) COMMENT '내용';
-ALTER TABLE crawling_data MODIFY rdate DATETIME COMMENT '시간';
-ALTER TABLE crawling_data MODIFY wordno INT COMMENT '검색어번호';
-
-SHOW FULL COLUMNS FROM crawling_data;
-
-
-
+COMMENT ON TABLE crawling_data is '크롤링 데이터';
+COMMENT ON COLUMN crawling_data.crno is '크롤링데이터번호';
+COMMENT ON COLUMN crawling_data.content is '내용';
+COMMENT ON COLUMN crawling_data.rdate is  '크롤링데이터등록시간';
+COMMENT ON COLUMN crawling_data.wordno is  '검색어번호';
 
 /**********************************/
 /* Table Name: 회원_검색 */
 /**********************************/
 CREATE TABLE member_word(
-		mwno INT NOT NULL AUTO_INCREMENT,
-		memberno INT NOT NULL,
-		wordno INT NOT NULL,
-		PRIMARY KEY(mwno),
+mwno INT NOT NULL,
+memberno INT NOT NULL,
+wordno INT NOT NULL,
+PRIMARY KEY(mwno),
     FOREIGN KEY(memberno) REFERENCES member(memberno),
     FOREIGN KEY(wordno) REFERENCES word(wordno)
 );
@@ -386,11 +375,11 @@ CREATE TABLE member_word(
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO member_word(memberno, wordno) 
-VALUES(1, 2);
+INSERT INTO member_word(mwno, memberno, wordno) 
+VALUES((SELECT NVL(MAX(mwno), 0)+1 as mwno FROM member_word), 1, 2);
 
-INSERT INTO member_word(memberno, wordno)
-VALUES(2, 1);
+INSERT INTO member_word(mwno, memberno, wordno)
+VALUES((SELECT NVL(MAX(mwno), 0)+1 as mwno FROM member_word), 2, 1);
 
 /* 모든 레코드 검색 */
 SELECT mwno, memberno, wordno
@@ -426,37 +415,32 @@ WHERE mwno=1
 /********************* DML 종료 *********************/
 
 
-ALTER TABLE member_word COMMENT = '회원_검색';
-ALTER TABLE member_word MODIFY mwno INT COMMENT '회원검색번호';
-ALTER TABLE member_word MODIFY memberno INT COMMENT '회원번호';
-ALTER TABLE member_word MODIFY wordno INT COMMENT '검색어번호';
-
-SHOW FULL COLUMNS FROM member_word;
-
-
-
+COMMENT ON TABLE member_word is '회원 검색';
+COMMENT ON COLUMN member_word.mwno is '회원검색번호';
+COMMENT ON COLUMN member_word.memberno is '회원번호';
+COMMENT ON COLUMN member_word.wordno is '검색어번호';
 
 
 /**********************************/
 /* Table Name: 카테고리 그룹 */
 /**********************************/
 CREATE TABLE categrp(
-		categrpno INT NOT NULL AUTO_INCREMENT,
-		classification INT NOT NULL,
-		name VARCHAR(50) NOT NULL,
-		rdate DATETIME NOT NULL,
-		PRIMARY KEY(categrpno)
+categrpno INT NOT NULL,
+classification INT NOT NULL,
+name VARCHAR(50) NOT NULL,
+rdate DATE NOT NULL,
+PRIMARY KEY(categrpno)
 );
 
 
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO categrp(classification, name, rdate) 
-VALUES(1, "공지사항", now());
+INSERT INTO categrp(categrpno, classification, name, rdate) 
+VALUES((SELECT NVL(MAX(categrpno), 0)+1 as categrpno FROM categrp), 1, "공지사항", sysdate);
 
-INSERT INTO categrp(classification, name, rdate)
-VALUES(2, "게시판", now());
+INSERT INTO categrp(categrpno, classification, name, rdate)
+VALUES((SELECT NVL(MAX(categrpno), 0)+1 as categrpno FROM categrp), 2, "게시판", sysdate);
 
 /* 모든 레코드 검색 */
 SELECT classification, name, rdate
@@ -500,28 +484,23 @@ WHERE categrp=1;
 
 
 
-ALTER TABLE categrp COMMENT = '카테고리 그룹';
-ALTER TABLE categrp MODIFY categrpno INT COMMENT '카테고리그룹번호';
-ALTER TABLE categrp MODIFY classification VARCHAR(50) COMMENT '분류';
-ALTER TABLE categrp MODIFY name VARCHAR(50) COMMENT '이름';
-ALTER TABLE categrp MODIFY rdate DATETIME COMMENT '카테고리등록일';
-
-SHOW FULL COLUMNS FROM categrp;
-
-
-
+COMMENT ON TABLE categrp is '카테고리 그룹';
+COMMENT ON COLUMN categrp.categrpno is '카테고리그룹번호';
+COMMENT ON COLUMN categrp.classification is '분류';
+COMMENT ON COLUMN categrp.name is '이름';
+COMMENT ON COLUMN categrp.rdate is '카테고리그룹등록일';
 
 
 /**********************************/
 /* Table Name: 게시판 */
 /**********************************/
 CREATE TABLE board(
-		boardno INT NOT NULL AUTO_INCREMENT,
-		name VARCHAR(100) NOT NULL,
-		rdate DATETIME NOT NULL,
-		categrpno INT NOT NULL,
-		memberno INT NOT NULL,
-		PRIMARY KEY(boardno),
+boardno INT NOT NULL,
+name VARCHAR(100) NOT NULL,
+rdate DATE NOT NULL,
+categrpno INT NOT NULL,
+memberno INT NOT NULL,
+PRIMARY KEY(boardno),
     FOREIGN KEY(categrpno) REFERENCES categrp(categrpno),
     FOREIGN KEY(memberno) REFERENCES member(memberno)
 );
@@ -531,17 +510,17 @@ CREATE TABLE board(
 /********************* DML 시작 *********************/
 
 /* 한 건 등록 */
-INSERT INTO board(name, rdate, categrpno, memberno)
-VALUES("게시판1", now(), 1, 1);
+INSERT INTO board(boardno, name, rdate, categrpno, memberno)
+VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardnoFROM board), "게시판1", sysdate, 1, 1);
 
-INSERT INTO board(name, rdate, categrpno, memberno)
-VALUES("게시판2", now(), 1, 2);
+INSERT INTO board(boardno, name, rdate, categrpno, memberno)
+VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardnoFROM board), "게시판2", sysdate, 1, 2);
 
-INSERT INTO board(name, rdate, categrpno, memberno)
-VALUES("게시판3", now(), 2, 1);
+INSERT INTO board(boardno, name, rdate, categrpno, memberno)
+VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardnoFROM board), "게시판3", sysdate, 2, 1);
 
-INSERT INTO board(name, rdate, categrpno, memberno)
-VALUES("게시판4", now(), 2, 2);
+INSERT INTO board(boardno, name, rdate, categrpno, memberno)
+VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardnoFROM board), "게시판4", sysdate, 2, 2);
 
 /* 모든 레코드 검색 */
 SELECT boardno, name, rdate, categrpno, memberno
@@ -615,18 +594,12 @@ WHERE boardno=1;
 
 /********************* DML 종료 *********************/
 
-
-
-ALTER TABLE board COMMENT = '게시판';
-ALTER TABLE board MODIFY boardno INT COMMENT '게시판번호';
-ALTER TABLE board MODIFY name VARCHAR(100) COMMENT '제목';
-ALTER TABLE board MODIFY rdate DATETIME COMMENT '등록시간';
-ALTER TABLE board MODIFY categrpno INT COMMENT '카테고리그룹번호';
-ALTER TABLE board MODIFY memberno INT COMMENT '회원번호';
-
-SHOW FULL COLUMNS FROM board;
-
-
+COMMENT ON TABLE board is '게시판';
+COMMENT ON COLUMN board.boardno is '게시판번호';
+COMMENT ON COLUMN board.name is '게시판제목';
+COMMENT ON COLUMN board.rdate is '등록일';
+COMMENT ON COLUMN board.categrpno is '카테고리그룹번호';
+COMMENT ON COLUMN board.memberno is '회원번호';
 
 
 
@@ -634,7 +607,7 @@ SHOW FULL COLUMNS FROM board;
 /* Table Name: 컨텐츠 */
 /**********************************/
 CREATE TABLE contents(
-contentsno INT NOT NULL AUTO_INCREMENT,
+contentsno INT NOT NULL,
 name VARCHAR(100) NOT NULL,            
 content VARCHAR(1000) NOT NULL,
 views INT DEFAULT 0 NOT NULL,
@@ -642,7 +615,7 @@ replies INT NOT NULL,
 size VARCHAR(1000),
 photo VARCHAR(1000),
 thumb VARCHAR(1000),
-rdate DATETIME NOT NULL,
+rdate DATE NOT NULL,
 boardno INT NOT NULL,
 memberno INT NOT NULL,
 PRIMARY KEY(contentsno),
@@ -655,20 +628,20 @@ FOREIGN KEY(memberno) REFERENCES member(memberno)
 /********************* DML 시작 *********************/
 
 /* 한 건 등록 */
-INSERT INTO contents(name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
-VALUES("제목", "가나다라마바사", 1, 10, "10.0KB", "photo01.jpg", "photo01_t.jpg", now(), 1, 1);
+INSERT INTO contents(contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
+VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목", "가나다라마바사", 1, 10, "10.0KB", "photo01.jpg", "photo01_t.jpg", sysdate, 1, 1);
 
 
-INSERT INTO contents(name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
-VALUES("제목2", "고노도로모보소", 1, 10, "10.0KB", "photo02.jpg", "photo02_t.jpg", now(), 2, 2); -- 테스트용
+INSERT INTO contents(contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
+VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목2", "고노도로모보소", 1, 10, "10.0KB", "photo02.jpg", "photo02_t.jpg", sysdate, 2, 2); -- 테스트용
 
 
-INSERT INTO contents(name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
-VALUES("제목3", "가나다로모보소", 1, 10, "10.0KB", "photo03.jpg", "photo03_t.jpg", now(), 1, 2); -- 테스트용
+INSERT INTO contents(contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
+VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목3", "가나다로모보소", 1, 10, "10.0KB", "photo03.jpg", "photo03_t.jpg", sysdate, 1, 2); -- 테스트용
 
 
-INSERT INTO contents(name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
-VALUES("제목4", "경기경경기심근경색", 1, 10, "10.0KB", "photo04.jpg", "photo04_t.jpg", now(), 10, 10); -- 에러 테스트용
+INSERT INTO contents(contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
+VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목4", "경기경경기심근경색", 1, 10, "10.0KB", "photo04.jpg", "photo04_t.jpg", sysdate, 10, 10); -- 에러 테스트용
 
 
 /* 모든 레코드 검색 */
@@ -751,23 +724,18 @@ WHERE contentsno=1;
 /********************* DML 종료 *********************/
 
 
-
-ALTER TABLE contents COMMENT = '게시글';
-ALTER TABLE contents MODIFY contentsno INT COMMENT '게시글번호';
-ALTER TABLE contents MODIFY name VARCHAR(100) COMMENT '제목';
-ALTER TABLE contents MODIFY content VARCHAR(1000) COMMENT '내용';
-ALTER TABLE contents MODIFY size INT COMMENT '용량';
-ALTER TABLE contents MODIFY views INT COMMENT '조회수';
-ALTER TABLE contents MODIFY replies INT COMMENT '댓글수';
-ALTER TABLE contents MODIFY photo VARCHAR(100) COMMENT '사진';
-ALTER TABLE contents MODIFY thumb VARCHAR(100) COMMENT '썸네일';
-ALTER TABLE contents MODIFY rdate DATETIME COMMENT '등록시간';
-ALTER TABLE contents MODIFY boardno INT COMMENT '게시판번호';
-ALTER TABLE contents MODIFY memberno INT COMMENT '회원번호';
-
-SHOW FULL COLUMNS FROM contents;
-
-
+COMMENT ON TABLE contents is '게시글';
+COMMENT ON COLUMN contents.contentsno is '게시글번호';
+COMMENT ON COLUMN contents.name is '제목';
+COMMENT ON COLUMN contents.content is '내용';
+COMMENT ON COLUMN contents.views is '조회수';
+COMMENT ON COLUMN contents.replies is '댓글수';
+COMMENT ON COLUMN contents.size is '용량';
+COMMENT ON COLUMN contents.photo is '사진';
+COMMENT ON COLUMN contents.thumb is '썸네일';
+COMMENT ON COLUMN contents.rdate is '등록일';
+COMMENT ON COLUMN contents.memberno is '회원번호';
+COMMENT ON COLUMN log.boardno is '게시판번호';
 
 
 
@@ -775,13 +743,13 @@ SHOW FULL COLUMNS FROM contents;
 /* Table Name: 댓글 */
 /**********************************/
 CREATE TABLE reply(
-		replyno INT NOT NULL AUTO_INCREMENT,
-		content VARCHAR(500) NOT NULL,
-		contentsno INT NOT NULL,
-		memberno INT NOT NULL,
-		PRIMARY KEY(replyno),
+replyno INT NOT NULL,
+content VARCHAR(500) NOT NULL,
+contentsno INT NOT NULL,
+memberno INT NOT NULL,
+PRIMARY KEY(replyno),
     FOREIGN KEY(memberno) REFERENCES member(memberno),
-    FOREIGN KEY(contentsno) REFERENCES contents(contentsno)
+    FOREIGN KEY(contentsno) REFERENCES member(contentsno)
 );
 
 
@@ -789,8 +757,8 @@ CREATE TABLE reply(
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO reply(content, contentsno, memberno)
-VALUES('내용입니다', 1, 1);
+INSERT INTO reply(replyno, content, contentsno, memberno)
+VALUES((SELECT NVL(MAX(replyno), 0)+1 as replyno FROM reply), '내용입니다', 1, 1);
 
 /* 모든 레코드 검색 */
 SELECT replyno, content, contentsno, memberno
@@ -822,26 +790,20 @@ WHERE replyno=1;
 
 /********************* DML 종료 *********************/
 
-
-
-ALTER TABLE reply COMMENT = '댓글';
-ALTER TABLE reply MODIFY replyno INT COMMENT '댓글번호';
-ALTER TABLE reply MODIFY content VARCHAR(500) COMMENT '댓글내용';
-ALTER TABLE reply MODIFY contentsno INT COMMENT '게시글번호';
-ALTER TABLE reply MODIFY memberno INT COMMENT '회원번호';
-
-SHOW FULL COLUMNS FROM reply;
-
-
-
+COMMENT ON TABLE reply is '로그인 내역';
+COMMENT ON COLUMN reply.replyno is '댓글번호';
+COMMENT ON COLUMN reply.content is '댓글내용';
+COMMENT ON COLUMN reply.memberno is '회원번호';
+COMMENT ON COLUMN reply.rdate is '등록시간';
+COMMENT ON COLUMN reply.contentsno is '게시글번호';
 
 /**********************************/
 /* Table Name: 프레시토마토 */
 /**********************************/
 CREATE TABLE freshtomato(
-    ftno INT NOT NULL AUTO_INCREMENT,
+    ftno INT NOT NULL,
     ftrate INT NOT NULL,
-    rdate DATETIME NOT NULL,
+    rdate DATE NOT NULL,
     wordno INT NOT NULL,
     PRIMARY KEY(ftno),
     FOREIGN KEY(wordno) REFERENCES word(wordno)
@@ -852,8 +814,8 @@ CREATE TABLE freshtomato(
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO freshtomato(ftrate, rdate)
-VALUES(80, now());
+INSERT INTO freshtomato(ftno, ftrate, rdate, wordno)
+VALUES((SELECT NVL(MAX(ftno), 0)+1 as ftno FROM freshtomato), 80, sysdate, 1);
 
 /* 모든 레코드 검색 */
 SELECT ftno, ftrate, rdate, wordno
@@ -881,27 +843,20 @@ WHERE ftno=1;
 /********************* DML 종료 *********************/
 
 
-
-ALTER TABLE freshtomato COMMENT = '댓글';
-ALTER TABLE freshtomato MODIFY ftno INT COMMENT '프레시토마토번호';
-ALTER TABLE freshtomato MODIFY ftrate INT COMMENT '프레시토마토지수';
-ALTER TABLE freshtomato MODIFY rdate DATETIME COMMENT '등록시간';
-ALTER TABLE freshtomato MODIFY wordno INT COMMENT '검색어번호';
-
-SHOW FULL COLUMNS FROM freshtomato;
-
-
-
-
+COMMENT ON TABLE freshtomato is '프레시 토마토';
+COMMENT ON COLUMN freshtomato.ftno is '프레시토마토번호';
+COMMENT ON COLUMN freshtomato.ftrate is '프레시토마토지수';
+COMMENT ON COLUMN freshtomato.rdate is '등록일';
+COMMENT ON COLUMN freshtomato.wordno is '검색어번호';
 
 
 /**********************************/
 /* Table Name: 검색_크롤링 긍정/부정 */
 /**********************************/
 CREATE TABLE word_crawling (
-    wcno INT NOT NULL AUTO_INCREMENT,
+    wcno INT NOT NULL,
     posi_nega INT NOT NULL,
-    crawling_data DATETIME NOT NULL,
+    crawling_data DATE NOT NULL,
     rdate INT NOT NULL,
     wordno INT NOT NULL,
     PRIMARY KEY(wcno),
@@ -913,11 +868,11 @@ CREATE TABLE word_crawling (
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO word_crawling(posi_nega, crawling_data, rdate, wordno)
-VALUES('P', "스테이크 맛있어요", now(), 1);
+INSERT INTO word_crawling(wcno, posi_nega, crawling_data, rdate, wordno)
+VALUES((SELECT NVL(MAX(wcno), 0)+1 as wcno FROM word_crawling), 'P', "스테이크 맛있어요", sysdate, 1);
 
-INSERT INTO word_crawling(posi_nega, crawling_data, rdate, wordno)
-VALUES('N', "스테이크 맛없어요", now(), 1);
+INSERT INTO word_crawling(wcno, posi_nega, crawling_data, rdate, wordno)
+VALUES((SELECT NVL(MAX(wcno), 0)+1 as wcno FROM word_crawling), 'N', "스테이크 맛없어요", sysdate, 1);
 
 /* 모든 레코드 검색 */
 SELECT wcno, posi_nega, crawling_data, rdate, wordno
@@ -949,27 +904,19 @@ WHERE wcno=1;
 
 /********************* DML 종료 *********************/
 
-
-
-ALTER TABLE word_crawling COMMENT = '검색_크롤링 긍정/부정';
-ALTER TABLE word_crawling MODIFY wcno INT COMMENT '검색크롤링번호';
-ALTER TABLE word_crawling MODIFY posi_nega INT COMMENT '긍정/부정';
-ALTER TABLE word_crawling MODIFY crawling_data DATETIME COMMENT '크롤링데이터내용';
-ALTER TABLE word_crawling MODIFY rdate INT COMMENT '등록시간';
-ALTER TABLE word_crawling MODIFY wordno INT COMMENT '검색어번호';
-
-SHOW FULL COLUMNS FROM word_crawling;
-
-
-
-
+COMMENT ON TABLE word_crawling is '로그인 내역';
+COMMENT ON COLUMN word_crawling.wcno is '로그인번호';
+COMMENT ON COLUMN word_crawling.posi_nega is '긍정/부정';
+COMMENT ON COLUMN word_crawling.crawling_data is '크롤링데이터내용';
+COMMENT ON COLUMN word_crawling.rdate is '등록일';
+COMMENT ON COLUMN word_crawling.wordno is '검색어번호';
 
 
 /**********************************/
 /* Table Name: 검색어 동향 */
 /**********************************/
 CREATE TABLE word_time_graph (
-    word_time_no INT NOT NULL AUTO_INCREMENT,
+    word_time_no INT NOT NULL,
     freq INT NOT NULL,
     rdate INT NOT NULL,
     wordno INT NOT NULL,
@@ -982,8 +929,8 @@ CREATE TABLE word_time_graph (
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO word_time_graph(freq, rdate, wordno)
-VALUES(10, now(), 1);
+INSERT INTO word_time_graph(word_time_no, freq, rdate, wordno)
+VALUES((SELECT NVL(MAX(word_time_no), 0)+1 as word_time_no FROM word_time_graph), 10, sysdate, 1);
 
 /* 모든 레코드 검색 */
 SELECT word_time_no, freq, rdate, wordno
@@ -1015,19 +962,11 @@ WHERE word_time_no=1;
 
 /********************* DML 종료 *********************/
 
-
-
-ALTER TABLE word_time_graph COMMENT = '검색어 동향';
-ALTER TABLE word_time_graph MODIFY word_time_no INT COMMENT '검색어동향번호';
-ALTER TABLE word_time_graph MODIFY freq INT COMMENT '빈도';
-ALTER TABLE word_time_graph MODIFY rdate INT COMMENT '등록시간';
-ALTER TABLE word_time_graph MODIFY wordno INT COMMENT '검색어번호';
-
-SHOW FULL COLUMNS FROM word_time_graph;
-
-
-
-
+COMMENT ON TABLE word_time_graph is '검색어 동향';
+COMMENT ON COLUMN word_time_graph.word_time_no is '검색어동향번호';
+COMMENT ON COLUMN word_time_graph.freq is '빈도';
+COMMENT ON COLUMN word_time_graph.rdate is '등록일';
+COMMENT ON COLUMN word_time_graph.wordno is '검색어번호';
 
 
 
@@ -1035,11 +974,11 @@ SHOW FULL COLUMNS FROM word_time_graph;
 /* Table Name: 검색어 감성분석 */
 /**********************************/
 CREATE TABLE word_sentiment (
-    word_sentiment_no INT NOT NULL AUTO_INCREMENT,
+    word_sentiment_no INT NOT NULL,
     posi_nega INT NOT NULL,
     percentage INT NOT NULL,
     freq INT NOT NULL,
-    rdate DATETIME NOT NULL,
+    rdate DATE NOT NULL,
     wordno INT NOT NULL,
     PRIMARY KEY(word_sentiment_no),
     FOREIGN KEY(wordno) REFERENCES word(wordno)
@@ -1050,11 +989,11 @@ CREATE TABLE word_sentiment (
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO word_time_graph(posi_nega, percentage, freq, rdate, wordno)
-VALUES('P', 100, 5, now(), 1);
+INSERT INTO word_sentiment(word_sentiment_no, posi_nega, percentage, freq, rdate, wordno)
+VALUES((SELECT NVL(MAX(word_sentiment_no), 0)+1 as word_sentiment_no FROM word_sentiment), 'P', 100, 5, sysdate, 1);
 
-INSERT INTO word_time_graph(posi_nega, percentage, freq, rdate, wordno)
-VALUES('N', 100, 5, now(), 1);
+INSERT INTO word_sentiment(word_sentiment_no, posi_nega, percentage, freq, rdate, wordno)
+VALUES((SELECT NVL(MAX(word_sentiment_no), 0)+1 as word_sentiment_no FROM word_sentiment), 'N', 100, 5, sysdate, 1);
 
 /* 모든 레코드 검색 */
 SELECT word_sentiment_no, posi_nega, percentage, freq, rdate, wordno
@@ -1087,13 +1026,10 @@ WHERE word_sentiment_no=1;
 /********************* DML 종료 *********************/
 
 
-
-ALTER TABLE word_sentiment COMMENT = '검색어 감성분석';
-ALTER TABLE word_sentiment MODIFY word_sentiment_no INT COMMENT '검색어감성분석번호';
-ALTER TABLE word_sentiment MODIFY posi_nega INT COMMENT '긍정/부정';
-ALTER TABLE word_sentiment MODIFY percentage INT COMMENT '퍼센티지';
-ALTER TABLE word_sentiment MODIFY freq INT COMMENT '빈도';
-ALTER TABLE word_sentiment MODIFY rdate INT COMMENT '날짜';
-ALTER TABLE word_sentiment MODIFY wordno INT COMMENT '검색어번호';
-
-SHOW FULL COLUMNS FROM word_sentiment;
+COMMENT ON TABLE word_sentiment is '검색어 감성분석';
+COMMENT ON COLUMN word_sentiment.word_sentiment_no is '검색어감성분석번호';
+COMMENT ON COLUMN word_sentiment.posi_nega is '긍정/부정';
+COMMENT ON COLUMN word_sentiment.percentage is '퍼센트';
+COMMENT ON COLUMN word_sentiment.freq is '빈도';
+COMMENT ON COLUMN word_sentiment.rdate is '등록일';
+COMMENT ON COLUMN word_sentiment.wordno is '검색어번호';

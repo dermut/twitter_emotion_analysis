@@ -73,8 +73,8 @@ public class ContentsDAO implements ContentsDAOInter {
   }
 
   @Override
-  public int reply(ContentsVO contentsVO) {
-    return sqlSessionTemplate.insert("contents.reply", contentsVO);
+  public Contents_ReplyVO reply(int contentsno) {
+    return sqlSessionTemplate.selectOne("contents.reply", contentsno);
   }
 
   

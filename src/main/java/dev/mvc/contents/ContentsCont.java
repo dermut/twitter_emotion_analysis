@@ -730,6 +730,20 @@ public class ContentsCont {
 //
 //
 //  
+  
+  /**
+   * ´ñ±Û ´Þ±â
+   * 
+   * @param contentsno
+   * @return
+   */
+  @RequestMapping(value = "/contents/reply.do", method = RequestMethod.POST)
+  public ModelAndView reply(int contentsno) {
+    ModelAndView mav = new ModelAndView();
+    
+    
+    return mav;
+  }
 }
 
 

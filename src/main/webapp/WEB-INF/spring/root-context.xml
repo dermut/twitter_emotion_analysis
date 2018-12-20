@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="url" value="jdbc:mysql://localhost:3306/tea" />
-    <property name="username" value="root" />
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+    <property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+    <property name="username" value="ai3" />
     <property name="password" value="1234" />
   </bean> 
 
@@ -19,9 +19,18 @@
     <property name="typeAliasesPackage" 
                    value="dev.mvc.tea,
                           dev.mvc.categrp,
-                          dev.mvc.contents,
                           dev.mvc.board,
-                          dev.mvc.member" />
+                          dev.mvc.contents,
+                          dev.mvc.member,
+                          dev.mvc.word,
+                          dev.mvc.member_word,
+                          dev.mvc.crawling_data,
+                          dev.mvc.freshtomato,
+                          dev.mvc.log,
+                          dev.mvc.reply,
+                          dev.mvc.word_sentiment,
+                          dev.mvc.word_time_graph"
+                          />
     <property name="mapperLocations" value="classpath:mybatis/*.xml" />
   </bean>
   

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="crawling"> <!-- 테이블명 사용 -->
+
+  <insert id="create" parameterType="CrawlingVO">
+    INSERT INTO crawling_data(content, rdate, wordno)
+    VALUES(#{content}, now(), #{wordno})
+  </insert>
+  
+  <!-- 
+  레코드 갯수 만큼 CrawlingVO 객체를 만들어 ArrayList에 저장하여 리턴,
+  List<CrawlingVO> list = new ArrayList<CrawlingVO>(); 
+  -->
+  <select id="list" resultType="CrawlingVO">
+    SELECT crno, content, rdate, wordno
+    FROM crawling_data
+    ORDER BY crno ASC
+  </select>
+  
+  <select id="list_by_content" parameterType="String" resultType="CrawlingVO">
+    SELECT crno, content, rdate, wordno
+    FROM crawling_data
+    WHERE content like #{word} <!-- 입력된 단어를 이용해 그 단어가 들어간 내용을 검색 -->
+  </select>
+  
+  <select id="count" resultType="int"> <!-- 크롤링데이터 전체 카운트 -->
+    SELECT COUNT(*) as cnt
+    FROM crawling_data
+  </select>
+
+  <select id="read" parameterType="int" resultType="CrawlingVO">
+    SELECT crno, content, rdate, wordno
+    FROM crawling_data
+    WHERE crno = #{crno}
+  </select>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM crawling_data
+    WHERE crno = #{crno}
+  </delete>
+  
+  <delete id="delete_by_rdate" parameterType="String">
+    DELETE FROM crawling_data
+    WHERE DATE(rdate) = #{rdate}
+  </delete>
+  
+  
+</mapper>
