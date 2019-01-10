@@ -41,6 +41,8 @@ public interface CategrpProcInter {
    * @return 贸府等 饭内靛 肮荐
    */
   public int delete (int categrpno);
+  
+  public int count_by_categrp(int categrpno);
 }
 
 

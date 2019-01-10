@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </insert>
   
   회원 별 검색어번호 목록  
-  <select id="wordno_by_member" parameterType="int" resultType="Member_Word">
+  <select id="wordno_by_member" parameterType="int" resultType="Member_WordVO">
       SELECT DISTINCT mwno, wordno
       FROM member_word
       WHERE memberno = #{memberno}

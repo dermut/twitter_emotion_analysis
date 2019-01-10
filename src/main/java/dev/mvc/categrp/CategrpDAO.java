@@ -24,6 +24,7 @@ public class CategrpDAO implements CategrpDAOInter {
   @Override
   public List<CategrpVO> list() {
     List<CategrpVO> list = sqlSessionTemplate.selectList("categrp.list");
+    
     return list;
   }
 
@@ -42,8 +43,12 @@ public class CategrpDAO implements CategrpDAOInter {
   @Override
   public int delete(int categrpno) {
     return sqlSessionTemplate.delete("categrp.delete", categrpno);
+  }
+
+  @Override
+  public int count_by_categrp(int categrpno) {
+    return sqlSessionTemplate.selectOne("categrp.count_by_categrp", categrpno);
   } 
-   
 }
 
 

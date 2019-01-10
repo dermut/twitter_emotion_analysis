@@ -43,7 +43,7 @@
           // panel += "<TD style='text-align: center ;'>"+rdata[index].boardno+"</TD>";
           panel += "<TD style='text-align: center ;'>"+(index+1)+"</TD>";
           panel += "<TD>"+rdata[index].categrp_name+"</TD>";
-          panel += "<TD><A href='../contents/list_by_board.do?boardno="+rdata[index].boardno+"'>"+rdata[index].board_name+"</A></TD>";
+          panel += "<TD><A href='../contents/list_by_board_search_paging.do?boardno="+rdata[index].boardno+"'>"+rdata[index].board_name+"</A></TD>";
           panel += "<TD>"+rdata[index].memberno+"</TD>";
           panel += "<TD>"+rdata[index].rdate.substring(0, 10)+"</TD>";
           panel += "<TD style='text-align: center;'>"; 
@@ -121,6 +121,7 @@
   function update(boardno) {
     $('#panel_create').hide();
     $('#panel_update').show();
+    $('#panel_delete').hide();
     
     $.ajax({
       url: "./update.do", // 요청을 보낼주소
@@ -131,10 +132,9 @@
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var frm_update = $('#frm_update');
-        // $('#categrpno', frm_update).val(rdata.categrpno).prop("selected", true);
         $('#categrpno', frm_update).val(rdata.categrpno); // SELECT tag
         $('#boardno', frm_update).val(rdata.boardno);        
-        $('#name', frm_update).val(rdata.board_name);
+        $('#name', frm_update).val(rdata.name);
         $('#memberno', frm_update).val(rdata.memberno);        
       },
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
@@ -208,13 +208,27 @@
       type: "get",  // or get
       cache: false,
       dataType: "json", // 응답 데이터 형식, or json
-      data: 'boardno=' +boardno,  // $('#frm').serialize(), 
+      data: 'boardno=' +boardno,
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var frm_delete = $('#frm_delete');
         $('#categrpno', frm_delete).val(rdata.categrpno); 
         $('#boardno', frm_delete).val(rdata.boardno);        
-        $('#board_name').html(rdata.name); // 게시판 이름
+        
+        var str = '';        
+        // 소속된 카테고리 갯수를 출력 예정
+        if (rdata.count_by_board > 0) {
+          str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos;  게시판에 [' + rdata.count_by_board + '] 건의 데이터가 등록되어있습니다.</span><br>';
+          str += '카테고리에 등록된 게시물을 삭제해야 게시판 삭제가 가능합니다.<br>';
+          str += '<button type="button" onclick="delete_contents_by_board('+boardno+')">카테고리 삭제</button>';
+          str += '&nbsp;<button type="button" onclick="action_cancel();">취소</button>';
+        } else {
+          str = '[' + rdata.name + "] 카테고리를 삭제하시겠습니까?<br>";
+          str += "삭제하면 복구 할 수 없습니다.<br>"
+          str += '<button type="button" id="submit" onclick="delete_submit();">삭제</button>';
+          str += '&nbsp;<button type="button" onclick="action_cancel();">취소</button>'; 
+        }
+       $('#msg_delete').html(str);
       },
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
@@ -278,6 +292,48 @@
     });
   }
 
+  //카테고리 그룹에 등록된 카테고리 모두 삭제
+  function delete_contents_by_board(boardno) {
+    $.ajax({
+      url: "./delete_contents_by_board.do", 
+      type: "post", // or get
+      cache: false,
+      async: true, // true: 비동기
+      dataType: "json", // 응답 형식, html, xml...
+      // data: $('#frm').serialize(),  // 보내는 데이터
+      data: 'boardno='+boardno,
+      success: function(rdata) {
+        var frm_delete = $('#frm_delete');
+        $('#boardno', frm_delete).val(boardno);
+        
+        var str = '';        
+        // 소속된 카테고리 갯수를 출력 예정
+        if (rdata.delete_contents_by_board > 0) {
+          str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos; 카테고리에서 [' + rdata.count_by_board + '] 건의 데이터를 삭제했습니다.</span><br>';
+          str += '컨텐츠 삭제를 계속 진행하시겠습니까?<br>';
+          str += '<button type="button" onclick="deleteForm('+boardno+')">카테고리 삭제</button>';
+          str += '&nbsp;<button type="button" onclick="action_cancel();">취소</button>';
+        } else {
+          str = '[' + rdata.name + "] 카테고리 관련 컨텐츠 삭제에 실패했습니다. 다시 시도하시겠습니까?<br>";
+          str += "삭제하면 복구 할 수 없습니다.<br>"
+          str += '<button type="button" onclick="delete_contents_by_board('+boardno+')">카테고리 삭제</button>';
+          str += '&nbsp;<button type="button" onclick="action_cancel();">취소</button>'; 
+        }
+        $('#msg_delete').html(str);
+      },
+      error: function(request, status, error) { // 응답 결과, 상태, 에러 내용
+        var msg = 'ERROR<br><br>';
+        msg += '<strong>request.status</strong><br>'+request.status + '<hr>';
+        msg += '<strong>request.responseText</strong><br>'+request.responseText + '<hr>';
+        msg += '<strong>status</strong><br>'+status + '<hr>';
+        msg += '<strong>error</strong><br>'+error + '<hr>';
+
+        $('#main_panel').html(msg);
+        $('#main_panel').show();
+      }
+     });
+
+  }
   
   function action_cancel() {
     $('#panel_update').hide();
@@ -304,12 +360,9 @@
     <FORM name='frm_delete' id='frm_delete'>
       <input type='hidden' name='categrpno' id='categrpno' value=''>
       <input type='hidden' name='boardno' id='boardno' value=''>
-      
-      <span id='board_name'></span> 게시판를 삭제하시겠습니까?
-      삭제하면 복구 할 수 없습니다.
-      <button type="button" id='submit' onclick="delete_submit()">삭제</button>
-      <button type="button" onclick="action_cancel()">취소</button>
+      <div id='msg_delete'></div>
     </FORM>
+    
   </DIV>
  
   <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F5F5F5; width: 100%; text-align: center;'>
@@ -351,8 +404,8 @@
 
       <label for='memberno'>접근 계정</label>
       <input type='text' name='memberno' id='memberno' value='' required="required" style='width: 10%;'>
- 
-      <button type="button" onclick="update_submit();">저장</button>
+      
+      <button type="submit" name="submit">저장</button>
       <button type="button" onclick="action_cancel()">취소</button>
     </FORM>
   </DIV>

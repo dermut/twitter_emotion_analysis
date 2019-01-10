@@ -33,12 +33,12 @@
   <ASIDE style='float: left;'>
     <A href='../board/list.do'>게시판 목록</A>
     <span style='font-size: 1.2em;'>></span>   
-    <A href='./list_by_boardno.do?boardno=${boardVO.boardno }'>${boardVO.board_name }</A>
+    <A href='./list_by_boardno.do?boardno=${boardVO.boardno }'>${boardVO.name }</A>
   </ASIDE>
   <ASIDE style='float: right;'>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span> 
-    <A href='./create.do?boardno=${boardVO.boardno }'>등록</A>
+    <A href='./list_by_board_search_paging.do?boardno=${boardVO.boardno }&nowPage=${param.nowPage}'>목록</A>
     <span class='menu_divide' >│</span> 
     <A href='./create.do?boardno=${boardVO.boardno }'>등록</A>
 
@@ -86,7 +86,7 @@
 
       <DIV style='text-align: right;'>
         <button type="submit">변경된 내용 저장</button>
-        <button type="button" onclick="location.href='./list.do?boardno=${boardVO.boardno}'">취소[목록]</button>
+        <button type="button" onclick="history.back();">취소[목록]</button>
       </DIV>
   </FORM>
 

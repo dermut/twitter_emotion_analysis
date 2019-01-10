@@ -32,7 +32,7 @@
   <ASIDE style='float: left;'>
       <A href='../board/list.do'>게시판 목록</A>  
       >
-      <A href='./list.do?boardno=${boardVO.boardno }'>${boardVO.board_name }</A>
+      <A href='./list.do?boardno=${boardVO.boardno }'>${boardVO.name }</A>
   </ASIDE>
   <ASIDE style='float: right;'>
     <A href="javascript:location.reload();">새로고침</A>

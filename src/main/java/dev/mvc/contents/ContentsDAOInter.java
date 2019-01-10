@@ -72,21 +72,19 @@ public interface ContentsDAOInter{
    */
   public List<ContentsVO> list_by_board_search_paging(HashMap<String, Object> hashMap);
   
-  /**
-   * 신규 답변을 최우선으로 출력하기위한 답변 순서 조절
-   * @param contentsVO
-   * @return
-   */
-  public int updateAnsnum(ContentsVO contentsVO);
+  public int reply_create(ReplyVO replyVO);
   
-  /**
-   * 답변
-   * @param contentsVO
-   * @return
-   */
-  public Contents_ReplyVO reply(int contentsno);
-
-   
+  public List<ReplyVO> reply_list();
+  
+  public List<ReplyVO> reply_by_contents(int contentsno);
+  
+  public ReplyVO reply_read(int replyno);
+  
+  public int reply_update(ReplyVO replyVO);
+  
+  public int reply_delete(int replyno);
+  
+  public int count_reply_by_contents(int contentsno);
 }
 
 

@@ -27,6 +27,11 @@ public class CategrpProc  implements CategrpProcInter {
   @Override
   public List<CategrpVO> list() {
     List<CategrpVO> list = categrpDAO.list();
+
+    for(int index=0;index<list.size();index++){
+      list.get(index).setCnt(count_by_categrp(list.get(index).getCategrpno()));
+    }
+    
     return list;
   }
 
@@ -43,6 +48,11 @@ public class CategrpProc  implements CategrpProcInter {
   @Override
   public int delete(int categrpno) {
     return categrpDAO.delete(categrpno);
+  }
+
+  @Override
+  public int count_by_categrp(int categrpno) {
+    return categrpDAO.count_by_categrp(categrpno);
   }
 }
 

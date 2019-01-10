@@ -27,7 +27,6 @@
                           dev.mvc.crawling_data,
                           dev.mvc.freshtomato,
                           dev.mvc.log,
-                          dev.mvc.reply,
                           dev.mvc.word_sentiment,
                           dev.mvc.word_time_graph"
                           />

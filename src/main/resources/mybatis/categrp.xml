@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   #{name}: public String getName(){...
   -->
   <insert id="create" parameterType="CategrpVO">
-    INSERT INTO categrp(classification, name, rdate)
-    VALUES(#{classification}, #{name}, now())
+    INSERT INTO categrp(categrpno, classification, name, rdate)
+    VALUES((SELECT NVL(MAX(categrpno), 0)+1 as categrpno FROM categrp), #{classification}, #{name}, sysdate)
   </insert>  
    
   <!-- 
@@ -24,13 +24,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   List<CategrpVO> list = new ArrayList<CategrpVO>(); 
   -->
   <select id="list" resultType="CategrpVO">
-    SELECT categrpno, classification, name, rdate 
+    SELECT categrpno, classification, name, rdate
     FROM categrp
     ORDER BY categrpno ASC
   </select>
   
   <select id="read" resultType="CategrpVO" parameterType="int">
-    SELECT categrpno, classification, name, rdate 
+    SELECT categrpno, classification, name, rdate
     FROM categrp
     WHERE categrpno = #{categrpno}
   </select>
@@ -45,6 +45,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM categrp
     WHERE categrpno = #{categrpno}
   </delete>
+  
+  <select id="count_by_categrp" resultType="int" parameterType="int">
+    SELECT COUNT(*) as cnt
+    FROM board
+    WHERE categrpno=#{categrpno}
+  </select>
 </mapper>
 
 

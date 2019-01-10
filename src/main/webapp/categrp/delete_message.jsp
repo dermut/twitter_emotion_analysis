@@ -24,7 +24,7 @@
     <UL>
       <c:choose>
         <c:when test="${param.count == 1 }">
-          <LI class='li_none'>카테고리를 삭제했습니다.</LI>
+          <LI class='li_none'>카테고리 그룹을 삭제했습니다.</LI>
         </c:when>
         <c:otherwise>
           <LI class='li_none'>카테고리 그룹 삭제에 실패했습니다.</LI>

@@ -21,11 +21,62 @@
 <script type="text/javascript">
   $(function() {
     
+    list();
   });
+
+  function list() {
+    $.ajax({
+      url: "./list_json.do", // 요청을 보낼주소
+      type: "get",
+      cache: false,
+      dataType: "json",
+      success: function(rdata){
+        var panel = '';
+        
+        for(index = 0; index < rdata.length; index++) {
+			    panel += "<TR>";
+			    panel += "  <TD style='text-align: center ;'>"+rdata[index].categrpno+"</TD>";
+			    panel += "  <TD style='text-align: center ;'>";
+			    if(rdata[index].classification == 1){
+			      panel += "        공지사항"  ;
+			    } else if(rdata[index].classification == 2) {
+			      panel += "        게시판";
+			    } else if(rdata[index].classification == 9) {
+			      panel += "        기타";
+			    }
+			    panel += "    </TD>";
+		      panel += "  <TD><A href='../board/list_by_categrp.do?categrpno="+rdata[index].categrpno+"'>"+rdata[index].name+"</A></TD>";
+		      panel += " <TD>" + rdata[index].cnt + "</TD>";
+		      panel += " <TD style='text-align: center ;'>"+rdata[index].rdate.substring(0,10)+"</TD>";
+		      panel += "  <TD>";
+		      panel += "   <A href='javascript:update("+rdata[index].categrpno+")'><IMG src='./images/update.png' title='수정'></A>";
+		      panel += "    <A href='javascript:deleteOne("+rdata[index].categrpno+")'><IMG src='./images/delete.png' title='삭제'></A>";
+		      panel += "  </TD>";
+		      panel += "</TR>";
+        }
+        $('#tbody_panel').empty();
+        $('#tbody_panel').append(panel);
+      },
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        var panel = '';
+        panel += "<DIV id='panel' class='popup1' style='heigth: 450px;'>";
+        panel += '  ERROR<br><br>';
+        panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
+        panel += '  <strong>error</strong><br>'+error + '<hr>';
+        panel += "  <br><button type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
+        panel += "</DIV>";
+        
+        $('#main_panel').html(panel);
+        $('#main_panel').show();
+      }
+    });
+  }
   
   function update(categrpno) {
     $('#panel_create').hide();
     $('#panel_update').show();
+    $('#panel_delete').hide();
     
     $.ajax({
       url: "./update.do", 
@@ -56,6 +107,8 @@
 
   }
   
+  
+  
   function create_update_cancel() {
     $('#panel_update').hide();
     $('#panel_delete').hide();
@@ -85,7 +138,7 @@
         if (rdata.count_by_categrp > 0) {
           str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos; 카테고리에 [' + rdata.count_by_categrp + '] 건의 데이터가 등록되어있습니다.</span><br>';
           str += '카테고리에 등록된 데이터를 삭제해야 카테고리 그룹 삭제가 가능합니다.<br>';
-          str += '<button type="button" onclick="delete_board_by_categrp('+categrpno+')">카테고리 삭제</button>';
+          str += '<button type="button" onclick="delete_contents_by_board('+categrpno+')">카테고리 삭제</button>';
           str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>';
         } else {
           str = '[' + rdata.name + "] 카테고리 그룹을 삭제하시겠습니까?<br>";
@@ -151,6 +204,7 @@
      });
 
   }
+  
 </script>
 
 </head> 
@@ -159,10 +213,6 @@
 <DIV class='container' style='width: 100%;'>
 <c:import url="/menu/top.jsp"  />
 <DIV class='content'>
-  <!-- 우선 순위 증가 감소 폼 -->
-  <FORM name='frm_seqno' id='frm_seqno' method='post' action=''>
-    <input type='hidden' name='categrpno' id='categrpno' value=''>
-  </FORM>
   
   <DIV id='main_panel'></DIV>
   
@@ -201,7 +251,7 @@
       <label for='name'>그룹 이름</label>
       <input type='text' name='name' id='name' size='15' value='' required="required" style='width: 30%;'>
 
-      <button type="submit" id='submit'>저장</button>
+      <button type="submit" id="submit">저장</button>
       <button type="button" onclick="create_update_cancel();">취소</button>
     </FORM>
   </DIV>
@@ -221,6 +271,7 @@
     <col style='width: 10%;'/>
     <col style='width: 20%;'/>
     <col style='width: 30%;'/>
+    <col style='width: 10%;'/>
     <col style='width: 20%;'/>
     <col style='width: 20%;'/>
   </colgroup>
@@ -230,34 +281,14 @@
     <TH style='text-align: center ;'>카테고리 번호</TH>
     <TH style='text-align: center ;'>그룹 분류</TH>
     <TH>대분류명</TH>
+    <TH>카테고리 개수</TH>
     <TH style='text-align: center ;'>등록일</TH>
     <TH style='text-align: center ;'>기타</TH>
   </TR>
   </thead>
-  <c:forEach var="categrpVO" items="${list }">
-  <TR>
-    <TD style='text-align: center ;'>${categrpVO.categrpno }</TD>
-    <TD style='text-align: center ;'>
-      <c:choose>
-        <c:when test="${categrpVO.classification == 1 }">
-          공지사항     
-        </c:when>
-        <c:when test="${categrpVO.classification == 2 }">
-          게시판
-        </c:when>
-        <c:when test="${categrpVO.classification == 9 }">
-          기타
-        </c:when>
-      </c:choose>
-    </TD>
-    <TD><A href="../board/list_by_categrp.do?categrpno=${categrpVO.categrpno }">${categrpVO.name }</A></TD>
-    <TD style='text-align: center ;'>${categrpVO.rdate.substring(0, 10) }</TD>
-    <TD>
-      <A href="javascript:update(${categrpVO.categrpno })"><IMG src='./images/update.png' title='수정'></A>
-      <A href="javascript:deleteOne(${categrpVO.categrpno })"><IMG src='./images/delete.png' title='삭제'></A>
-    </TD>
-  </TR>
-  </c:forEach> 
+  
+  <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
+  </tbody>
 
 </TABLE>
 

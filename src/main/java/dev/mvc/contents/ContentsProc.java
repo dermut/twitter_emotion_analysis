@@ -81,25 +81,32 @@ public class ContentsProc implements ContentsProcInter {
     
     String thumbs = contentsVO.getThumb(); // xmas01_2_t.jpg/xmas02_2_t.jpg...
     String files = contentsVO.getPhoto();          // xmas01_2.jpg/xmas02_2.jpg...
-    String sizes = contentsVO.getSize();        // 272558/404087... 
+    String sizes = contentsVO.getFsize();        // 272558/404087... 
+    String[] thumbs_array = null;
+    String[] files_array = null;
+    String[] sizes_array = null;
     
-    String[] thumbs_array = thumbs.split("/");  // Thumbs
-    String[] files_array = files.split("/");   // 파일명 추출
-    String[] sizes_array = sizes.split("/"); // 파일 사이즈
- 
-    int count = sizes_array.length;
-    // System.out.println("sizes_array.length: " + sizes_array.length);
-    // System.out.println("sizes: " + sizes);
-    // System.out.println("files: " + files);
- 
-    if (files.length() > 0) {
-      for (int index = 0; index < count; index++) {
-        sizes_array[index] = Tool.unit(new Integer(sizes_array[index]));  // 1024 -> 1KB
+    if (thumbs == null) {
+      return file_list;
+    } else {
+      thumbs_array = thumbs.split("/");  // Thumbs
+      files_array = files.split("/");   // 파일명 추출
+      sizes_array = sizes.split("/"); // 파일 사이즈
       
-        FileVO fileVO = new FileVO(thumbs_array[index], files_array[index], sizes_array[index]);
-        file_list.add(fileVO);
-      }
-    } 
+      int count = sizes_array.length;
+      // System.out.println("sizes_array.length: " + sizes_array.length);
+      // System.out.println("sizes: " + sizes);
+      // System.out.println("files: " + files);
+   
+      if (files.length() > 0) {
+        for (int index = 0; index < count; index++) {
+          sizes_array[index] = Tool.unit(new Integer(sizes_array[index]));  // 1024 -> 1KB
+        
+          FileVO fileVO = new FileVO(thumbs_array[index], files_array[index], sizes_array[index]);
+          file_list.add(fileVO);
+        }
+      } 
+    }
 
     return file_list;
   }
@@ -151,7 +158,7 @@ public class ContentsProc implements ContentsProcInter {
      2 페이지: WHERE r >= 11 AND r <= 20
      3 페이지: WHERE r >= 21 AND r <= 30
      */
-    hashMap.put("s3tartNum", startNum);
+    hashMap.put("startNum", startNum);
     hashMap.put("endNum", endNum);
     
     List<ContentsVO> list = contentsDAO.list_by_board_search_paging(hashMap); 
@@ -164,7 +171,7 @@ public class ContentsProc implements ContentsProcInter {
       contentsVO.setName(title);
       
       String thumbs = contentsVO.getThumb();
-      if (thumbs.length() > 0) { // preview 이미지가 있는지 검사
+      if (thumbs != null) { // preview 이미지가 있는지 검사
         String thumb = (thumbs.split("/"))[0]; // 첫번째 파일명 추출
         contentsVO.setThumb(thumb);
       }
@@ -259,17 +266,41 @@ public class ContentsProc implements ContentsProcInter {
   }
 
   @Override
-  public int updateAnsnum(ContentsVO contentsVO) {
-    int count = 0;
-    count = contentsDAO.updateAnsnum(contentsVO);
-    
-    return count;
+  public int reply_create(ReplyVO replyVO) {
+    return contentsDAO.reply_create(replyVO);
   }
 
   @Override
-  public Contents_ReplyVO reply(int contentsno) {
-    return contentsDAO.reply(contentsno);
+  public List<ReplyVO> reply_list() {
+    return contentsDAO.reply_list();
   }
+
+  @Override
+  public List<ReplyVO> reply_by_contents(int contentsno) {
+    return contentsDAO.reply_by_contents(contentsno);
+  }
+
+  @Override
+  public ReplyVO reply_read(int replyno) {
+    return contentsDAO.reply_read(replyno);
+  }
+
+  @Override
+  public int reply_update(ReplyVO replyVO) {
+    return contentsDAO.reply_update(replyVO);
+  }
+
+  @Override
+  public int reply_delete(int replyno) {
+    return contentsDAO.reply_delete(replyno);
+  }
+
+  @Override
+  public int count_reply_by_contents(int contentsno) {
+    return contentsDAO.count_reply_by_contents(contentsno);
+  }
+
+  
 }
 
 

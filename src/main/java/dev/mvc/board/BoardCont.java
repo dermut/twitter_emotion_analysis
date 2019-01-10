@@ -35,7 +35,7 @@ public class BoardCont {
     System.out.println("--> BoardCont created.");
   }
 
-  // http://localhost:9090/ojt/board/create.do
+  // http://localhost:9090/tea/board/create.do
   @RequestMapping(value = "/board/create.do", method = RequestMethod.GET)
   public ModelAndView create() {
     ModelAndView mav = new ModelAndView();
@@ -44,7 +44,7 @@ public class BoardCont {
     return mav;
   }
 
-  // http://localhost:9090/ojt/board/create.do
+  // http://localhost:9090/tea/board/create.do
   @RequestMapping(value = "/board/create.do", method = RequestMethod.POST)
   public ModelAndView create(BoardVO boardVO) {
     ModelAndView mav = new ModelAndView();
@@ -54,7 +54,7 @@ public class BoardCont {
     return mav;
   }
 
-  // http://localhost:9090/ojt/board/create_json.do?categrpno=1&name=등산&memberno=1
+  // http://localhost:9090/tea/board/create_json.do?categrpno=1&name=등산&memberno=1
   // {"msgs":["카테고리를 등록했습니다.","등록된 카테고리 등산"]}
   @ResponseBody
   @RequestMapping(value = "/board/create_json.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
@@ -81,7 +81,7 @@ public class BoardCont {
    * 
    * @return
    */
-  // http://localhost:9090/ojt/board/list.do
+  // http://localhost:9090/tea/board/list.do
   @RequestMapping(value = "/board/list.do", method = RequestMethod.GET)
   public ModelAndView list() {
     ModelAndView mav = new ModelAndView();
@@ -96,7 +96,7 @@ public class BoardCont {
 
   /**
    * JSON 기반 전체 목록
-   * http://localhost:9090/ojt/board/list_json.do
+   * http://localhost:9090/tea/board/list_json.do
    * @return
    */
   @ResponseBody
@@ -106,13 +106,13 @@ public class BoardCont {
     List<Categrp_BoardVO> list = boardProc.list();
 
     JSONArray json = new JSONArray(list);
-
+    
     return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
   }
 
   /**
    * 카테고리 그룹별 전체 목록
-   * http://localhost:9090/ojt/board/list_by_categrp.do
+   * http://localhost:9090/tea/board/list_by_categrp.do
    * @return
    */
   @RequestMapping(value = "/board/list_by_categrp.do", method = RequestMethod.GET)
@@ -129,7 +129,7 @@ public class BoardCont {
 
   /**
    * 카테고리 그룹별 JSON 기반 전체 목록
-   * http://localhost:9090/ojt/board/list_by_categrp_json.do
+   * http://localhost:9090/tea/board/list_by_categrp_json.do
    * @return
    */
   @ResponseBody
@@ -145,7 +145,7 @@ public class BoardCont {
 
   /*
    * 수정 폼
-   * http://localhost:9090/ojt/board/update.do?boardno=1
+   * http://localhost:9090/tea/board/update.do?boardno=1
    * @param categrpno
    * @return
    */
@@ -154,80 +154,98 @@ public class BoardCont {
                            method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
   public String update(int boardno) {
     // System.out.println("--> update() GET executed");
+    BoardVO boardVO = boardProc.read(boardno);
     
-    Categrp_BoardVO boardVO = boardProc.read(boardno);
     JSONObject obj = new JSONObject(boardVO);
-   
-      // 기본 값을 변경하는 경우는 직접 값을 명시
-//    obj.put("boardno", boardno);
-//    obj.put("categrpno", boardVO.getCategrpno());
-//    obj.put("title", boardVO.getTitle());
-//    obj.put("seqno", boardVO.getSeqno());
-//    obj.put("visible", boardVO.getVisible());
-//    obj.put("ids", boardVO.getIds());
-//    obj.put("rdate", boardVO.getRdate());
+    // 기본 값을 변경하는 경우는 직접 값을 명시
+    obj.put("categrpno", boardVO.getCategrpno());
+    obj.put("name", boardVO.getName());
+    obj.put("memberno", boardVO.getMemberno());
+    obj.put("boardno", boardVO.getBoardno());
 
     return obj.toString();
   }
 
-  // http://localhost:9090/ojt/board/update_json.do?categrpno=1&boardno=1&title=네덜란드&seqno=1&visible=Y&ids=admin
+  // http://localhost:9090/tea/board/update_json.do?categrpno=1&boardno=1&name=네덜란드&memberno=1
   // {"msgs":["카테고리를 등록했습니다.","등록된 카테고리 등산"]}
-  @ResponseBody
-  @RequestMapping(value = "/board/update_json.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-  public ResponseEntity update_json(BoardVO boardVO) {
-    HttpHeaders responseHeaders = new HttpHeaders();
+  @RequestMapping(value = "/board/update.do", method = RequestMethod.POST)
+  public ModelAndView update(BoardVO boardVO) {
+    ModelAndView mav = new ModelAndView();
 
-    JSONObject json = new JSONObject();
-    JSONArray msgs = new JSONArray();
+    int count = boardProc.update(boardVO);
+    mav.setViewName("redirect:/board/list.do");
 
-    if (boardProc.update(boardVO) == 1) {
-      msgs.put("카테고리를 수정했습니다.");
-      msgs.put("수정된 카테고리 " + boardVO.getName());
-    } else {
-      msgs.put("카테고리 수정에 실패했습니다.");
-      msgs.put("다시한번 시도해주세요. ☏ 문의: 000-0000-0000");
-    }
-    json.put("msgs", msgs);
-
-    return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
+    return mav;
   }
 
   /**
    * 삭제 폼
-   * http://localhost:9090/ojt/board/delete.do?boardno=1
+   * http://localhost:9090/tea/board/delete.do?boardno=1
    * @param boardno
    * @return
    */
   @ResponseBody
   @RequestMapping(value = "/board/delete.do", 
-                           method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-  public String delete(int boardno) {
-    Categrp_BoardVO boardVO = boardProc.read(boardno);
+                  method = RequestMethod.GET,
+                  produces = "text/plain;charset=UTF-8")
+  public ResponseEntity delete(int boardno) {
+    HttpHeaders responseHeaders = new HttpHeaders();
+    BoardVO boardVO = boardProc.read(boardno);
     JSONObject obj = new JSONObject(boardVO);
-
-    return obj.toString();
+    obj.put("boardno", boardVO.getBoardno());
+    obj.put("name", boardVO.getName());
+    obj.put("count_by_board", boardProc.count_by_board(boardno));
+    
+    return new ResponseEntity(obj.toString(), responseHeaders, HttpStatus.CREATED);
   }
   
-  // http://localhost:9090/ojt/board/delete.do?boardno=1
+  // http://localhost:9090/tea/board/delete.do?boardno=1
   @ResponseBody
   @RequestMapping(value = "/board/delete.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
   public ResponseEntity delete_proc(int boardno) {
+//    ModelAndView mav = new ModelAndView();
     HttpHeaders responseHeaders = new HttpHeaders();
-
+    
+    String name = boardProc.read(boardno).getName();
+    int count = boardProc.delete(boardno);
+    
     JSONObject json = new JSONObject();
     JSONArray msgs = new JSONArray();
-    
-    String name = boardProc.read(boardno).getBoard_name();
-    
-    if (boardProc.delete(boardno) == 1) {
+    if (count == 1) {
       msgs.put("카테고리를 삭제했습니다.");
-      msgs.put("삭제된 카테고리 [" + name + "]");
+      msgs.put("삭제된 카테고리:" + name);
     } else {
-      msgs.put("[" + name + "] 카테고리 수정에 실패했습니다.");
+      msgs.put("카테고리 삭제에 실패했습니다.");
       msgs.put("다시한번 시도해주세요. ☏ 문의: 000-0000-0000");
     }
     json.put("msgs", msgs);
+//    mav.setViewName("redirect:/board/list.do");
 
+    return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
+  }
+  
+  /**
+   * 카테고리 테이블에서 카테고리 그룹에 소속된 레코드 모두 삭제
+   * @param boardno
+   * @return
+   */
+  @ResponseBody
+  @RequestMapping(value="/board/delete_contents_by_board.do", 
+                             method=RequestMethod.POST,
+                             produces="text/plain;charset=UTF-8")
+  public ResponseEntity delete_contents_by_board(int boardno) {
+    HttpHeaders responseHeaders = new HttpHeaders();
+    BoardVO boardVO = boardProc.read(boardno);
+    
+    int count_by_board = boardProc.count_by_board(boardno);
+    int delete_contents_by_board = boardProc.delete_contents_by_board(boardno);
+    
+    JSONObject json = new JSONObject();
+    json.put("boardno", boardVO.getBoardno());
+    json.put("name", boardVO.getName());
+    json.put("delete_contents_by_board", delete_contents_by_board);
+    json.put("count_by_board", count_by_board);
+    
     return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
   }
 }

@@ -63,21 +63,43 @@ public class ContentsDAO implements ContentsDAOInter {
   
   @Override
   public List<ContentsVO> list_by_board_search_paging(HashMap<String, Object> hashMap) {
-    //return sqlSessionTemplate.selectList("contents.list_by_board_search_paging", hashMap);
     return sqlSessionTemplate.selectList("contents.list_by_board_search_paging2", hashMap);
   }
-  
+
   @Override
-  public int updateAnsnum(ContentsVO contentsVO) {
-    return sqlSessionTemplate.update("contents.updateAnsnum", contentsVO); 
+  public int reply_create(ReplyVO replyVO) {
+    return sqlSessionTemplate.insert("contents.reply_create", replyVO);
   }
 
   @Override
-  public Contents_ReplyVO reply(int contentsno) {
-    return sqlSessionTemplate.selectOne("contents.reply", contentsno);
+  public List<ReplyVO> reply_list() {
+    return sqlSessionTemplate.selectList("contents.reply_list");
   }
 
-  
+  @Override
+  public List<ReplyVO> reply_by_contents(int contentsno) {
+    return sqlSessionTemplate.selectList("contents.reply_by_contents", contentsno);
+  }
+
+  @Override
+  public ReplyVO reply_read(int replyno) {
+    return sqlSessionTemplate.selectOne("contents.reply_read", replyno);
+  }
+
+  @Override
+  public int reply_update(ReplyVO replyVO) {
+    return sqlSessionTemplate.update("contents.reply_update", replyVO);
+  }
+
+  @Override
+  public int reply_delete(int replyno) {
+    return sqlSessionTemplate.delete("contents.reply_delete", replyno);
+  }
+
+  @Override
+  public int count_reply_by_contents(int contentsno) {
+    return sqlSessionTemplate.selectOne("contents.count_reply_by_contents", contentsno);
+  }
 }
 
 

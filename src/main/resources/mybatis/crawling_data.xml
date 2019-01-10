@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="crawling"> <!-- 테이블명 사용 -->
 
   <insert id="create" parameterType="CrawlingVO">
-    INSERT INTO crawling_data(content, rdate, wordno)
-    VALUES(#{content}, now(), #{wordno})
+    INSERT INTO crawling_data(crno, content, rdate, wordno)
+    VALUES((SELECT NVL(MAX(crno), 0)+1 as crno FROM crawling_data), #{content}, sysdate, #{wordno})
   </insert>
   
   <!-- 

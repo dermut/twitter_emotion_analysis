@@ -28,7 +28,7 @@ public interface BoardDAOInter {
    * @param categrpno
    * @return
    */
-  public Categrp_BoardVO read(int boardno);
+  public BoardVO read(int boardno);
   
   /**
    * 레코드를 수정합니다.
@@ -43,6 +43,10 @@ public interface BoardDAOInter {
    * @return
    */
   public int delete(int boardno);
+  
+  public int count_by_board(int boardno);
+
+  public int delete_contents_by_board(int boardno);
 }
 
 

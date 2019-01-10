@@ -32,20 +32,27 @@ public class BoardProc implements BoardProcInter {
   }
 
   @Override
-  public Categrp_BoardVO read(int categoryno) {
-    return boardDAO.read(categoryno);
+  public BoardVO read(int boardno) {
+    return boardDAO.read(boardno);
   }
 
   @Override
-  public int update(BoardVO categoryVO) {
-    return boardDAO.update(categoryVO);
+  public int update(BoardVO boardVO) {
+    return boardDAO.update(boardVO);
   }
 
   @Override
   public int delete(int categoryno) {
     return boardDAO.delete(categoryno);
   }
+
+  @Override
+  public int count_by_board(int boardno) {
+    return boardDAO.count_by_board(boardno);
+  }
+  
+  public int delete_contents_by_board(int boardno) {
+    return boardDAO.delete_contents_by_board(boardno); 
+  }
+
 }
-
-
-

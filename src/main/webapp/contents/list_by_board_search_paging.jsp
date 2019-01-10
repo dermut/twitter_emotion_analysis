@@ -61,7 +61,7 @@ $(function(){
     </c:choose>
     <button type='submit'>검색</button>
     <button type='button' 
-                 onclick="location.href='./list_by_boardno.do?boardno=${boardVO.boardno }'">전체 보기</button>
+                 onclick="location.href='./list_by_board_search_paging.do?boardno=${boardVO.boardno }'">전체 보기</button>
   </ASIDE>
   </form>
     
@@ -69,21 +69,20 @@ $(function(){
 
   <table class="table table-striped" style='width: 100%;'>
       <colgroup>
+        <col style="width: 10%;"></col>
         <col style="width: 50%;"></col>
-        <col style="width: 5%;"></col>
         <col style="width: 20%;"></col>
         <col style="width: 10%;"></col>
-        <col style="width: 15%;"></col>
+        <col style="width: 10%;"></col>
         
       </colgroup>
       <%-- table 컬럼 --%>
       <thead>
         <tr>
-          <th>제목</th>
           <th>파일</th>
+          <th>제목</th>
           <th>등록일</th>
           <th>아이디</th>
-          <th>기타</th>
         </tr>
       
       </thead>
@@ -93,26 +92,25 @@ $(function(){
         <c:forEach var="contentsVO" items="${list }">
           <tr>
             <td style='vertical-align: middle;'>
-              
-              <a href="./read.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&word=${param.word}&nowPage=${param.nowPage}">${contentsVO.title}</a> 
-            </td> 
-
-            <td style='vertical-align: middle;'>
               <c:choose>
-                <c:when test="${contentsVO.thumb != ''}">
-                  <IMG id='thumb' src='./storage/${contentsVO.thumb}' > <!-- 이미지 파일명 출력 -->
+                <c:when test="${contentsVO.thumb != null}">
+                  <IMG id='thumb' src='./storage/${contentsVO.thumb }'> <!-- 이미지 파일명 출력 -->
                 </c:when>
                 <c:otherwise>
-                  <IMG id='thumb' src='./images/none1.jpg' style='width: 120px; height: 80px;'> <!-- 파일이 존재하지 않는 경우 -->
-                  </c:otherwise>
+                  <!-- 파일이 존재하지 않는 경우 -->
+                  <IMG src='./images/none1.jpg' style='width: 120px; height: 80px;'>
+                </c:otherwise>
               </c:choose>
-              </td>          
-
-
-            <td style='vertical-align: middle;'>${contentsVO.rdate.substring(0, 16)}</td>
-            <td style='vertical-align: middle;'>${contentsVO.id}</td>
+            </td>   
+                     
             <td style='vertical-align: middle;'>
-              <a href="./reply.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><img src="./images/reply.png" title="답변" border='0'/></a>
+              
+              <a href="./read.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&word=${param.word}&nowPage=${param.nowPage}">${contentsVO.name}</a> 
+            </td> 
+
+            <td style='vertical-align: middle;'>${contentsVO.rdate.substring(0, 10)}</td>
+            <td style='vertical-align: middle;'>${contentsVO.memberno}</td>
+            <td style='vertical-align: middle;'>
               <a href="./update.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><img src="./images/update.png" title="수정" border='0'/></a>
               <a href="./delete.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><img src="./images/delete.png" title="삭제"  border='0'/></a>
             </td>

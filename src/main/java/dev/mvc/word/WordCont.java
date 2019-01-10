@@ -1,5 +1,6 @@
 package dev.mvc.word;
 
+
 import java.util.List;
 
 
@@ -14,6 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.member.MemberProcInter;
 import dev.mvc.member_word.Member_WordProcInter;
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.OAuth2Authorization;
+import twitter4j.conf.ConfigurationBuilder;
+
 
 
 @Controller
@@ -31,8 +41,29 @@ public class WordCont {
   @Qualifier("dev.mvc.member_word.Member_WordProc")
   private Member_WordProcInter member_wordProc = null;
   
-  public WordCont(){
+  public WordCont() throws TwitterException{
     System.out.println("--> WordCont created.");
+    
+//    final String CONSUMER_KEY = "jSfyi2vRJtHsdZ7brddYk1O3X";
+//    final String CONSUMER_SECRET = "ou20mWDeEFcGgfXDZndTy9VdzZ0y4NFV9tk4lpR0NTuJPSQ7v8";
+//    
+//    final String ACCESS_TOKEN = "241886291-HN5Q7vCm2mte6avegHpi9SCOnHx5mOXHCWdQFzDm ";
+//    final String ACCESS_TOKEN_SECRET = "0QyYwIPjQTJaUzx6tX4cqN9oQJVgeIuXtBROSDzLX0QRA";
+//    
+//    ConfigurationBuilder cb = new ConfigurationBuilder();
+//    cb.setDebugEnabled(true)
+//      .setOAuthConsumerKey(CONSUMER_KEY)
+//      .setOAuthConsumerSecret(CONSUMER_SECRET)
+//      .setOAuthAccessToken(ACCESS_TOKEN)
+//      .setOAuthAccessTokenSecret(ACCESS_TOKEN_SECRET);
+//    TwitterFactory tf = new TwitterFactory(cb.build());
+//    Twitter twitter = tf.getInstance();
+//    
+//    Query query = new Query("source:twitter4j yusukey");
+//    QueryResult result = twitter.search(query);
+//    for(Status status : result.getTweets()) {
+//      System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+//    }
   }
   
 /*  @RequestMapping(value = "/index.do", method = RequestMethod.GET)

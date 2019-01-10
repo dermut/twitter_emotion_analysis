@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="board"> <!-- 테이블명 사용 -->
   <!-- 등록 -->
   <insert id="create" parameterType="BoardVO">
-    INSERT INTO board(name, rdate, categrpno, memberno)
-    VALUES(#{name}, now(), #{categrpno}, #{memberno})
+    INSERT INTO board(boardno, name, rdate, categrpno, memberno)
+    VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardno FROM board), #{name}, sysdate, #{categrpno}, #{memberno})
   </insert>
 
   <!-- 목록 -->
@@ -21,8 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
   <!-- categrp별 목록 -->
-  <select id="list_by_categrp" resultType="Categrp_BoardVO"
-    parameterType="int">
+  <select id="list_by_categrp" resultType="Categrp_BoardVO" parameterType="int">
     SELECT c.categrpno, c.name as categrp_name,
     t.boardno, t.categrpno, t.name as board_name, t.memberno, t.rdate
     FROM categrp c, board t
@@ -30,17 +29,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY c.categrpno ASC, t.boardno ASC
   </select>
 
-  <select id="read" resultType="Categrp_BoardVO" parameterType="int">
-    SELECT   c.categrpno, c.name as categrp_name,
-			          t.boardno, t.categrpno, t.name as board_name, t.memberno
-    FROM categrp c, board t
-    WHERE t.boardno=#{boardno} AND c.categrpno = t.categrpno
+<!--   <select id="read" resultType="Categrp_BoardVO" parameterType="int"> -->
+<!--     SELECT   c.categrpno, c.name as categrp_name, -->
+<!-- 			          t.boardno, t.categrpno, t.name as board_name, t.memberno -->
+<!--     FROM categrp c, board t -->
+<!--     WHERE t.boardno=#{boardno} AND c.categrpno = t.categrpno -->
+<!--   </select> -->
+
+  <select id="read" resultType="BoardVO" parameterType="int">
+    SELECT  boardno, name, rdate, categrpno, memberno
+    FROM    board
+    WHERE   boardno = #{boardno}
   </select>
 
   <!-- record update -->
   <update id="update" parameterType="BoardVO">
-    UPDATE board
-    SET categrpno=#{categrpno}, name=#{name}, memberno=#{memberno}
+    UPDATE board 
+    SET name=#{name}, categrpno=#{categrpno}, memberno=#{memberno}
     WHERE boardno=#{boardno}
   </update>
   
@@ -61,6 +66,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM board
     WHERE categrpno=#{categrpno}  
   </delete>  
+  
+  <select id="count_by_board" resultType="int" parameterType="int">
+    SELECT COUNT(*) as cnt
+    FROM contents
+    WHERE boardno=#{boardno}
+  </select>
+  
+  <delete id="delete_contents_by_board" parameterType="int">
+    DELETE FROM contents
+    WHERE boardno=#{boardno}
+  </delete>
 </mapper>
 
 

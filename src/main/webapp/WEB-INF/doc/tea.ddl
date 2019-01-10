@@ -42,6 +42,10 @@ VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'root', '박우진
 INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, rdate) 
 VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'root2', 'girl', '1234', '01000000000', 'girl@gmail.com', '1993-00-00', 'F', 'A', sysdate);
 
+INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, rdate) 
+VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'root3', 'master', '1234', '01000000000', 'girl@gmail.com', '1993-00-00', 'F', 'M', sysdate);
+
+
 /* 모든 레코드 검색 */
 SELECT memberno, id, name, passwd, phone, email, birth, sex, grade
 FROM member;
@@ -85,7 +89,7 @@ FROM member;
 
 /* 한 건 삭제 */
 DELETE FROM member
-WHERE memberno=3;
+WHERE memberno=9;
 
 SELECT memberno, id, name, passwd, phone, email, birth, sex, grade
 FROM member;
@@ -437,10 +441,10 @@ PRIMARY KEY(categrpno)
 
 /* 한 개의 레코드 등록 */
 INSERT INTO categrp(categrpno, classification, name, rdate) 
-VALUES((SELECT NVL(MAX(categrpno), 0)+1 as categrpno FROM categrp), 1, "공지사항", sysdate);
+VALUES((SELECT NVL(MAX(categrpno), 0)+1 as categrpno FROM categrp), 1, '공지사항', sysdate);
 
 INSERT INTO categrp(categrpno, classification, name, rdate)
-VALUES((SELECT NVL(MAX(categrpno), 0)+1 as categrpno FROM categrp), 2, "게시판", sysdate);
+VALUES((SELECT NVL(MAX(categrpno), 0)+1 as categrpno FROM categrp), 2, '게시판', sysdate);
 
 /* 모든 레코드 검색 */
 SELECT classification, name, rdate
@@ -501,8 +505,8 @@ rdate DATE NOT NULL,
 categrpno INT NOT NULL,
 memberno INT NOT NULL,
 PRIMARY KEY(boardno),
-    FOREIGN KEY(categrpno) REFERENCES categrp(categrpno),
-    FOREIGN KEY(memberno) REFERENCES member(memberno)
+FOREIGN KEY(categrpno) REFERENCES categrp(categrpno),
+FOREIGN KEY(memberno) REFERENCES member(memberno)
 );
 
 
@@ -511,16 +515,16 @@ PRIMARY KEY(boardno),
 
 /* 한 건 등록 */
 INSERT INTO board(boardno, name, rdate, categrpno, memberno)
-VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardnoFROM board), "게시판1", sysdate, 1, 1);
+VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardno FROM board), '게시판1', sysdate, 1, 1);
 
 INSERT INTO board(boardno, name, rdate, categrpno, memberno)
-VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardnoFROM board), "게시판2", sysdate, 1, 2);
+VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardno FROM board), '게시판2', sysdate, 1, 2);
 
 INSERT INTO board(boardno, name, rdate, categrpno, memberno)
-VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardnoFROM board), "게시판3", sysdate, 2, 1);
+VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardno FROM board), '게시판3', sysdate, 2, 1);
 
 INSERT INTO board(boardno, name, rdate, categrpno, memberno)
-VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardnoFROM board), "게시판4", sysdate, 2, 2);
+VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardno FROM board), '게시판4', sysdate, 2, 2);
 
 /* 모든 레코드 검색 */
 SELECT boardno, name, rdate, categrpno, memberno
@@ -608,13 +612,13 @@ COMMENT ON COLUMN board.memberno is '회원번호';
 /**********************************/
 CREATE TABLE contents(
 contentsno INT NOT NULL,
-name VARCHAR(100) NOT NULL,            
+name VARCHAR(100) NOT NULL,
 content VARCHAR(1000) NOT NULL,
-views INT DEFAULT 0 NOT NULL,
+views INT NOT NULL,
 replies INT NOT NULL,
-size VARCHAR(1000),
-photo VARCHAR(1000),
-thumb VARCHAR(1000),
+fsize VARCHAR(1000) NULL,
+photo VARCHAR(1000) NULL,
+thumb VARCHAR(1000) NULL,
 rdate DATE NOT NULL,
 boardno INT NOT NULL,
 memberno INT NOT NULL,
@@ -623,46 +627,50 @@ FOREIGN KEY(boardno) REFERENCES board(boardno),
 FOREIGN KEY(memberno) REFERENCES member(memberno)
 );
 
-
+    
 
 /********************* DML 시작 *********************/
 
 /* 한 건 등록 */
-INSERT INTO contents(contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
-VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목", "가나다라마바사", 1, 10, "10.0KB", "photo01.jpg", "photo01_t.jpg", sysdate, 1, 1);
+INSERT INTO contents(contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno)
+VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), '제목', '가나다라마바사', 1, 10, '10.0KB', 'photo01.jpg', 'photo01_t.jpg', sysdate, 1, 1);
 
 
-INSERT INTO contents(contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
-VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목2", "고노도로모보소", 1, 10, "10.0KB", "photo02.jpg", "photo02_t.jpg", sysdate, 2, 2); -- 테스트용
+INSERT INTO contents(contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno)
+VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), '제목2', '고노도로모보소', 1, 10, '10.0KB', 'photo02.jpg', 'photo02_t.jpg', sysdate, 2, 2); -- 테스트용
 
 
-INSERT INTO contents(contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
-VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목3", "가나다로모보소", 1, 10, "10.0KB", "photo03.jpg", "photo03_t.jpg", sysdate, 1, 2); -- 테스트용
+INSERT INTO contents(contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno)
+VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), '제목3', '가나다로모보소', 1, 10, '10.0KB', 'photo03.jpg', 'photo03_t.jpg', sysdate, 1, 2); -- 테스트용
 
 
-INSERT INTO contents(contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno)
-VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목4", "경기경경기심근경색", 1, 10, "10.0KB", "photo04.jpg", "photo04_t.jpg", sysdate, 10, 10); -- 에러 테스트용
+INSERT INTO contents(contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno)
+VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목4", "경기경경기심근경색", 3, 10, "10.0KB", "photo04.jpg", "photo04_t.jpg", sysdate, 10, 10); -- 에러 테스트용
 
 
 /* 모든 레코드 검색 */
-SELECT contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno
+SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno
 FROM contents;
 
 /* 한 건 조회 */
-SELECT contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno
+SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno
 FROM contents
 WHERE contentsno=1;
 
+SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno
+FROM contents
+WHERE contentsno=4 AND boardno=1;
+
 /* 검색 */
-SELECT contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno
+SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno
 FROM contents
 WHERE name='제목';
 
-SELECT contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno
+SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno
 FROM contents
 WHERE content like '%가나다%';
 
-SELECT contentsno, name, content, views, replies, size, photo, thumb, rdate, boardno, memberno
+SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno
 FROM contents
 WHERE DATE(rdate) BETWEEN '2018-12-03' AND '2018-12-07'; 
 
@@ -681,7 +689,7 @@ WHERE memberno=1;
 
 /* 수정 */
 UPDATE contents
-SET name="고고", content="김수완무", size="10.0KB", photo="photo02.jpg", thumb="photo03_t.jpg"
+SET name="고고", content="김수완무", fsize="10.0KB", photo="photo02.jpg", thumb="photo03_t.jpg"
 WHERE contentsno=1;
  
 /* 한 건 삭제 */
@@ -694,18 +702,18 @@ WHERE name="고고";
 
  
 /* 전체 출력 순서 선택 */
-SELECT contentsno, name, content, views, replies, size, photo, thumb, rdate, categrpno, memberno
+SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, categrpno, memberno
 FROM contents
 ORDER BY contentsno ASC;
 
-SELECT contentsno, name, content, views, replies, size, photo, thumb, rdate, categrpno, memberno
+SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, categrpno, memberno
 FROM contents
 ORDER BY contentsno DESC;
 
 
 
 /* 페이징 */
-SELECT contentsno, name, content, size, views, replies, photo, thumb, rdate, categrpno, memberno
+SELECT contentsno, name, content, fsize, views, replies, photo, thumb, rdate, categrpno, memberno
 FROM contents
 ORDER BY contentsno DESC
 LIMIT 0, 10;
@@ -730,7 +738,7 @@ COMMENT ON COLUMN contents.name is '제목';
 COMMENT ON COLUMN contents.content is '내용';
 COMMENT ON COLUMN contents.views is '조회수';
 COMMENT ON COLUMN contents.replies is '댓글수';
-COMMENT ON COLUMN contents.size is '용량';
+COMMENT ON COLUMN contents.fsize is '용량';
 COMMENT ON COLUMN contents.photo is '사진';
 COMMENT ON COLUMN contents.thumb is '썸네일';
 COMMENT ON COLUMN contents.rdate is '등록일';
@@ -746,10 +754,11 @@ CREATE TABLE reply(
 replyno INT NOT NULL,
 content VARCHAR(500) NOT NULL,
 contentsno INT NOT NULL,
+rdate DATE NOT NULL,
 memberno INT NOT NULL,
 PRIMARY KEY(replyno),
-    FOREIGN KEY(memberno) REFERENCES member(memberno),
-    FOREIGN KEY(contentsno) REFERENCES member(contentsno)
+FOREIGN KEY(memberno) REFERENCES member(memberno),
+FOREIGN KEY(contentsno) REFERENCES contents(contentsno)
 );
 
 
@@ -757,21 +766,21 @@ PRIMARY KEY(replyno),
 /********************* DML 시작 *********************/
 
 /* 한 개의 레코드 등록 */
-INSERT INTO reply(replyno, content, contentsno, memberno)
-VALUES((SELECT NVL(MAX(replyno), 0)+1 as replyno FROM reply), '내용입니다', 1, 1);
+INSERT INTO reply(replyno, content, contentsno, rdate, memberno)
+VALUES((SELECT NVL(MAX(replyno), 0)+1 as replyno FROM reply), '내용입니다', 1, sysdate, 1);
 
 /* 모든 레코드 검색 */
-SELECT replyno, content, contentsno, memberno
-FROM reply;
+SELECT replyno, content, contentsno, rdate, memberno
+FROM reply
 ORDER BY replyno ASC;
 
 /* 검색 */
-SELECT replyno, content, contentsno, memberno
+SELECT replyno, content, contentsno, rdate, memberno
 FROM reply
 WHERE content like '%내용%';
 
 /* 한 건 조회 */
-SELECT replyno, content, contentsno, memberno
+SELECT replyno, content, contentsno, rdate, memberno
 FROM reply
 WHERE replyno=1;
 
@@ -855,9 +864,9 @@ COMMENT ON COLUMN freshtomato.wordno is '검색어번호';
 /**********************************/
 CREATE TABLE word_crawling (
     wcno INT NOT NULL,
-    posi_nega INT NOT NULL,
-    crawling_data DATE NOT NULL,
-    rdate INT NOT NULL,
+    posi_nega CHAR(1) NOT NULL,
+    crawling_data VARCHAR(1000) NOT NULL,
+    rdate DATE NOT NULL,
     wordno INT NOT NULL,
     PRIMARY KEY(wcno),
     FOREIGN KEY(wordno) REFERENCES word(wordno)
@@ -869,10 +878,10 @@ CREATE TABLE word_crawling (
 
 /* 한 개의 레코드 등록 */
 INSERT INTO word_crawling(wcno, posi_nega, crawling_data, rdate, wordno)
-VALUES((SELECT NVL(MAX(wcno), 0)+1 as wcno FROM word_crawling), 'P', "스테이크 맛있어요", sysdate, 1);
+VALUES((SELECT NVL(MAX(wcno), 0)+1 as wcno FROM word_crawling), 'P', '스테이크 맛있어요', sysdate, 1);
 
 INSERT INTO word_crawling(wcno, posi_nega, crawling_data, rdate, wordno)
-VALUES((SELECT NVL(MAX(wcno), 0)+1 as wcno FROM word_crawling), 'N', "스테이크 맛없어요", sysdate, 1);
+VALUES((SELECT NVL(MAX(wcno), 0)+1 as wcno FROM word_crawling), 'N', '스테이크 맛없어요', sysdate, 1);
 
 /* 모든 레코드 검색 */
 SELECT wcno, posi_nega, crawling_data, rdate, wordno
@@ -918,7 +927,7 @@ COMMENT ON COLUMN word_crawling.wordno is '검색어번호';
 CREATE TABLE word_time_graph (
     word_time_no INT NOT NULL,
     freq INT NOT NULL,
-    rdate INT NOT NULL,
+    rdate DATE NOT NULL,
     wordno INT NOT NULL,
     PRIMARY KEY(word_time_no),
     FOREIGN KEY(word_time_no) REFERENCES word(wordno)
@@ -975,7 +984,7 @@ COMMENT ON COLUMN word_time_graph.wordno is '검색어번호';
 /**********************************/
 CREATE TABLE word_sentiment (
     word_sentiment_no INT NOT NULL,
-    posi_nega INT NOT NULL,
+    posi_nega CHAR(1) NOT NULL,
     percentage INT NOT NULL,
     freq INT NOT NULL,
     rdate DATE NOT NULL,
@@ -1033,3 +1042,13 @@ COMMENT ON COLUMN word_sentiment.percentage is '퍼센트';
 COMMENT ON COLUMN word_sentiment.freq is '빈도';
 COMMENT ON COLUMN word_sentiment.rdate is '등록일';
 COMMENT ON COLUMN word_sentiment.wordno is '검색어번호';
+
+SELECT memberno, contentsno, name, content, views, replies, fsize,
+       photo, thumb, rdate, boardno, rownum as r
+FROM (
+	SELECT m.memberno, c.contentsno, c.name, c.content, c.views, c.replies,
+	       c.fsize, c.photo, c.thumb, c.rdate, c.boardno
+	FROM member m, contents c
+	WHERE m.memberno = c.memberno AND c.boardno = 1
+	ORDER BY c.contentsno ASC
+)

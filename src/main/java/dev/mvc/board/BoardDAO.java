@@ -31,7 +31,7 @@ public class BoardDAO implements BoardDAOInter {
   }
 
   @Override
-  public Categrp_BoardVO read(int boardno) {
+  public BoardVO read(int boardno) {
     return sqlSessionTemplate.selectOne("board.read", boardno);
   }
 
@@ -43,6 +43,15 @@ public class BoardDAO implements BoardDAOInter {
   @Override
   public int delete(int boardno) {
     return sqlSessionTemplate.delete("board.delete", boardno);
+  }
+
+  @Override
+  public int count_by_board(int boardno) {
+    return sqlSessionTemplate.selectOne("board.count_by_board", boardno);
+  }
+  
+  public int delete_contents_by_board(int boardno) {
+    return sqlSessionTemplate.delete("board.delete_contents_by_board", boardno);
   }
 }
 

@@ -39,7 +39,7 @@
     <span class='menu_divide' >│</span> 
     <A href='./create.do'>회원 가입</A>
     <span class='menu_divide' >│</span> 
-    <A href='./create.do'>목록</A>
+    <A href='./list.do'>목록</A>
   </ASIDE> 
  
   <div class='menu_line'></div>
@@ -76,7 +76,7 @@
     <TD class='td'>${memberno}</TD>
     <TD class='td'><A href="./read.do?memberno=${memberno}">${memberVO.id}</A></TD>
     <TD class='td'><A href="./read.do?memberno=${memberno}">${memberVO.name}</A></TD>
-    <TD class='td'><A href="./read.do?memberno=${memberno}">${memberVO.sex}</A></TD>
+    <TD class='td'>${memberVO.sex}</TD>
     <TD class='td'>${memberVO.grade}</TD> <!-- 등급 -->
     <TD class='td'>${memberVO.phone}</TD>
     <TD class='td'>${memberVO.email}</TD>

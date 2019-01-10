@@ -11,7 +11,7 @@ public class ContentsVO {
   content VARCHAR(1000) NOT NULL,
   views INT DEFAULT 0 NOT NULL,
   replies INT NOT NULL,
-  size VARCHAR(1000),
+  fsize VARCHAR(1000),
   photo VARCHAR(1000),
   thumb VARCHAR(1000),
   rdate DATETIME NOT NULL,
@@ -29,7 +29,7 @@ public class ContentsVO {
   private String content;
   private int views;
   private int replies;
-  private String size;
+  private String fsize;
   private String photo;
   private String thumb;
   private String rdate;
@@ -53,30 +53,30 @@ public class ContentsVO {
   */    
   private List<MultipartFile> photoMF;
 
-  /** size의 컴마 저장 출력용 변수, 실제 컬럼은 존재하지 않음. */
-  private String sizesLabel;
+  /** fsize의 컴마 저장 출력용 변수, 실제 컬럼은 존재하지 않음. */
+  private String fsizesLabel;
 
 
   public ContentsVO() {
     super();
   }
 
-  public ContentsVO(int contentsno, String name, String content, int views, int replies, String size, String photo,
-      String thumb, String rdate, int boardno, int memberno, List<MultipartFile> photoMF, String sizesLabel) {
+  public ContentsVO(int contentsno, String name, String content, int views, int replies, String fsize, String photo,
+      String thumb, String rdate, int boardno, int memberno, List<MultipartFile> photoMF, String fsizesLabel) {
     super();
     this.contentsno = contentsno;
     this.name = name;
     this.content = content;
     this.views = views;
     this.replies = replies;
-    this.size = size;
+    this.fsize = fsize;
     this.photo = photo;
     this.thumb = thumb;
     this.rdate = rdate;
     this.boardno = boardno;
     this.memberno = memberno;
     this.photoMF = photoMF;
-    this.sizesLabel = sizesLabel;
+    this.fsizesLabel = fsizesLabel;
   }
 
   public int getContentsno() {
@@ -119,12 +119,12 @@ public class ContentsVO {
     this.replies = replies;
   }
 
-  public String getSize() {
-    return size;
+  public String getFsize() {
+    return fsize;
   }
 
-  public void setSize(String size) {
-    this.size = size;
+  public void setFsize(String fsize) {
+    this.fsize = fsize;
   }
 
   public String getPhoto() {
@@ -167,15 +167,15 @@ public class ContentsVO {
     this.memberno = memberno;
   }
 
-  public String getSizesLabel() {
-    return sizesLabel;
+  public String getFsizesLabel() {
+    return fsizesLabel;
   }
 
   /**
-   * @param sizesLabel the sizesLabel to set
+   * @param fsizesLabel the fsizesLabel to set
    */
-  public void setSizesLabel(String sizesLabel) {
-    this.sizesLabel = sizesLabel;
+  public void setFsizesLabel(String fsizesLabel) {
+    this.fsizesLabel = fsizesLabel;
   }
 
   public List<MultipartFile> getPhotoMF() {
