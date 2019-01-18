@@ -1,5 +1,8 @@
 package dev.mvc.member_word;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,22 +16,22 @@ public class Member_WordDAO implements Member_WordDAOInter{
   public Member_WordDAO() {
     System.out.println("--> Member_WordDAO created.");
   }
-
+ 
   @Override
-  public int create(int memberno, int wordno) {
-    /*int count = sqlSessionTemplate.insert("member_word.create", memberno, )*/
-    return 0;
+  public int create(Map<String, Object> map) {
+    int count = sqlSessionTemplate.insert("member_word.create", map);
+    return count; 
   }
 
   @Override
-  public Member_WordVO wordno_by_member(int memberno) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<Word_MemberWordVO> wordno_by_member(int memberno) {
+    List<Word_MemberWordVO> list = sqlSessionTemplate.selectList("member_word.wordno_by_member", memberno);
+    return list;
   }
 
   @Override
-  public Member_WordVO member_by_wordno(int wordno) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<Word_MemberWordVO> member_by_wordno(int wordno) {
+    List<Word_MemberWordVO> list = sqlSessionTemplate.selectList("member_word.member_by_wordno", wordno);
+    return list; 
   }
 }

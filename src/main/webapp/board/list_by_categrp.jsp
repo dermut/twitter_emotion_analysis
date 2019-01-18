@@ -252,99 +252,107 @@
 </head> 
  
 <body>
-<DIV class='container' style='width: 100%;'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content' style='width: 100%;'>
+<div class="main_wrapper main_wrapper--index">
+  <div class="top">
+    <c:import url="/menu/top.jsp"/>
+  </div>
   
-  <DIV id='main_panel'></DIV>
+  <div class="top_second">
+    <c:import url="/menu/top_second.jsp"/>
+  </div>
   
-  <DIV class='title_line'>${categrpVO.name } 카테고리</DIV>
- 
-  <DIV id='panel_delete' style='display: none; padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
-	  <FORM name='frm_delete' id='frm_delete' method='post' action='./delete.do'>
-	    <input type='hidden' name='boardno' id='boardno' value=''>
-	    
-	    <DIV id='msg_delete' style='margin: 20px auto;'></DIV>
-	  </FORM>
-  </DIV>
-  
-  <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F5F5F5; width: 100%; text-align: center;'>
-    <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
-      <!-- 개발시 임시 값 사용 -->
-      <!-- 
-      <input type='hidden' name='categrpno' id='categrpno' value='1'>
-       -->
-       
-      <label for='categrp'>카테고리 그룹 번호</label>
-      <input type='number' name='categrpno' id='categrpno' value='${param.categrpno }' required="required" style='width: 5%;'>
-      
-      <label for='name'>카테고리 이름</label>
-      <input type='text' name='name' id='name' size='10' value='' required="required" style='width: 10%;'>
- 
-      <label for='memberno'>접근 계정</label>
-      <input type='text' name='memberno' id='memberno' value='' required="required" style='width: 10%;'>
- 
-      <button type="button" id='submit' onclick="create()">등록</button>
-      <button type="button" onclick="create_update_cancel()">취소</button>
-    </FORM>
-  </DIV>
-  
-  <!--  수정폼은 항상 PK 전달한다. -->
-  <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #DDDDDD; width: 100%; text-align: center;'>  
-    <FORM name='frm_update' id='frm_update' method='POST' action='./update.do'>
-      <input type='hidden' name='boardno' id='boardno' value=''> 
- 
-      <label for='title'>카테고리 그룹 번호</label>
-      <input type='number' name='categrpno' id='categrpno' size='7' value='' required="required" style='width: 3%;'>
-        
-      <label for='name'>게시판 이름</label>
-      <input type='text' name='name' id='name' size='15' value='' required="required" style='width: 20%;'>
- 
-      <label for='memberno'>접근 계정</label>
-      <input type='text' name='memberno' id='memberno' value='' required="required" style='width: 10%;'>
- 
-      <button type="submit" id='submit'>저장</button>
-      <button type="button" onclick="create_update_cancel()">취소</button>
-    </FORM>
-  </DIV>
-  
-<TABLE class='table table-striped'>
-  <colgroup>
-<%--     <col style='width: 10%;'/>
-    <col style='width: 10%;'/> --%>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 25%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 15%;'/>
- 
-  </colgroup>
-  <thead>  
-  <TR>
-<!--     <TH style='text-align: center ;'>categrpno</TH>
-    <TH style='text-align: center ;'>seqno</TH> -->
-    <TH style='text-align: center ;'>번호</TH>
-    <TH style='text-align: center ;'>그룹</TH>
-    <TH style='text-align: center ;'>카테고리</TH>
-    <TH style='text-align: center ;'>접근계정</TH>
-    <TH style='text-align: center ;'>등록일자
-    <TH style='text-align: center ;'>기타</TH>
-    
-  </TR>
-  </thead>
- 
-  <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
-  </tbody>
-  
-</TABLE>
- 
- 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+  <div class="main_container">
+    <div class="contents" align="center">
+		  <DIV id='main_panel'></DIV>
+		  
+		  <DIV class='title_line'>${categrpVO.name } 카테고리</DIV>
+		 
+		  <DIV id='panel_delete' style='display: none; padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
+			  <FORM name='frm_delete' id='frm_delete' method='post' action='./delete.do'>
+			    <input type='hidden' name='boardno' id='boardno' value=''>
+			    
+			    <DIV id='msg_delete' style='margin: 20px auto;'></DIV>
+			  </FORM>
+		  </DIV>
+		  
+		  <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F5F5F5; width: 100%; text-align: center;'>
+		    <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
+		      <!-- 개발시 임시 값 사용 -->
+		      <!-- 
+		      <input type='hidden' name='categrpno' id='categrpno' value='1'>
+		       -->
+		       
+		      <label for='categrp'>카테고리 그룹 번호</label>
+		      <input type='number' name='categrpno' id='categrpno' value='${param.categrpno }' required="required" style='width: 5%;'>
+		      
+		      <label for='name'>카테고리 이름</label>
+		      <input type='text' name='name' id='name' size='10' value='' required="required" style='width: 10%;'>
+		 
+		      <label for='memberno'>접근 계정</label>
+		      <input type='text' name='memberno' id='memberno' value='' required="required" style='width: 10%;'>
+		 
+		      <button type="button" id='submit' onclick="create()">등록</button>
+		      <button type="button" onclick="create_update_cancel()">취소</button>
+		    </FORM>
+		  </DIV>
+		  
+		  <!--  수정폼은 항상 PK 전달한다. -->
+		  <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #DDDDDD; width: 100%; text-align: center;'>  
+		    <FORM name='frm_update' id='frm_update' method='POST' action='./update.do'>
+		      <input type='hidden' name='boardno' id='boardno' value=''> 
+		 
+		      <label for='title'>카테고리 그룹 번호</label>
+		      <input type='number' name='categrpno' id='categrpno' size='7' value='' required="required" style='width: 3%;'>
+		        
+		      <label for='name'>게시판 이름</label>
+		      <input type='text' name='name' id='name' size='15' value='' required="required" style='width: 20%;'>
+		 
+		      <label for='memberno'>접근 계정</label>
+		      <input type='text' name='memberno' id='memberno' value='' required="required" style='width: 10%;'>
+		 
+		      <button type="submit" id='submit'>저장</button>
+		      <button type="button" onclick="create_update_cancel()">취소</button>
+		    </FORM>
+		  </DIV>
+		  
+		<TABLE class='table table-striped'>
+		  <colgroup>
+		<%--     <col style='width: 10%;'/>
+		    <col style='width: 10%;'/> --%>
+		    <col style='width: 10%;'/>
+		    <col style='width: 10%;'/>
+		    <col style='width: 25%;'/>
+		    <col style='width: 10%;'/>
+		    <col style='width: 10%;'/>
+		    <col style='width: 10%;'/>
+		    <col style='width: 10%;'/>
+		    <col style='width: 15%;'/>
+		 
+		  </colgroup>
+		  <thead>  
+		  <TR>
+		<!--     <TH style='text-align: center ;'>categrpno</TH>
+		    <TH style='text-align: center ;'>seqno</TH> -->
+		    <TH style='text-align: center ;'>번호</TH>
+		    <TH style='text-align: center ;'>그룹</TH>
+		    <TH style='text-align: center ;'>카테고리</TH>
+		    <TH style='text-align: center ;'>접근계정</TH>
+		    <TH style='text-align: center ;'>등록일자
+		    <TH style='text-align: center ;'>기타</TH>
+		    
+		  </TR>
+		  </thead>
+		 
+		  <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
+		  </tbody>
+		  
+		</TABLE>
+		 
+		 
+		</DIV> <!-- content END -->
+		<jsp:include page="/menu/bottom.jsp" flush='false' />
+	</DIV> <!-- container END -->
+</div>
 </body>
  
 </html> 

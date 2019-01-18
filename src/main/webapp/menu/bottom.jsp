@@ -4,9 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>BOTTOM</title>
+<title>TEA_BOTTOM</title>
 </head>
 <body>
- BOTTOM
+
+<ul class="bottom_link">
+	<li class="bottom_link_item"><A href="./about/about.jsp" class="bottom_a_white">ABOUT TEA</A>  </li>
+	<li class="bottom_link_item"><A href="./about/privacy.jsp" class="bottom_a_white">개인정보처리방침</A>  </li> 
+	<li class="bottom_link_item"><A href="./about/help.jsp" class="bottom_a_white">도움말</A>  </li>
+	<li class="bottom_link_item"><A href="./about/feedback.jsp" class="bottom_a_white">문의/피드백</A></li>
+</ul>
+
 </body>
 </html>

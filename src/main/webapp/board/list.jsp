@@ -22,7 +22,6 @@
     action_cancel(); // panel 출력 초기화
     
     list();  // 모든 게시판 목록
-    
   });
   
   // 모든 게시판 목록
@@ -37,14 +36,13 @@
       success: function(rdata) { // callback 함수
         var panel = '';
 
-        console.log(rdata);
         for(index=0; index < rdata.length; index++) {
           panel += "<TR>";
           // panel += "<TD style='text-align: center ;'>"+rdata[index].boardno+"</TD>";
           panel += "<TD style='text-align: center ;'>"+(index+1)+"</TD>";
           panel += "<TD>"+rdata[index].categrp_name+"</TD>";
           panel += "<TD><A href='../contents/list_by_board_search_paging.do?boardno="+rdata[index].boardno+"'>"+rdata[index].board_name+"</A></TD>";
-          panel += "<TD>"+rdata[index].memberno+"</TD>";
+          panel += "<TD>"+rdata[index].id+"</TD>";
           panel += "<TD>"+rdata[index].rdate.substring(0, 10)+"</TD>";
           panel += "<TD style='text-align: center;'>"; 
           panel += "  <A href='../contents/create.do?boardno="+rdata[index].boardno+"'><IMG src='./images/create.png' name='등록'></A>";
@@ -220,13 +218,17 @@
         if (rdata.count_by_board > 0) {
           str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos;  게시판에 [' + rdata.count_by_board + '] 건의 데이터가 등록되어있습니다.</span><br>';
           str += '카테고리에 등록된 게시물을 삭제해야 게시판 삭제가 가능합니다.<br>';
-          str += '<button type="button" onclick="delete_contents_by_board('+boardno+')">카테고리 삭제</button>';
-          str += '&nbsp;<button type="button" onclick="action_cancel();">취소</button>';
+          str += '<span class="button-group">'
+          str += '<button class="btn btn-danger" type="button" onclick="delete_contents_by_board('+boardno+')" style="background-image:none;">카테고리 삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>';
+          str += '</span>';
         } else {
           str = '[' + rdata.name + "] 카테고리를 삭제하시겠습니까?<br>";
-          str += "삭제하면 복구 할 수 없습니다.<br>"
-          str += '<button type="button" id="submit" onclick="delete_submit();">삭제</button>';
-          str += '&nbsp;<button type="button" onclick="action_cancel();">취소</button>'; 
+          str += "삭제하면 복구 할 수 없습니다.<br>";
+          str += '<span class="button-group">';
+          str += '<button class="btn btn-danger" type="button" id="submit" onclick="delete_submit();" style="background-image:none;">삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>';
+          str += '</span>';
         }
        $('#msg_delete').html(str);
       },
@@ -237,7 +239,7 @@
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
-        panel += "  <br><button type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
+        panel += "  <br><button class='btn btn-info' type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
         panel += "</DIV>";
         
         $('#main_panel').html(panel);
@@ -258,12 +260,12 @@
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 250px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  알림<br>';
         for(index=0; index < rdata.msgs.length; index++) {
           panel += rdata.msgs[index]+'<br>';
         }
-        panel += "  <button type='button' onclick=\"$('#main_panel').hide();\" class='popup_button'>닫기</button>";
+        panel += "  <button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\" style='background-image:none;'>닫기</button>";
         panel += "</DIV>";
         
         action_cancel();
@@ -282,12 +284,11 @@
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
-        panel += "  <br><button type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
+        panel += "  <br><button class='btn btn-info' type='button' onclick=\"$('#main_panel').hide();\" style='background-image:none;'>닫기</button>";
         panel += "</DIV>";
         
         $('#main_panel').html(panel);
         $('#main_panel').show();
- 
       }
     });
   }
@@ -311,13 +312,13 @@
         if (rdata.delete_contents_by_board > 0) {
           str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos; 카테고리에서 [' + rdata.count_by_board + '] 건의 데이터를 삭제했습니다.</span><br>';
           str += '컨텐츠 삭제를 계속 진행하시겠습니까?<br>';
-          str += '<button type="button" onclick="deleteForm('+boardno+')">카테고리 삭제</button>';
-          str += '&nbsp;<button type="button" onclick="action_cancel();">취소</button>';
+          str += '<button class="btn btn-danger" type="button" onclick="deleteForm('+boardno+')" style="background-image:none;">카테고리 삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>';
         } else {
           str = '[' + rdata.name + "] 카테고리 관련 컨텐츠 삭제에 실패했습니다. 다시 시도하시겠습니까?<br>";
           str += "삭제하면 복구 할 수 없습니다.<br>"
-          str += '<button type="button" onclick="delete_contents_by_board('+boardno+')">카테고리 삭제</button>';
-          str += '&nbsp;<button type="button" onclick="action_cancel();">취소</button>'; 
+          str += '<button class="btn btn-danger" type="button" onclick="delete_contents_by_board('+boardno+')" style="background-image:none;">카테고리 삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>'; 
         }
         $('#msg_delete').html(str);
       },
@@ -336,6 +337,7 @@
   }
   
   function action_cancel() {
+    $('#main_panel').hide();
     $('#panel_update').hide();
     $('#panel_delete').hide();
     $('#panel_create').show();
@@ -348,101 +350,116 @@
 </head> 
  
 <body>
-<DIV class='container' style='width: 100%;'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content' style='width: 100%;'>
+<div class="main_wrapper community_wrapper--index">
+  <div class="top">
+    <c:import url="/menu/top.jsp"/>
+  </div>
   
-  <DIV id='main_panel'></DIV>
+  <div class="top_second">
+    <c:import url="/menu/top_second.jsp"/>
+  </div>
   
-  <DIV class='name_line'>전체 게시판 목록</DIV>
- 
-  <DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #FFAAAA; width: 100%; text-align: center;'>
-    <FORM name='frm_delete' id='frm_delete'>
-      <input type='hidden' name='categrpno' id='categrpno' value=''>
-      <input type='hidden' name='boardno' id='boardno' value=''>
-      <div id='msg_delete'></div>
-    </FORM>
-    
-  </DIV>
- 
-  <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F5F5F5; width: 100%; text-align: center;'>
-    <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
-      <!-- 개발시 임시 값 사용 -->
-       
-      <label for='name'>게시판 </label>
-       <select name='categrpno' id='categrpno'>
-         <c:forEach var="categrpVO" items="${categrp_list}">
-           <option value='${categrpVO.categrpno }'>${categrpVO.name}</option>
-         </c:forEach>
-       </select>
-             
-      <label for='name'>게시판 이름</label>
-      <input type='text' name='name' id='name' size='10' value='' required="required" style='width: 10%;'>
- 
-      <label for='memberno'>접근 계정</label>
-      <input type='text' name='memberno' id='memberno' value='' required="required" style='width: 10%;'>
- 
-      <button type="button" id='submit' onclick="create()">등록</button>
-      <button type="button" onclick="action_cancel()">취소</button>
-    </FORM>
-  </DIV>
-  
-  <!--  수정폼은 항상 PK 전달한다. -->
-  <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #DDDDDD; width: 100%; text-align: center;'>  
-    <FORM name='frm_update' id='frm_update' method='POST' action='./update.do'>
-      <input type='hidden' name='boardno' id='boardno' value=''> 
- 
-      <label for='name'>게시판 </label>
-       <select name='categrpno' id='categrpno'>
-         <c:forEach var="categrpVO" items="${categrp_list}">
-           <option value='${categrpVO.categrpno }'>${categrpVO.name}</option>
-         </c:forEach>
-       </select>
-       
-      <label for='name'>게시판 이름</label>
-      <input type='text' name='name' id='name' size='15' value='' required="required" style='width: 20%;'>
-
-      <label for='memberno'>접근 계정</label>
-      <input type='text' name='memberno' id='memberno' value='' required="required" style='width: 10%;'>
-      
-      <button type="submit" name="submit">저장</button>
-      <button type="button" onclick="action_cancel()">취소</button>
-    </FORM>
-  </DIV>
-  
-<TABLE class='table table-striped'>
-  <colgroup>
-<%--     <col style='width: 10%;'/>
-    <col style='width: 10%;'/> --%>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 15%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 25%;'/>
- 
-  </colgroup>
-  <thead>  
-  <TR>
-    <TH style='text-align: center ;'>번호</TH>
-    <TH style='text-align: center ;'>그룹</TH>
-    <TH style='text-align: center ;'>게시판</TH>
-    <TH style='text-align: center ;'>접근계정</TH>
-    <TH style='text-align: center ;'>등록일자</TH>
-    <TH style='text-align: center ;'>기타</TH>
-    
-  </TR>
-  </thead>
- 
-  <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
-  </tbody>
-  
-</TABLE>
- 
- 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+  <div class="main_container">
+    <div class="contents" align="center">
+		  
+		  <DIV class="main_panel" id='main_panel'></DIV>
+		  
+		  <div class="title_l">
+        <h2>게시판</h2>
+      </div>
+		  
+      <DIV class="form-group" id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F5F5F5; width: 50%;'>
+        <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
+          <div class="input-group">
+            <span class="input-group addon" style="padding: 0px 0px 3px 0px;">게시판</span>
+	          
+	          <select class="form-control" name='categrpno' id='categrpno' style="padding:0px 0px 3px 0px;">
+	            <c:forEach var="categrpVO" items="${categrp_list}">
+	              <option value='${categrpVO.categrpno }'>${categrpVO.name}</option>
+	            </c:forEach>
+	          </select>
+	                 
+	          <span class="input-group addon" style="padding:3px 0px 3px 0px;">게시판 이름</span>
+	          
+	          <input class="form-control" type='text' name='name' id='name' size='10' value='' required="required">
+	     
+	          <input type='hidden' class="form-control" name='memberno' id='memberno' value='${user_memberno}' required="required">
+	           
+	          <div class="button-group">
+	            <button class="btn btn-primary btn-info" type="button" id='submit' onclick="create();" style="background-image:none;">등록</button>
+	            &nbsp
+	            <button class="btn btn-secondary btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>
+            </div>
+          </div>
+        </FORM>
+      </DIV>
+			  
+      <DIV class="form-group" id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #DDDDDD; width: 50%;'>  
+        <FORM name='frm_update' id='frm_update' method='POST' action='./update.do'>
+          <input type='hidden' name='boardno' id='boardno' value=''> 
+          <div class="input-group">
+	          <span class="input-group addon" style="padding:3px 0px 3px 0px;">게시판 </span>
+	           <select class="form-control" name='categrpno' id='categrpno'>
+	             <c:forEach var="categrpVO" items="${categrp_list}">
+	               <option value='${categrpVO.categrpno }'>${categrpVO.name}</option>
+	             </c:forEach>
+	           </select>
+	           
+	          <span class="input-group addon" style="padding:3px 0px 3px 0px;">게시판 이름</span>
+	          <input class="form-control" type='text' name='name' id='name' size='15' value='' required="required" >
+	    
+	          <input class="form-control" type='hidden' name='memberno' id='memberno' value='${user_memberno }' required="required">
+	          
+            <div class="button-group">
+	            <button class="btn btn-primary btn-info" type="submit" name="submit">저장</button>
+	            &nbsp
+	            <button class="btn btn-secondary btn-info" type="button" onclick="action_cancel()">취소</button>
+            </div>
+          </div>
+        </FORM>
+      </DIV>  
+			  
+			<DIV class="form-group" id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #FFAAAA; width: 100%; text-align: center;'>
+			  <FORM name='frm_delete' id='frm_delete'>
+			    <input type='hidden' name='categrpno' id='categrpno' value=''>
+			    <input type='hidden' name='boardno' id='boardno' value=''>
+			    
+			    <div id='msg_delete'></div>
+			  </FORM>
+			</DIV>
+		  
+		<TABLE class='table table-striped table-hover' style='background-color: #F9F9F9; text-align: center;'>
+		  <colgroup>
+		    <col style='width: 10%;'/>
+		    <col style='width: 10%;'/>
+		    <col style='width: 35%;'/>
+		    <col style='width: 15%;'/>
+		    <col style='width: 10%;'/>
+		    <col style='width: 20%;'/>
+		 
+		  </colgroup>
+		  <thead>  
+		  <TR>
+		    <TH style='text-align: center ;'>번호</TH>
+		    <TH style='text-align: center ;'>그룹</TH>
+		    <TH style='text-align: center ;'>게시판</TH>
+		    <TH style='text-align: center ;'>접근계정</TH>
+		    <TH style='text-align: center ;'>등록일자</TH>
+		    <TH style='text-align: center ;'>기타</TH>
+		    
+		  </TR>
+		  </thead>
+		 
+		  <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
+		  </tbody>
+		  
+		</TABLE>
+		 
+		 
+	  </DIV> <!-- content END -->
+    <jsp:include page="/menu/bottom.jsp" flush='false' />
+  </DIV> <!-- container END -->
+</div>
 </body>
  
 </html> 

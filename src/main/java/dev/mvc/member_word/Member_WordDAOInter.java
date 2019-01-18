@@ -1,5 +1,8 @@
 package dev.mvc.member_word;
 
+import java.util.List;
+import java.util.Map;
+
 public interface Member_WordDAOInter {
 
   /**
@@ -8,19 +11,19 @@ public interface Member_WordDAOInter {
    * @param wordno
    * @return
    */
-  public int create(int memberno, int wordno);
+  public int create(Map<String, Object> map);
   
   /**
    * 회원 별 검색어번호 목록
    * @param memberno
    * @return
    */
-  public Member_WordVO wordno_by_member(int memberno);
+  public List<Word_MemberWordVO> wordno_by_member(int memberno);
   
   /**
    * 특정 검색어를 어떤 회원이 검색했는지
    * @param wordno
    * @return
    */
-  public Member_WordVO member_by_wordno(int wordno);
+  public List<Word_MemberWordVO> member_by_wordno(int wordno);
 }

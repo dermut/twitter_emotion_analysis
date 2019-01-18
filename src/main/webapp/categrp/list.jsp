@@ -13,13 +13,21 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
+<%-- <link href="${pageContext.request.contextPath}/bootstrap/bootstrap/css/font-awesome.min.css" rel="stylesheet"> --%>
+<%-- <link href="${pageContext.request.contextPath}/bootstrap/css/font-awesome.min.css" rel="stylesheet"> --%>
+<%-- <link href="${pageContext.request.contextPath}/bootstrap/css/style.css" rel="stylesheet"> --%>
+<%-- <link href="${pageContext.request.contextPath}/bootstrap/css/blog-single.css" rel="stylesheet"> --%>
+<%-- <link href="${pageContext.request.contextPath}/bootstrap/css/responsive.css" rel="stylesheet"> --%>
+
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
     
 <script type="text/javascript">
   $(function() {
+    create_update_cancel();
     
     list();
   });
@@ -47,10 +55,10 @@
 			    panel += "    </TD>";
 		      panel += "  <TD><A href='../board/list_by_categrp.do?categrpno="+rdata[index].categrpno+"'>"+rdata[index].name+"</A></TD>";
 		      panel += " <TD>" + rdata[index].cnt + "</TD>";
-		      panel += " <TD style='text-align: center ;'>"+rdata[index].rdate.substring(0,10)+"</TD>";
-		      panel += "  <TD>";
+		      panel += " <TD style='text-align: center;'>"+rdata[index].rdate.substring(0,10)+"</TD>";
+		      panel += "  <TD style='text-align: center;'>";
 		      panel += "   <A href='javascript:update("+rdata[index].categrpno+")'><IMG src='./images/update.png' title='수정'></A>";
-		      panel += "    <A href='javascript:deleteOne("+rdata[index].categrpno+")'><IMG src='./images/delete.png' title='삭제'></A>";
+		      panel += "   <A href='javascript:deleteOne("+rdata[index].categrpno+")'><IMG src='./images/delete.png' title='삭제'></A>";
 		      panel += "  </TD>";
 		      panel += "</TR>";
         }
@@ -69,6 +77,50 @@
         
         $('#main_panel').html(panel);
         $('#main_panel').show();
+      }
+    });
+  }
+  
+  //등록 처리
+  function create() {
+    $.ajax({
+      url: "./create_json.do", // 요청을 보낼주소
+      type: "post",  // or get
+      cache: false,
+      dataType: "json", // 응답 데이터 형식, or json
+      data: $('#frm_create').serialize(), 
+      // Ajax 통신 성공, JSP 정상 처리
+      success: function(rdata) { // callback 함수
+        var panel = '';
+        panel += "<DIV id='panel' class='popup1' style='heigth: 250px;'>";
+        panel += '  알림<br>';
+        for(index=0; index < rdata.msgs.length; index++) {
+          panel += rdata.msgs[index]+'<br>';
+        }
+        panel += "  <button type='button' onclick=\"$('#main_panel').hide();\" class='popup_button'>닫기</button>";
+        panel += "</DIV>";
+        
+        create_update_cancel();
+        
+        list();  // 전체 게시판 목록
+        
+        $('#main_panel').html(panel);
+        $('#main_panel').show();
+        
+      },
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        var panel = '';
+        panel += "<DIV id='panel' class='popup1' style='heigth: 450px;'>";
+        panel += '  ERROR<br><br>';
+        panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
+        panel += '  <strong>error</strong><br>'+error + '<hr>';
+        panel += "  <br><button type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
+        panel += "</DIV>";
+        
+        $('#main_panel').html(panel);
+        $('#main_panel').show();
+ 
       }
     });
   }
@@ -113,6 +165,9 @@
     $('#panel_update').hide();
     $('#panel_delete').hide();
     $('#panel_create').show();
+    $('#frm_create')[0].reset();
+    
+    $('#main_panel').hide();
   }
   
   // 삭제 폼
@@ -138,13 +193,18 @@
         if (rdata.count_by_categrp > 0) {
           str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos; 카테고리에 [' + rdata.count_by_categrp + '] 건의 데이터가 등록되어있습니다.</span><br>';
           str += '카테고리에 등록된 데이터를 삭제해야 카테고리 그룹 삭제가 가능합니다.<br>';
-          str += '<button type="button" onclick="delete_contents_by_board('+categrpno+')">카테고리 삭제</button>';
-          str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>';
+          str += '<span class="button-group">';
+          str += '<button class="btn btn-danger" type="button" onclick="delete_category_by_categrp('+categrpno+')">카테고리 삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="create_update_cancel();">취소</button>';
+          str += '</span>';
         } else {
-          str = '[' + rdata.name + "] 카테고리 그룹을 삭제하시겠습니까?<br>";
-          str += "삭제하면 복구 할 수 없습니다.<br>"
-          str += '<button type="submit" id="submit">삭제</button>';
-          str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>'; 
+          str += '[' + rdata.name + "] 카테고리 그룹을 삭제하시겠습니까?<br>";
+          str += "삭제하면 복구 할 수 없습니다.<br>";
+          str += '<span class="button-group">';
+          str += '<button class="btn btn-danger" type="submit" id="submit" style="background-image:none;">삭제</button>';
+          str += '&nbsp';
+          str += '<button class="btn btn-info" type="button" onclick="create_update_cancel(); style="background-image:none;">취소</button>'; 
+          str += '</span>';
         }
         $('#msg_delete').html(str);
       },
@@ -163,9 +223,9 @@
   }
   
   // 카테고리 그룹에 등록된 카테고리 모두 삭제
-  function delete_board_by_categrp(categrpno) {
+  function delete_category_by_categrp(categrpno) {
     $.ajax({
-      url: "./delete_board_by_categrp.do", 
+      url: "./delete_category_by_categrp.do", 
       type: "post", // or get
       cache: false,
       async: true, // true: 비동기
@@ -181,13 +241,17 @@
         if (rdata.delete_by_categrp > 0) {
           str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos; 카테고리에서 [' + rdata.delete_by_categrp + '] 건의 데이터를 삭제했습니다.</span><br>';
           str += '카테고리 그룹 삭제를 계속 진행하시겠습니까?<br>';
-          str += '<button type="button" onclick="deleteOne('+categrpno+')">카테고리 그룹 삭제</button>';
-          str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>';
+          str += '<span class="button-group">'
+          str += '<button class="btn btn-danger" type="button" onclick="deleteOne('+categrpno+')">카테고리 그룹 삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="create_update_cancel();">취소</button>';
+          str += '</span>'
         } else {
           str = '[' + rdata.name + "] 카테고리 그룹 관련 카테고리 삭제에 실패했습니다. 다시 시도하시겠습니까?<br>";
           str += "삭제하면 복구 할 수 없습니다.<br>"
-          str += '<button type="button" onclick="delete_board_by_categrp('+categrpno+')">카테고리 삭제</button>';
-          str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>'; 
+          str += '<span class="button-group">'
+          str += '<button class="btn btn-danger" type="button" onclick="delete_board_by_categrp('+categrpno+')">카테고리 삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="create_update_cancel();">취소</button>'; 
+          str += '</span>'
         }
         $('#msg_delete').html(str);
       },
@@ -210,91 +274,114 @@
 </head> 
 
 <body>
-<DIV class='container' style='width: 100%;'>
-<c:import url="/menu/top.jsp"  />
-<DIV class='content'>
+<div class="main_wrapper community_wrapper--index">
+  <div class="top">
+    <c:import url="/menu/top.jsp"/>
+  </div>
   
-  <DIV id='main_panel'></DIV>
+  <div class="top_second">
+    <c:import url="/menu/top_second.jsp"/>
+  </div>
   
-  <DIV class='title_line'>카테고리 그룹</DIV>
-
-  <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
-    <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
-        
-      <label for='classification'>그룹 분류 코드</label>
-      <select name='classification' id='classification'>
-        <option value='1' selected="selected">1-공지사항</option>
-        <option value='2'>2-게시판</option>
-        <option value='9'>9-기타</option>
-      </select>
-          
-      <label for='name'>그룹 이름</label>
-      <input type='text' name='name' id='name' value='' required="required" style='width: 25%;'>
-       
-      <button type="submit" id='submit'>등록</button>
-      <button type="button" onclick="create_update_cancel();">취소</button>
-    </FORM>
-  </DIV>
-
-  <DIV id='panel_update' style='display: none; padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
-    <FORM name='frm_update' id='frm_update' method='POST' 
-                action='./update.do'>
-      <input type='hidden' name='categrpno' id='categrpno' value=''>
-
-      <label for='classification'>그룹 분류 코드</label>
-      <select name='classification' id='classification'>
-        <option value='1' selected="selected">1-공지사항</option>
-        <option value='2'>2-게시판</option>
-        <option value='9'>9-기타</option>
-      </select>
+  <div class="main_container">
+    <div class="contents" align="center">
+    
+	  <DIV class="main_panel" id='main_panel'></DIV>
+		  
+		  <div class="title_l">
+	      <h2>카테고리 그룹</h2>
+		  </div>
+		  
+		  <DIV class="form-group" id='panel_create' style='padding: 10px 0px 10px 0px;  background-color: #F9F9F9; width: 50%;'>
+		    <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
+		      <label class="control-label" style="padding:5px 0px 5px 0px;">카테고리 그룹 등록</label>
+		      <div class="input-group">
+            <span class="input-group addon" style="padding:0px 0px 3px 0px;">그룹 분류 코드</span>
             
-      <label for='name'>그룹 이름</label>
-      <input type='text' name='name' id='name' size='15' value='' required="required" style='width: 30%;'>
-
-      <button type="submit" id="submit">저장</button>
-      <button type="button" onclick="create_update_cancel();">취소</button>
-    </FORM>
-  </DIV>
-
-  <DIV id='panel_delete' style='display: none; padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
-    <FORM name='frm_delete' id='frm_delete' method='POST' 
-                action='./delete.do'> 
-      <input type='hidden' name='categrpno' id='categrpno' value=''>
-
-      <DIV id='msg_delete' style='margin: 20px auto;'></DIV>
-    </FORM>
-  </DIV>
-
-  
-<TABLE class='table table-striped'>
-  <colgroup>
-    <col style='width: 10%;'/>
-    <col style='width: 20%;'/>
-    <col style='width: 30%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 20%;'/>
-    <col style='width: 20%;'/>
-  </colgroup>
-
-  <thead>  
-  <TR>
-    <TH style='text-align: center ;'>카테고리 번호</TH>
-    <TH style='text-align: center ;'>그룹 분류</TH>
-    <TH>대분류명</TH>
-    <TH>카테고리 개수</TH>
-    <TH style='text-align: center ;'>등록일</TH>
-    <TH style='text-align: center ;'>기타</TH>
-  </TR>
-  </thead>
-  
-  <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
-  </tbody>
-
-</TABLE>
-
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" />
-</DIV> <!-- container END -->
+			      <select class="form-control" name='classification' id='classification' style="padding:0px 0px 3px 0px;">
+			        <option value='1' selected="selected">1-공지사항</option>
+			        <option value='2'>2-게시판</option>
+			        <option value='9'>9-기타</option>
+			      </select> 
+			          
+			      <span class="input-group addon" style="padding:3px 0px 3px 0px;">그룹 이름</span>
+			      
+            <input class="form-control" type='text' name='name' id='name' value='' required="required">
+			      
+			      <span class="button-group">
+		          <button class="btn btn-primary btn-info" type="button" id='submit' onclick="create();" style="background-image:none;" >등록</button>
+		          &nbsp
+		          <button class="btn btn-secondary btn-info" type="button" onclick="create_update_cancel();" style="background-image:none;">취소</button>
+		        </span>
+		      </div>
+		    </FORM> 
+		  </DIV>
+		
+		  <DIV class="form-group" id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 50%;'>
+		    <FORM name='frm_update' id='frm_update' method='POST' action='./update.do'>
+          <input type='hidden' name='categrpno' id='categrpno' value=''>
+		      <label class="control-label" style="padding:5px 0px 5px 0px;">카테고리 그룹 수정</label>
+          <div class="input-group">
+            
+            <span class="input-group addon" style="padding:0px 0px 3px 0px;">그룹 분류 코드</span>
+            
+			      <select class="form-control" name='classification' id='classification' style="padding:0px 0px 3px 0px;">
+			        <option value='1' selected="selected">1-공지사항</option>
+			        <option value='2'>2-게시판</option>
+			        <option value='9'>9-기타</option>
+			      </select>
+			            
+			      <span class="input-group addon" style="padding:3px 0px 3px 0px;">그룹 이름</span>
+			      <input class="form-control" type='text' name='name' id='name' size='15' value='' required="required">
+			      
+			      <div class="button-group">
+			        <button class="btn btn-primary btn-info" type="submit" id="submit" style="background-image:none;">저장</button>
+			        &nbsp
+			        <button class="btn btn-secondary btn-info" type="button" onclick="create_update_cancel();" style="background-image:none;">취소</button>
+			      </div>
+		      </div>
+		    </FORM>
+		  </DIV>
+		  
+		  <DIV class="form-group" id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 50%;'>
+		    <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete.do'> 
+		      <input type='hidden' name='categrpno' id='categrpno' value=''>
+		
+		      <DIV id='msg_delete' style='margin: 20px auto;'></DIV>
+		    </FORM>
+		  </DIV>
+		
+		  
+		<TABLE class='table table-striped table-hover' style='background-color: #F9F9F9;'>
+		  <colgroup>
+		    <col style='width: 10%;'/>
+		    <col style='width: 20%;'/>
+		    <col style='width: 30%;'/>
+		    <col style='width: 10%;'/>
+		    <col style='width: 20%;'/>
+		    <col style='width: 20%;'/>
+		  </colgroup>
+		
+		  <thead>  
+		  <TR>
+		    <TH style='text-align: center ;'>카테고리 번호</TH>
+		    <TH style='text-align: center ;'>그룹 분류</TH>
+		    <TH>대분류명</TH>
+		    <TH>카테고리 개수</TH>
+		    <TH style='text-align: center ;'>등록일</TH>
+		    <TH style='text-align: center ;'>기타</TH>
+		  </TR>
+		  </thead>
+		  
+		  <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
+		  </tbody>
+		
+		</TABLE>
+		
+		</DIV> <!-- content END -->
+		<jsp:include page="/menu/bottom.jsp" />
+	</DIV> <!-- container END -->
+</div>
 </body>
 
 </html> 

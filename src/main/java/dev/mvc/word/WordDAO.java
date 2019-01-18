@@ -19,34 +19,32 @@ public class WordDAO implements WordDAOInter{
 
     @Override
     public int create(String word) {
-      int count = sqlSessionTemplate.insert("word.create", word);
-      return count;
+      return sqlSessionTemplate.insert("word.create", word);
     }
 
     @Override
     public int count_by_word(String word) {
-      int count = sqlSessionTemplate.selectOne("word.count_by_word", word);
-      return count;
+      return sqlSessionTemplate.selectOne("word.count_by_word", word);
     }
 
     @Override
     public int count() {
-      int count = sqlSessionTemplate.selectOne("word.count");
-      return count;
+      return sqlSessionTemplate.selectOne("word.count");
     }
 
     @Override
     public List<WordVO> word_list() {
-      List<WordVO> list = sqlSessionTemplate.selectList("word.word_list");
-      return list;
+      return sqlSessionTemplate.selectList("word.word_list");
     }
 
     @Override
     public int wordno_by_word(String word) {
-      int num = sqlSessionTemplate.selectOne("word.wordno_by_word", word);
-      return num;
+      return sqlSessionTemplate.selectOne("word.wordno_by_word", word);
+    }
+
+    @Override
+    public int search_word(String word) {
+      return sqlSessionTemplate.selectOne("word.search_word", word);
     }
     
-    
-  
 }

@@ -1,5 +1,7 @@
 package dev.mvc.member_word;
 
+import java.util.List;
+
 public interface Member_WordProcInter {
 
   /**
@@ -15,12 +17,12 @@ public interface Member_WordProcInter {
    * @param memberno
    * @return
    */
-  public Member_WordVO wordno_by_member(int memberno);
+  public List<Word_MemberWordVO> wordno_by_member(int memberno);
   
   /**
    * 특정 검색어를 어떤 회원이 검색했는지
    * @param wordno
    * @return
    */
-  public Member_WordVO member_by_wordno(int wordno);
+  public List<Word_MemberWordVO> member_by_wordno(int wordno);
 }

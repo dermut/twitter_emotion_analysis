@@ -317,7 +317,7 @@ COMMENT ON COLUMN word.rdate is '검색시간';
 /**********************************/
 CREATE TABLE crawling_data(
 crno INT NOT NULL,
-content VARCHAR(280) NOT NULL,
+content VARCHAR(500) NOT NULL,
 rdate DATE NOT NULL,
 wordno INT NOT NULL,
 PRIMARY KEY(crno),
@@ -969,6 +969,10 @@ WHERE word_time_no=1;
 DELETE FROM word_time_graph
 WHERE word_time_no=1;
 
+    COUNT(*) as cnt
+    FROM word_time_graph
+    WHERE word=#{word} and rdate=#{rdate}
+
 /********************* DML 종료 *********************/
 
 COMMENT ON TABLE word_time_graph is '검색어 동향';
@@ -1043,12 +1047,7 @@ COMMENT ON COLUMN word_sentiment.freq is '빈도';
 COMMENT ON COLUMN word_sentiment.rdate is '등록일';
 COMMENT ON COLUMN word_sentiment.wordno is '검색어번호';
 
-SELECT memberno, contentsno, name, content, views, replies, fsize,
-       photo, thumb, rdate, boardno, rownum as r
-FROM (
-	SELECT m.memberno, c.contentsno, c.name, c.content, c.views, c.replies,
-	       c.fsize, c.photo, c.thumb, c.rdate, c.boardno
-	FROM member m, contents c
-	WHERE m.memberno = c.memberno AND c.boardno = 1
-	ORDER BY c.contentsno ASC
-)
+
+SELECT min(wordno)
+FROM word
+WHERE word='바다' and TO_CHAR(rdate, 'YYYY/MM/DD')=TO_CHAR(sysdate, 'YYYY/MM/DD'); /***** if) 이게 0이면, 새로 word_time_graph를 create *****/

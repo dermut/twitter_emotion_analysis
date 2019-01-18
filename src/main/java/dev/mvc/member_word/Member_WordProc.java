@@ -1,5 +1,9 @@
 package dev.mvc.member_word;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -17,20 +21,26 @@ public class Member_WordProc implements Member_WordProcInter{
   
   @Override
   public int create(int memberno, int wordno) {
-    /*int count = member_wordDAO.*/
-    return 0;
+    /*여기서 맵 이용*/
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("memberno", memberno);
+    map.put("wordno", wordno);
+    
+    int count = member_wordDAO.create(map);
+    
+    return count;
+  }
+
+  @Override 
+  public List<Word_MemberWordVO> wordno_by_member(int memberno) {
+    List<Word_MemberWordVO> list = member_wordDAO.wordno_by_member(memberno);
+    return list;
   }
 
   @Override
-  public Member_WordVO wordno_by_member(int memberno) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public Member_WordVO member_by_wordno(int wordno) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<Word_MemberWordVO> member_by_wordno(int wordno) {
+    List<Word_MemberWordVO> list = member_wordDAO.member_by_wordno(wordno);
+    return list; 
   }
 
 }

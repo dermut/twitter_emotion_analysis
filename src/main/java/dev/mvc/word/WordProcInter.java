@@ -36,4 +36,6 @@ public interface WordProcInter {
    * @return
    */
   public int wordno_by_word(String word);
+  
+  public int search_word(String word);
 }

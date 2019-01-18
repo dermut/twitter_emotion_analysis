@@ -20,32 +20,32 @@ public class WordProc implements WordProcInter{
 
   @Override
   public int create(String word) {
-    int count = wordDAO.create(word);
-    return count;
+    return wordDAO.create(word);
   }
 
   @Override
   public int count_by_word(String word) {
-    int count = wordDAO.count_by_word(word);
-    return count;
+    return wordDAO.count_by_word(word);
   }
 
   @Override
   public int count() {
-    int count = wordDAO.count();
-    return count;
+    return wordDAO.count();
   }
 
   @Override
   public List<WordVO> word_list() {
-    List<WordVO> list = wordDAO.word_list();
-    return list;
+    return wordDAO.word_list();
   }
   
   @Override
   public int wordno_by_word(String word){
-    int num = wordDAO.wordno_by_word(word);
-    return num;
+    return wordDAO.wordno_by_word(word);
+  }
+
+  @Override
+  public int search_word(String word) {
+    return wordDAO.search_word(word);
   }
   
   

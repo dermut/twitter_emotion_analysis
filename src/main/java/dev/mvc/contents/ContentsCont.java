@@ -740,7 +740,9 @@ public class ContentsCont {
   public ResponseEntity reply_by_contents(int contentsno){
     HttpHeaders responseHeaders = new HttpHeaders();
     
-    List<ReplyVO> list = contentsProc.reply_by_contents(contentsno);
+    List<ReplyIDVO> list = contentsProc.reply_by_contents(contentsno);
+    
+    
     JSONArray json = new JSONArray(list);
     
     return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);

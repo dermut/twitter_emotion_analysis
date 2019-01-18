@@ -1,0 +1,136 @@
+@media (max-width: 768px) { 
+	.header-area .header-social-links li{
+		margin-bottom: -5px;
+	}
+	.header-social-links .input-group {
+	  margin-bottom: -5px;
+	}
+	.header-area .row{
+		margin: 0 auto;
+	}
+	.header-area .col-md-6{
+		max-width: 487.5px;
+		margin: 0 auto;
+		float: left;
+	}
+	
+	.menu .container{
+		width: 100%;
+	}
+	
+	.container > .navbar-collapse, .container > .navbar-header {
+	  margin-left: 0;
+	  margin-right: 0;
+	}
+	
+	.menu .navbar-brand{
+		line-height: 2.2;
+	}
+	
+	.navbar-collapse{
+		max-width: 100%;
+		margin: 0 auto;
+		padding-left: 0;
+		padding-right: 0;
+		margin-top: 75px;
+	}
+	
+	.navbar-toggle{
+		margin-right: 0;
+	}
+	
+	.navbar-collapse.in{
+		border-color: transparent;
+		margin-top: 75px;
+	}
+	
+	.navbar-nav{
+		margin: 0;
+		padding: 0 !important;
+	}
+
+	.home h1{
+		font-size: 30px;
+	}
+	.home .btn.btn-primary{
+		margin-bottom: 10px;
+	}
+	.feature .col-md-4{
+		max-width: 325px;
+		margin: 0 auto;
+	}
+	
+	.feature-more .col-md-6{
+		max-width: 487.5px;
+		margin: 0 auto;
+	}
+	
+	.supporter{
+		height: 450px;
+	}
+	
+	.supporter .prev-slide {
+	  left: -3%;
+	}
+	
+	.supporter .next-slide {
+	  right: -3%;
+	}
+	
+	.porton-design .media-content{
+		max-width: 487.5px;
+		padding-left: 0;
+		margin: 0 auto;
+	}
+	
+	.feature-project .col-md-3{
+		padding: 0;
+	}
+	
+	.feature-project .project-img{
+		max-width: 325px;
+		margin: 0 auto;
+	}
+	
+	.project-item .single-item{
+		max-width: 325px;
+		margin: 0 auto;	
+	}
+	
+	.team .thumbnail{
+		max-width: 325px;
+		margin: 0 auto;	
+	}
+	
+	.porton-tab .col-md-6{
+		max-width: 487.5px;
+		margin: 0 auto;
+	}
+	
+	.porton-tab .col-sm-4{
+		display: inline-block;
+		max-width: 162.33px;
+	}
+	
+	.porton-tab .nav li a{
+		margin-bottom: 10px;
+	}
+	
+	.news .media{
+		max-width: 325px;
+		margin: 0 auto;	
+		margin-bottom: 20px;
+		
+	}
+	
+	.top-footer .col-md-3{
+		max-width: 325px;
+		margin: 0 auto;	
+	}
+	
+	.blog .media-body h1 {
+		font-size: 18px;
+	}
+	.dis-none{
+		display: none;
+	}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.board.BoardProcInter;
 import dev.mvc.board.Categrp_BoardVO;
 
 
@@ -24,6 +25,10 @@ public class CategrpCont {
   @Qualifier("dev.mvc.categrp.CategrpProc")
   private CategrpProcInter categrpProc = null;
  
+  @Autowired
+  @Qualifier("dev.mvc.board.BoardProc")
+  private BoardProcInter boardProc = null;
+  
   public CategrpCont() {
     System.out.println("--> CategrpCont created.");
   }
@@ -46,9 +51,29 @@ public class CategrpCont {
     ModelAndView mav = new ModelAndView();
     
     int count = categrpProc.create(categrpVO);
-    mav.setViewName("redirect:/categrp/create_message.jsp?count=" + count); // /webapp/categrp/create_message.jsp
+    
+    mav.setViewName("redirect:/board/create_message.jsp?count=" + count); // /webapp/categrp/list.jsp
     
     return mav;
+  }
+  
+  @ResponseBody
+  @RequestMapping(value="/categrp/create_json.do", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+  public ResponseEntity create_json(CategrpVO categrpVO) {
+    HttpHeaders responseHeaders = new HttpHeaders();
+    int count = categrpProc.create(categrpVO);
+    
+    JSONObject json = new JSONObject();
+    JSONArray msgs = new JSONArray();
+    
+    if(count == 1) {
+      msgs.put("카테고리 그룹 생성에 성공하였습니다.");
+    } else {
+      msgs.put("카테고리 그룹 생성에 실패했습니다.");
+    }
+    json.put("msgs", msgs);
+    
+    return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
   }
   
   // http://localhost:9090/tea/categrp/list.do
@@ -76,12 +101,7 @@ public class CategrpCont {
     HttpHeaders responseHeaders = new HttpHeaders();
     List<CategrpVO> list = categrpProc.list();
 
-//    for(int index=0; index<list.size(); index++) {
-//      list.get(index).setCnt(categrpProc.count_by_categrp(list.get(index).getCategrpno()));
-//    }
-    
     JSONArray json = new JSONArray(list);
-
     
     return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
   }
@@ -142,7 +162,7 @@ public class CategrpCont {
     JSONObject json = new JSONObject();
     json.put("categrpno", categrpVO.getCategrpno());
     json.put("name", categrpVO.getName());
-//    json.put("count_by_categrp", count_by_categrp);
+    json.put("count_by_categrp", categrpProc.count_by_categrp(categrpno));
         
     return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
   }
@@ -153,9 +173,27 @@ public class CategrpCont {
     ModelAndView mav = new ModelAndView();
     
     int count = categrpProc.delete(categrpno);
-    mav.setViewName("redirect:/categrp/delete_message.jsp?count=" + count); // /webapp/categrp/create_message.jsp 와 연결
-    
+    mav.setViewName("/categrp/list"); // /webapp/categrp/create_message.jsp 와 연결
+
     return mav;
+  }
+  
+  // http://localhost:9090/tea/categrp/delete_json.do -> 실행 주소
+  @RequestMapping(value="/categrp/delete_json.do", method=RequestMethod.POST)
+  public ResponseEntity delete_json(int categrpno) {
+    HttpHeaders responseHeaders = new HttpHeaders();
+    int count = categrpProc.delete(categrpno);
+    
+    JSONObject json = new JSONObject();
+    JSONArray msgs = new JSONArray();
+    
+    if(count == 1) {
+      msgs.put("카테고리 그룹 삭제에 성공하였습니다.");
+    } else {
+      msgs.put("카테고리 그룹 삭제에 실패했습니다.");
+    }
+    
+    return new ResponseEntity(msgs.toString(), responseHeaders, HttpStatus.CREATED);
   }
  
   /**
@@ -171,24 +209,16 @@ public class CategrpCont {
     HttpHeaders responseHeaders = new HttpHeaders();
     CategrpVO categrpVO = categrpProc.read(categrpno);
     
-//    int delete_by_categrp = boardProc.delete_by_categrp(categrpno);
+    int delete_by_categrp = boardProc.delete_by_categrp(categrpno);
     
     JSONObject json = new JSONObject();
     json.put("categrpno", categrpVO.getCategrpno());
     json.put("name", categrpVO.getName());
-//    json.put("delete_by_categrp", delete_by_categrp);
+    json.put("delete_by_categrp", delete_by_categrp);
         
     return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
   }
-  
-  
-  
 }
-
-
-
-
-
 
 
 

@@ -1,12 +1,30 @@
   
   /*-------------------------Commons---------------------------*/
-  
+    
   *{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Apple SD Gothic Neo", Apple Gothic, Helvetica, "Malgun Gothic", Dotum, Arial, Tahoma;
     font-size: 14px;
   }
   
+  dl, dt, dd, ol, ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+  }
+  
   .container {
+    padding-right: 0px;
+    padding-left: 0px;
     font-size: 20px;
   }
   
@@ -14,19 +32,239 @@
     font-size: 14px;
   }
   
+  .li_none {
+    color: white;
+  }
+  
+  .title_l {
+    margin: 20px 0px 20px 0px;
+    color: white;
+  }
+  
+  .main_panel {
+    height: 250px;
+    background-color: #F9F9F9;
+    padding: 10px 0px 10px 0px;
+  }
+  
   /*-----------------------Commons END------------------------*/
   
+  /*--------------------------MAIN-----------------------------*/
+  
+  .main_wrapper {
+    min-width: 1080px;
+    min-height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .main_wrapper--index {
+    background: #00b2ff;
+    background: linear-gradient(52deg, #5383e8, #3991ef 31%, #3892f0 32%, #3594f1 36%, #00b2ff);
+  }
+  
+    
+  .main_wrapper--index .top {
+    background: none;
+  }
+  
+  .main_wrapper--index .top_container {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+  
+  .main_wrapper--index .top_container .login_list {
+/*     top: 25px; */
+  }
+  
+  .main_wrapper .main_container {
+    width: 1080px;
+    margin: 0 auto;
+  }
+  
+  .main_container {
+    position: relative;
+    min-height: 700px;
+    padding-bottom: 120px;
+  }
+  
+  .main_logo {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+
+  .main_search_bar_frm {
+    position: relative;
+    width: 624px;
+    height: 50px;
+    margin: 0 auto;
+    border-radius: 2px;
+    background-color: #fff;
+  }
+  
+  .main_search_bar_txt {
+    display: block;
+    width: 100%;
+    padding: 15px 150px 18px 17px;
+    background: none;
+    border: none;
+    line-height: 17px;
+    font-size: 14px;
+    color: #9b9b9b;
+    box-sizing: border-box;
+    outline: none;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .main_search_button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px 10px 0 0;
+    height: 30px;
+    padding: 0;
+    border: none;
+  }
+  
+  .main_bottom {
+    width: 1080px;
+    margin: 0 auto;
+    padding: 40px 0;
+    color: white;
+  }
+  
+  /*------------------------MAIN END---------------------------*/
   
   /*--------------------------TOP-----------------------------*/
   
-  .top_right {
-    float: right;
-    padding: 5px;
+  .top_container {
+    position: relative;
+    max-width: 1300px;
+    margin: 0 auto;
+    vertical-align: middle;
+  }
+  
+  .top_container .login_list {
+    position: absolute;
+    right: 0;
+  }
+  
+  .site {
+    display: inline-block;
+    vertical-align: middle;
+    height: 16px;
+    line-height: 16px;
+    font-size: 12px;
+    color: #fff;
+    position: absolute;
+    margin-left: 20px;
+  }
+  
+  .login_list {
+    top: 25px;
+    position: absolute;
+    right: 0;
+  }
+  
+  .login {
+    margin-left: 20px;
+  }
+  
+  .top {
+    height: 100px;
+    background-color: rgb(30, 161, 247);
+    position: relative;
   }
   
   .login_button {
-    color: white;
-    background-color: green;
+    display: inline-block;
+    height: 26px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 2px;
+    line-height: 26px;
+    font-size: 12px;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    background-color: #1c87c3;
+    text-decoration: none;
   }
   
   /*------------------------TOP END---------------------------*/
+  
+  /*-----------------------TOP_SECOND--------------------------*/
+  
+  .top_second {
+    background-color: rgb(29, 46, 81);
+  }
+  
+  .top_second_font {
+    font-size: 16px;
+    color: rgb(115, 161, 203);
+  }
+  
+  /*---------------------TOP_SECOND END------------------------*/
+  
+  /*--------------------------BOTTOM-----------------------------*/
+  
+  .bottom_link {
+    float: left;
+    padding: 5px;
+  }
+  
+  .bottom_link_item {
+    display: inline;
+    margin-left: 30px;
+  }
+  
+  .bottom_a_white {
+    color: white;
+  }
+  
+  /*------------------------BOTTOM END---------------------------*/
+  
+  /*--------------------------IMAGE------------------------------*/
+  
+  .image {
+    display: inline-block;
+    vertical-align: middle;
+    text-indent: -99999px;
+  }
+  
+  .image-42 {
+    background-position: -90px -797px;
+    width: 50px;
+    height: 30px;
+  }
+  
+  /*------------------------IMAGE END----------------------------*/
+  
+  /*--------------------------MEMBER-----------------------------*/
+  
+  
+  .member_aside {
+    color: white;
+  }
+  
+  /*------------------------MEMBER END---------------------------*/
+  
+  /*-----------------------COMMUNITY-----------------------------*/
+  
+  .community_wrapper--index {
+    background: #00b2ff;
+    background: linear-gradient(52deg, #5383e8, #3991ef 31%, #3892f0 32%, #3594f1 36%, #00b2ff);
+  }
+  
+  /*---------------------COMMUNITY END---------------------------*/
+  
+  
+  /*--------------------------LOG IN-----------------------------*/
+  
+  .login_root {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /*-------------------------LOG OUT------------------------------*/
+  

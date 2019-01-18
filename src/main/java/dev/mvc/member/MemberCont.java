@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  
 @Controller
+@SessionAttributes({"user_memberno", "user_id"})
 public class MemberCont {
   
   @Autowired
@@ -309,11 +311,14 @@ public class MemberCont {
      session.setAttribute("passwd", passwd);
      session.setAttribute("name", old_memberVO.getName());
      session.setAttribute("grade", old_memberVO.getGrade());
-     
+
+     System.out.println(id);
      // 로그인내역 성공 create
      String ip = request.getRemoteAddr(); 
      String sf = "O";
      int memberno = old_memberVO.getMemberno();
+     mav.addObject("user_memberno", memberno); // Session에 memberno 저장
+     mav.addObject("user_id", id);
      memberProc.create_login_list(ip, sf, memberno);
      // -------------------------------------------------------------------
      // id 관련 쿠기 저장

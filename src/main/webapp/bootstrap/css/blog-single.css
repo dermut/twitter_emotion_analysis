@@ -1,0 +1,143 @@
+/* BLOG PAGE*/
+.blog{
+	margin-bottom: 40px;
+}
+
+.blog .thumbnail{
+	padding: 0; 
+	border: none;
+	margin-bottom: 30px;
+	background-color: #f0f0f0; 
+	border-radius: 0;
+}
+
+.blog .thumbnail img{
+	border-bottom: 2px solid #2796de;
+}
+
+.blog .thumbnail .caption .btn.btn-primary{
+	border-radius: 2px; 
+	border-color: transparent; 
+	background-color: #2796de;  
+}
+
+.blog .thumbnail .caption{
+	padding: 30px 20px;
+}
+
+.blog .thumbnail .caption h3{
+	margin-top: 0;
+	font-size: 22px; 
+	line-height: 1.2;
+}
+
+.blog .thumbnail .caption p{
+	margin-bottom: 15px;
+}
+
+.blog .options{
+	margin-bottom: 10px;
+}
+
+.blog .options a {
+	color: #999;
+	font-family: "Times New Roman";
+	font-size: 13px;
+	font-style: oblique;
+	letter-spacing: 1px;
+	margin-right: 5px;
+	text-decoration: none;
+	text-transform: capitalize;
+}
+.blog .options a .fa{
+	color: #2796de;
+	margin-right: 2px;
+}
+
+.blog .pagination li a{
+	color: #999;
+}
+
+.blog .pagination li.active a{
+	color: #fff;
+	background-color: #2796de;
+	border-color: #2796de;
+}
+
+/* SINGLE PAGE */
+
+.single-detail h1{
+	font-size: 30px; 
+	line-height: 1.4; 
+	margin-bottom: 50px; 
+}
+
+.single-detail h2{
+	margin-bottom: 10px; 
+	font-size: 22px;
+}
+
+.single-detail img{
+	margin-bottom: 30px; 
+	border-bottom: 2px solid #2796de; 
+}
+
+.single-deltail p{
+	font-size: 10px;
+	margin-bottom: 20px;
+}
+
+.single-detail blockquote{
+	font-family: 'Times New Roman';
+	border-left: 5px solid #2796de;
+	font-size: 15px !important; 
+	font-style: oblique;
+	margin: 20px 0 20px 15px;
+	padding: 10px 20px;
+}
+
+.comments{
+	margin-bottom: 50px;
+	margin-top: 40px; 
+}
+
+.comments h2{
+	color: #999;
+	margin-bottom: 30px; 
+	padding-top: 20px;
+	border-top: 1px dashed #999; 
+	text-transform: capitalize;
+}
+
+.comments .media{
+	margin-top: 0;
+}
+
+.comments .media-left{
+	padding-top: 6px; 
+	padding-right: 20px
+}
+
+.comments .media-body p{
+	margin-bottom: 25px;
+}
+.comments .media-body h3{
+	font-size: 20px;
+	color: #777;
+}
+
+/* EMEMENTS */
+.btn-source{
+	display: none;
+}
+
+.elements{
+	margin-bottom: 50px;
+}
+
+.elements h1{
+	color: #999;
+	margin-top: 35px;
+	margin-bottom: 20px;
+	text-transform: capitalize;
+}

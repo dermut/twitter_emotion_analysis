@@ -13,35 +13,45 @@
 
 </head> 
 <body>
-<DIV class='container'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>
-
-<DIV class='title_line'>알림</DIV>
-
-<DIV class='message'>
-  <fieldset class='fieldset_basic'>
-    <UL>
-      <c:choose>
-        <c:when test="${param.count == 1 }">
-          <LI class='li_none'>새로운 카테고리 그룹을 등록했습니다.</LI>
-        </c:when>
-        <c:otherwise>
-          <LI class='li_none'>새로운 카테고리 그룹 등록에 실패했습니다.</LI>
-        </c:otherwise>
-      </c:choose>
-      <LI class='li_none'>
-        <br>
-        <button type='button' onclick="location.href='./list.do'">목록</button>
-      </LI>
-     </UL>
-  </fieldset>
-
-</DIV>
-
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+<div class="main_wrapper main_wrapper--index">
+  <div class="top">
+    <c:import url="/menu/top.jsp"/>
+  </div>
+  
+  <div class="top_second">
+    <c:import url="/menu/top_second.jsp"/>
+  </div>
+  
+  <div class="main_container">
+    <div class="contents" align="center">
+    
+		<DIV class='title_line'>알림</DIV>
+		
+		<DIV class='message'>
+		  <fieldset class='fieldset_basic'>
+		    <UL>
+		      <c:choose>
+		        <c:when test="${param.count == 1 }">
+		          <LI class='li_none'>새로운 카테고리 그룹을 등록했습니다.</LI>
+		        </c:when>
+		        <c:otherwise>
+		          <LI class='li_none'>새로운 카테고리 그룹 등록에 실패했습니다.</LI>
+		        </c:otherwise>
+		      </c:choose>
+		      <LI class='li_none'>
+		        <br>
+		        <button type='button' onclick="location.href='./list.do'">목록</button>
+		      </LI>
+		     </UL>
+		  </fieldset>
+		
+		</DIV>
+		
+		</DIV> <!-- content END -->
+		<jsp:include page="/menu/bottom.jsp" flush='false' />
+		
+	</DIV> <!-- container END -->
+</div>
 </body>
 
 </html> 

@@ -105,7 +105,13 @@ public class BoardCont {
     HttpHeaders responseHeaders = new HttpHeaders();
     List<Categrp_BoardVO> list = boardProc.list();
 
+    for(int index=0; index < list.size(); index++) {
+      list.get(index).setId(boardProc.getId(list.get(index).getMemberno()));
+    }
+    
     JSONArray json = new JSONArray(list);
+    
+    
     
     return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
   }

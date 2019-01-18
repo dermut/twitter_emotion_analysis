@@ -47,12 +47,23 @@ public class BoardProc implements BoardProcInter {
   }
 
   @Override
+  public int delete_by_categrp(int categrpno) {
+    return boardDAO.delete_by_categrp(categrpno);
+  }
+
+  @Override
   public int count_by_board(int boardno) {
     return boardDAO.count_by_board(boardno);
   }
   
+  @Override
   public int delete_contents_by_board(int boardno) {
     return boardDAO.delete_contents_by_board(boardno); 
+  }
+
+  @Override
+  public String getId(int memberno) {
+    return boardDAO.getId(memberno);
   }
 
 }

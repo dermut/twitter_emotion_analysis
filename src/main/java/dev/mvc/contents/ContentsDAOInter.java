@@ -76,7 +76,7 @@ public interface ContentsDAOInter{
   
   public List<ReplyVO> reply_list();
   
-  public List<ReplyVO> reply_by_contents(int contentsno);
+  public List<ReplyIDVO> reply_by_contents(int contentsno);
   
   public ReplyVO reply_read(int replyno);
   
@@ -85,6 +85,8 @@ public interface ContentsDAOInter{
   public int reply_delete(int replyno);
   
   public int count_reply_by_contents(int contentsno);
+  
+  public String id_by_reply(int memberno);
 }
 
 

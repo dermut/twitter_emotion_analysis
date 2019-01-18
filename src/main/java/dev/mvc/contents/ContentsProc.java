@@ -276,8 +276,14 @@ public class ContentsProc implements ContentsProcInter {
   }
 
   @Override
-  public List<ReplyVO> reply_by_contents(int contentsno) {
-    return contentsDAO.reply_by_contents(contentsno);
+  public List<ReplyIDVO> reply_by_contents(int contentsno) {
+    List<ReplyIDVO> list = contentsDAO.reply_by_contents(contentsno);
+    
+    for(int index=0; index < list.size(); index++) {
+      list.get(index).setId(contentsDAO.id_by_reply(list.get(index).getMemberno()));
+    }
+    
+    return list;
   }
 
   @Override
@@ -298,6 +304,11 @@ public class ContentsProc implements ContentsProcInter {
   @Override
   public int count_reply_by_contents(int contentsno) {
     return contentsDAO.count_reply_by_contents(contentsno);
+  }
+
+  @Override
+  public String id_by_reply(int memberno) {
+    return contentsDAO.id_by_reply(memberno);
   }
 
   

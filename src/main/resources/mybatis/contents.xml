@@ -103,7 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                             WHERE m.memberno = c.memberno AND c.boardno=#{boardno} AND c.content LIKE '%' || #{word} || '%'  
                           </otherwise>
                         </choose>
-                        ORDER BY c.contentsno ASC
+                        ORDER BY c.contentsno DESC
               )            
     )
     WHERE <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]> 
@@ -126,7 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
   <!-- 콘텐츠별 목록 -->
-  <select id="reply_by_contents" parameterType="int" resultType="ReplyVO">
+  <select id="reply_by_contents" parameterType="int" resultType="ReplyIDVO">
     SELECT replyno, content, contentsno, rdate, memberno
     FROM reply
     WHERE contentsno=#{contentsno}
@@ -153,12 +153,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </delete>
   
   <!-- 콘텐츠별 댓글 수 -->
-  
-  <select id="count_reply_by_contents" parameterType="int">
+  <select id="count_reply_by_contents" parameterType="int" resultType="int">
     SELECT COUNT(*) as cnt
     FROM reply
     WHERE contentsno=#{contentsno}
   </select>
+  
+  <!-- 댓글의 아이디 찾기 -->
+  <select id="id_by_reply" parameterType="int" resultType="String">
+    SELECT id
+    FROM member
+    WHERE memberno=#{memberno}
+  </select>
+  
   
   <!-- ******************** 댓글 관련 종료 ******************** -->
     

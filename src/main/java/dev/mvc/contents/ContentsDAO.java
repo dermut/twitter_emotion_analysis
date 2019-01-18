@@ -77,7 +77,7 @@ public class ContentsDAO implements ContentsDAOInter {
   }
 
   @Override
-  public List<ReplyVO> reply_by_contents(int contentsno) {
+  public List<ReplyIDVO> reply_by_contents(int contentsno) {
     return sqlSessionTemplate.selectList("contents.reply_by_contents", contentsno);
   }
 
@@ -100,6 +100,12 @@ public class ContentsDAO implements ContentsDAOInter {
   public int count_reply_by_contents(int contentsno) {
     return sqlSessionTemplate.selectOne("contents.count_reply_by_contents", contentsno);
   }
+
+  @Override
+  public String id_by_reply(int memberno) {
+    return sqlSessionTemplate.selectOne("contents.id_by_reply", memberno);
+  }
+  
 }
 
 

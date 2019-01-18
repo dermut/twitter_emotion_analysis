@@ -6,25 +6,33 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>TOP</title>
+
+<link href="${pageContext.request.contextPath}/css/style.css" rel="Stylesheet" type="text/css">
+
 </head>
 <body>
-<div class="container">
-  <div class="top_right">
-    <A class='menu_link'  href='${pageContext.request.contextPath}/categrp/list.do'>카테고리 그룹</A> <span class='top_menu1'> | </span>
-    <A class='menu_link'  href='${pageContext.request.contextPath}/board/list.do'>카테고리 목록</A> <span class='top_menu1'> | </span>
-    <A class='menu_link'  href='${pageContext.request.contextPath}/member/list.do'>회원 목록</A> <span class='top_menu1'> | </span>
-    <A class='menu_link'  href='${pageContext.request.contextPath}/login/login_list.do'>로그인 내역</A> <span class='top_menu1'> | </span>
-
-    <c:choose>
-        <c:when test="${sessionScope.grade == null}">
-          <button type="button" class="login_button" id="login" name="login" onclick="location.href='${pageContext.request.contextPath}/member/login.do'">로그인</button>
-        </c:when>
-        <c:otherwise>
-          ${sessionScope.id } <button type="button" class="logout_button" id="logout" name="logout" onclick="location.href='${pageContext.request.contextPath}/member/logout.do'">로그아웃</button>
-        </c:otherwise>
-      </c:choose>
-    
+<div class="top_container">
+  
+    <ul class="sites">
+      <li class="site">
+        <a href="${pageContext.request.contextPath}"><img alt="TEA Home Logo" src="${pageContext.request.contextPath}/image/home.png"></a>
+      </li>
+    </ul>
+      
+	  <ul class="login_list">
+	    <li class="login">
+		    <c:choose>
+	        <c:when test="${sessionScope.grade == null}">
+	          <button type="button" class="login_button" id="login" name="login" onclick="location.href='${pageContext.request.contextPath}/member/login.do'">로그인</button>
+	        </c:when>
+	        <c:otherwise>
+	          <div style="color:white; display: inline;">○ 접속한 아이디: </div>
+	          <div style="color:white; font-weight: bold; display: inline;">${sessionScope.id } &nbsp&nbsp | &nbsp&nbsp</div>
+	          <button class="login_button" type="button" class="logout_button" id="logout" name="logout" onclick="location.href='${pageContext.request.contextPath}/member/logout.do'">로그아웃</button>
+	        </c:otherwise>
+		    </c:choose>
+	    </li>
+    </ul>
   </div>
-</div>
 </body>
 </html>

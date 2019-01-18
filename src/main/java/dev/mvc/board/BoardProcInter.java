@@ -43,8 +43,12 @@ public interface BoardProcInter {
    * @return
    */
   public int delete(int boardno);
+
+  public int delete_by_categrp(int categrpno);
   
   public int count_by_board(int boardno);
-
+  
   public int delete_contents_by_board(int boardno);
+  
+  public String getId(int memberno);
 }

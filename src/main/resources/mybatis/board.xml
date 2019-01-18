@@ -77,6 +77,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM contents
     WHERE boardno=#{boardno}
   </delete>
+  
+  <select id="getId" resultType="String" parameterType="int">
+    SELECT id
+    FROM member
+    WHERE memberno=#{memberno}
+  </select>
 </mapper>
 
 

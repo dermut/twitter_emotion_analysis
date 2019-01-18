@@ -5,5 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="freshtomato">
-
+  
+  <insert id="create" parameterType="TomatoVO">
+    INSERT INTO freshtomato(ftno, ftrate, rdate, wordno)
+    VALUES((SELECT NVL(MAX(ftno), 0)+1 as ftno FROM ftno), #{ftrate}, sysdate, #{wordno})
+  </insert>
+  
+  <select id="read" parameterType="int" resultType="TomatoVO">
+    SELECT FROM freshtomato
+    WHERE ftno = #{ftno}
+  </select>
 </mapper>

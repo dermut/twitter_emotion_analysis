@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "word">
+<mapper namespace="word">
 
   <insert id="create" parameterType="String">
     INSERT INTO word(wordno, word, rdate) 
@@ -12,9 +12,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <!-- 검색어 별 갯수 -->  
   <select id="count_by_word" parameterType="String" resultType="int">
-      SELECT COUNT(*) as cnt
-      FROM word
-      WHERE word = #{word}
+    SELECT COUNT(*) as cnt
+    FROM word
+    WHERE word = #{word}
   </select>
   
   <!-- 총 검색어 갯수 -->
@@ -23,10 +23,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM word
   </select>
   
+  <!-- 단어 전체 리스트 -->
   <select id="word_list" resultType="WordVO">
     SELECT wordno, word, rdate
     FROM word
     ORDER BY wordno DESC
   </select>
+  
+  <!-- 검색어번호가 중복될 경우 가장 높은 wordno를 가져옴 -->  
+  <select id="wordno_by_word" parameterType="String" resultType="int">
+    SELECT max(wordno) 
+    KEEP(DENSE_RANK FIRST ORDER BY wordno DESC) 
+    FROM word
+    WHERE word = #{word}
+  </select>
 
+  <!-- Word 테이블에 이미 있는 단어인지를 판별하는 쿼리 -->
+  <select id="search_word" parameterType="String" resultType="int">
+    SELECT COUNT(*) as cnt
+    FROM word
+    WHERE word=#{word} and TO_CHAR(rdate, 'YYYY/MM/DD')=TO_CHAR(sysdate, 'YYYY/MM/DD')
+  </select>
 </mapper> 

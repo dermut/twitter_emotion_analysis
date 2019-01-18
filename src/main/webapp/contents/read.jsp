@@ -262,7 +262,7 @@
     $('#panel_create').show();
     $('#panel_update').hide();
     $('#panel_delete').hide();
-  }
+  } 
   
   
   function reply_by_contents(contentsno) {
@@ -279,7 +279,7 @@
         for(index=0; index < rdata.length; index++) {
           panel += "<TR>";
           panel += "<TD style='text-align: center ;'>"+(index+1)+"</TD>";
-          panel += "<TD>"+rdata[index].memberno+"</TD>";
+          panel += "<TD>"+rdata[index].id+"</TD>";
           panel += "<TD>"+rdata[index].content+"</TD>";
           panel += "<TD>"+rdata[index].rdate.substring(0, 10)+"</TD>";
           panel += "<TD>"
@@ -362,26 +362,22 @@
     </ul>
   </fieldset>
   
-  <DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #FFAAAA; width: 100%; text-align: center;'>
-    <FORM name='frm_delete' id='frm_delete'>
-      <input type='hidden' name='replyno' id='replyno' value=''>
-      <div id='msg_delete'></div>
-    </FORM>
-  </DIV>
-  
   <div id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #DDDDDD; width: 100%; text-align: center;'>
     <FORM name='frm_create_reply' id="frm_create_reply" method="post" action='./reply_create.do'>
-	    <input type="hidden" name="nowPage" id="nowPage" value="${param.nowPage }">
-	    <input type="hidden" name="word" id="word" value="${param.word }">
-	    <input type="hidden" name="contentsno" value="${contentsVO.contentsno }">
-	    <input type="hidden" name="memberno" value=1> <!-- 수정해야 함. 로그인되어있는 아이디! -->
-	      <ul>
-		      <li>
-			      <textarea id="content" name="content" rows="5" cols="30"></textarea>
-		      </li>
-	      </ul>
-	     <input type="submit" id="reply_create_submit">
-	  </FORM>
+      <input type="hidden" name="nowPage" id="nowPage" value="${param.nowPage }">
+      <input type="hidden" name="word" id="word" value="${param.word }">
+      <input type="hidden" name="contentsno" value="${contentsVO.contentsno }">
+      <input type="hidden" name="memberno" value='${user_memberno }'> <!-- 수정해야 함. 로그인되어있는 아이디! -->
+        <ul>
+          <li>
+            <span>${user_id }</span>
+          </li>
+          <li>
+            <textarea id="content" name="content" rows="5" cols="30"></textarea>
+          </li>
+        </ul>
+       <input type="submit" id="reply_create_submit">
+    </FORM>
   </div>
   
   <!--  수정폼은 항상 PK 전달한다. -->
@@ -398,6 +394,13 @@
     </FORM>
   </DIV>
   
+  <DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #FFAAAA; width: 100%; text-align: center;'>
+    <FORM name='frm_delete' id='frm_delete'>
+      <input type='hidden' name='replyno' id='replyno' value=''>
+      <div id='msg_delete'></div>
+    </FORM>
+  </DIV>
+  
   <TABLE class='table table-striped'>
   <colgroup>
     <col style='width: 10%;'/>
@@ -407,16 +410,6 @@
     <col style='width: 20%;'/>
   </colgroup>
   
-  <thead>  
-  <TR>
-    <TH style='text-align: center ;'>번호</TH>
-    <TH style='text-align: center ;'>아이디</TH>
-    <TH style='text-align: center ;'>내용</TH>
-    <TH style='text-align: center ;'>등록일자</TH>
-    <TH style='text-align: center ;'>기능</TH>
-  </TR>
-  </thead>
- 
   <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
   </tbody>
   

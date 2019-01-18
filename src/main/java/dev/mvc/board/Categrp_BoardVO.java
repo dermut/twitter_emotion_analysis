@@ -11,6 +11,8 @@ public class Categrp_BoardVO {
   private String rdate;
   private int memberno;
   
+  // id
+  private String id;
   
   public Categrp_BoardVO() {
     super();
@@ -61,5 +63,13 @@ public class Categrp_BoardVO {
   public void setMemberno(int memberno) {
     this.memberno = memberno;
   }
+  public String getId() {
+    return id;
+  }
+  public void setId(String id) {
+    this.id = id;
+  }
+  
+  
 }
  

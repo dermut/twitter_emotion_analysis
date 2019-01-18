@@ -31,15 +31,15 @@
 <jsp:include page="/menu/top.jsp" flush='false' />
 <DIV class='content'>
  
-  <ASIDE style='float: left;'>
+<!--   <ASIDE style='float: left;'>
       <A href='./word/list.do'>검색어 목록</A>  
-  </ASIDE>
+  </ASIDE> -->
  
   <div class='menu_line'></div>
   
  
   <table class="table table-striped" style='width: 100%; text-align: center;'>
-  <caption>관리자만 접근가능합니다.</caption>
+  <caption>검색어 목록</caption>
   <colgroup>
     <col style='width: 20%;'/>
     <col style='width: 30%;'/>
@@ -66,10 +66,11 @@
   
 </TABLE>
  
-<!-- <DIV class='bottom_menu'>
-  <button type='button' onclick="location.href='../member/index.do'">돌아가기</button>
+<DIV class='bottom_menu'>
+  <button type='button' onclick="location.href='../'">돌아가기</button>
   
-</DIV> -->
+</DIV> 
+ 
  
 </DIV> <!-- content END -->
 <jsp:include page="/menu/bottom.jsp" flush='false' />
