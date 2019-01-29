@@ -38,21 +38,22 @@
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var panel = '';
- 
+
         for(index=0; index < rdata.length; index++) {
           panel += "<TR>";
           // panel += "<TD style='text-align: center ;'>"+rdata[index].boardno+"</TD>";
           panel += "<TD style='text-align: center ;'>"+(index+1)+"</TD>";
           panel += "<TD>"+rdata[index].categrp_name+"</TD>";
-          panel += "<TD>"+rdata[index].board_name+"</TD>";
-          panel += "<TD>"+rdata[index].memberno+"</TD>";
+          panel += "<TD><A href='../contents/list_by_board_search_paging.do?boardno="+rdata[index].boardno+"'>"+rdata[index].board_name+"</A></TD>";
+          panel += "<TD>"+rdata[index].id+"</TD>";
           panel += "<TD>"+rdata[index].rdate.substring(0, 10)+"</TD>";
           panel += "<TD style='text-align: center;'>"; 
-          panel += "  <A href=\"javascript:update("+rdata[index].boardno+")\"><IMG src='./images/update.png' title='수정'></A>";  
-          panel += "  <A href=\"javascript:deleteOne("+rdata[index].boardno+")\"><IMG src='./images/delete.png' title='삭제'></A>";
+          panel += "  <A href='../contents/create.do?boardno="+rdata[index].boardno+"'><IMG src='./images/create.png' name='등록'></A>";
+          panel += "  <A href=\"javascript:update("+rdata[index].boardno+")\"><IMG src='./images/update.png' name='수정'></A>";  
+          panel += "  <A href=\"javascript:deleteForm("+rdata[index].boardno+")\"><IMG src='./images/delete.png' name='삭제'></A>"; 
           panel += "</TD>";
           panel += "</TR>";
-        }
+        } 
         // alert(panel);
         // return;
         $('#tbody_panel').empty();
@@ -252,96 +253,109 @@
 </head> 
  
 <body>
-<div class="main_wrapper main_wrapper--index">
-  <div class="top">
-    <c:import url="/menu/top.jsp"/>
-  </div>
-  
-  <div class="top_second">
-    <c:import url="/menu/top_second.jsp"/>
-  </div>
+<div class="main_wrapper">
+  <c:import url="/menu/top.jsp"/>
+
+  <c:import url="/menu/top_second.jsp"/>
   
   <div class="main_container">
     <div class="contents" align="center">
 		  <DIV id='main_panel'></DIV>
 		  
-		  <DIV class='title_line'>${categrpVO.name } 카테고리</DIV>
-		 
-		  <DIV id='panel_delete' style='display: none; padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
-			  <FORM name='frm_delete' id='frm_delete' method='post' action='./delete.do'>
-			    <input type='hidden' name='boardno' id='boardno' value=''>
-			    
-			    <DIV id='msg_delete' style='margin: 20px auto;'></DIV>
-			  </FORM>
-		  </DIV>
-		  
-		  <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F5F5F5; width: 100%; text-align: center;'>
-		    <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
-		      <!-- 개발시 임시 값 사용 -->
-		      <!-- 
-		      <input type='hidden' name='categrpno' id='categrpno' value='1'>
-		       -->
-		       
-		      <label for='categrp'>카테고리 그룹 번호</label>
-		      <input type='number' name='categrpno' id='categrpno' value='${param.categrpno }' required="required" style='width: 5%;'>
-		      
-		      <label for='name'>카테고리 이름</label>
-		      <input type='text' name='name' id='name' size='10' value='' required="required" style='width: 10%;'>
-		 
-		      <label for='memberno'>접근 계정</label>
-		      <input type='text' name='memberno' id='memberno' value='' required="required" style='width: 10%;'>
-		 
-		      <button type="button" id='submit' onclick="create()">등록</button>
-		      <button type="button" onclick="create_update_cancel()">취소</button>
-		    </FORM>
-		  </DIV>
-		  
-		  <!--  수정폼은 항상 PK 전달한다. -->
-		  <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #DDDDDD; width: 100%; text-align: center;'>  
-		    <FORM name='frm_update' id='frm_update' method='POST' action='./update.do'>
-		      <input type='hidden' name='boardno' id='boardno' value=''> 
-		 
-		      <label for='title'>카테고리 그룹 번호</label>
-		      <input type='number' name='categrpno' id='categrpno' size='7' value='' required="required" style='width: 3%;'>
-		        
-		      <label for='name'>게시판 이름</label>
-		      <input type='text' name='name' id='name' size='15' value='' required="required" style='width: 20%;'>
-		 
-		      <label for='memberno'>접근 계정</label>
-		      <input type='text' name='memberno' id='memberno' value='' required="required" style='width: 10%;'>
-		 
-		      <button type="submit" id='submit'>저장</button>
-		      <button type="button" onclick="create_update_cancel()">취소</button>
-		    </FORM>
-		  </DIV>
-		  
-		<TABLE class='table table-striped'>
-		  <colgroup>
-		<%--     <col style='width: 10%;'/>
-		    <col style='width: 10%;'/> --%>
-		    <col style='width: 10%;'/>
-		    <col style='width: 10%;'/>
-		    <col style='width: 25%;'/>
-		    <col style='width: 10%;'/>
-		    <col style='width: 10%;'/>
-		    <col style='width: 10%;'/>
-		    <col style='width: 10%;'/>
-		    <col style='width: 15%;'/>
-		 
-		  </colgroup>
-		  <thead>  
-		  <TR>
-		<!--     <TH style='text-align: center ;'>categrpno</TH>
-		    <TH style='text-align: center ;'>seqno</TH> -->
-		    <TH style='text-align: center ;'>번호</TH>
-		    <TH style='text-align: center ;'>그룹</TH>
-		    <TH style='text-align: center ;'>카테고리</TH>
-		    <TH style='text-align: center ;'>접근계정</TH>
-		    <TH style='text-align: center ;'>등록일자
-		    <TH style='text-align: center ;'>기타</TH>
-		    
-		  </TR>
-		  </thead>
+		  <div class="title_l">
+        <h2>${categrpVO.name}</h2>
+      </div>
+      
+      <DIV class="form-group" id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F5F5F5; width: 40%;'>
+        <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
+          <div class="form-group">
+            <input type='hidden' name='categrpno' id='categrpno' value=''>
+            <label class="control-label" style="padding:5px 0px 5px 0px;">게시판 등록</label>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label" style="padding:5px 61% 5px 0px;">게시판</label>
+          
+            <select class="form-control" name='categrpno' id='categrpno' style="width: 70%; padding:0px 0px 3px 0px;">
+              <c:forEach var="categrpVO" items="${categrp_list}">
+                <option value='${categrpVO.categrpno }'>${categrpVO.name}</option>
+              </c:forEach>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label" style="padding:5px 56% 5px 0px;">게시판 이름</label>
+            <input class="form-control" type='text' name='name' id='name' size='10' value='' required="required" style="width:70%;">
+            <input type='hidden' class="form-control" name='memberno' id='memberno' value='${user_memberno}' required="required">
+          </div>
+          
+          <div class="button-group">
+            <button class="btn btn-primary btn-info" type="button" id='submit' onclick="create();" style="background-image:none;">등록</button>
+            <button class="btn btn-secondary btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>
+          </div>
+        </FORM>
+      </DIV>
+        
+      <DIV class="form-group" id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #F5F5F5; width: 40%;'>  
+        <FORM name='frm_update' id='frm_update' method='POST' action='./update.do'>
+          <div class="form-group">
+            <label class="control-label" style="padding:5px 0px 5px 0px;">게시판 수정</label>
+          </div>
+          
+          <div class="form-group">
+            <input type='hidden' name='boardno' id='boardno' value=''> 
+          
+            <label class="control-label" style="padding:5px 61% 5px 0px;">게시판 </label>
+            <select class="form-control" name='categrpno' id='categrpno' style="width:70%;">
+              <c:forEach var="categrpVO" items="${categrp_list}">
+                <option value='${categrpVO.categrpno }'>${categrpVO.name}</option>
+              </c:forEach>
+            </select>
+          </div>   
+          
+          <div class="form-group">
+            <label class="control-label" style="padding:5px 56% 5px 0px;">게시판 이름</label>
+            <input class="form-control" type='text' name='name' id='name' size='15' value='' required="required" style="width:70%;">
+            <input class="form-control" type='hidden' name='memberno' id='memberno' value='${user_memberno }' required="required">
+          </div>
+          
+          <div class="button-group">
+            <button class="btn btn-primary btn-info" type="submit" name="submit">저장</button>
+            <button class="btn btn-secondary btn-info" type="button" onclick="action_cancel()">취소</button>
+          </div>
+        </FORM>
+      </DIV>  
+        
+      <DIV class="form-group" id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #FFAAAA; width: 100%; text-align: center;'>
+        <FORM name='frm_delete' id='frm_delete'>
+          <input type='hidden' name='categrpno' id='categrpno' value=''>
+          <input type='hidden' name='boardno' id='boardno' value=''>
+          
+          <div id='msg_delete'></div>
+        </FORM>
+      </DIV>
+      
+    <TABLE class='table table-striped table-hover' style='width: 90%; background-color: #F9F9F9; text-align: center;'>
+      <colgroup>
+        <col style='width: 10%;'/>
+        <col style='width: 10%;'/>
+        <col style='width: 35%;'/>
+        <col style='width: 15%;'/>
+        <col style='width: 10%;'/>
+        <col style='width: 20%;'/>
+     
+      </colgroup>
+      <thead>  
+      <TR>
+        <TH style='text-align: center ;'>번호</TH>
+        <TH style='text-align: center ;'>그룹</TH>
+        <TH style='text-align: center ;'>게시판</TH>
+        <TH style='text-align: center ;'>접근계정</TH>
+        <TH style='text-align: center ;'>등록일자</TH>
+        <TH style='text-align: center ;'>기타</TH>
+        
+      </TR>
+      </thead>
 		 
 		  <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
 		  </tbody>

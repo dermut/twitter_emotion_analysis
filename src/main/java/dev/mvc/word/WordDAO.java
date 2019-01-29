@@ -43,8 +43,8 @@ public class WordDAO implements WordDAOInter{
     }
 
     @Override
-    public int search_word(String word) {
-      return sqlSessionTemplate.selectOne("word.search_word", word);
+    public int isExist(String word) {
+      int count = sqlSessionTemplate.selectOne("word.isExist", word);
+      return count;
     }
-    
 }

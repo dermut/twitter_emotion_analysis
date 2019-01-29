@@ -36,19 +36,6 @@ public class ContentsProc implements ContentsProcInter {
     return contentsDAO.total_count();
   }
 
-  @Override
-  public List<ContentsVO> list_by_board(int boardno) {
-    List<ContentsVO> list = contentsDAO.list_by_board(boardno);
-    
-    int count = list.size();
-    for (int i=0; i < count; i++) {
-      ContentsVO contentsVO = list.get(i);
-      contentsVO.setThumb(getThumb(contentsVO));
-    }
-    
-    return list;
-  }
-  
   /**
    * 이미지 목록중에 첫번째 이미지 파일명을 추출하여 리턴
    * @param contentsVO
@@ -122,19 +109,6 @@ public class ContentsProc implements ContentsProcInter {
   }
 
   @Override
-  public List<ContentsVO> list_by_board_search(HashMap hashMap) {
-    List<ContentsVO> list = contentsDAO.list_by_board_search(hashMap);
-    
-    int count = list.size();
-    for (int i=0; i < count; i++) {
-      ContentsVO contentsVO = list.get(i);
-      contentsVO.setThumb(getThumb(contentsVO));
-    }
-    
-    return list;
-  }
-
-  @Override
   public int search_count(HashMap hashMap) {
     return contentsDAO.search_count(hashMap);
   }
@@ -162,13 +136,20 @@ public class ContentsProc implements ContentsProcInter {
     hashMap.put("endNum", endNum);
     
     List<ContentsVO> list = contentsDAO.list_by_board_search_paging(hashMap); 
+    for(int index=0; index < list.size(); index++){
+      list.get(index).setId(id_by_reply(list.get(index).getMemberno()));
+    }
     Iterator<ContentsVO> iter = list.iterator();
+    
+    int index = 0;
     
     while(iter.hasNext() == true) {
       ContentsVO contentsVO = iter.next();
       String title = Tool.textLength(contentsVO.getName(), 90);
       title = Tool.convertChar(title); // 태그 처리
       contentsVO.setName(title);
+      contentsVO.setCount_reply(contentsDAO.count_reply_by_contents(list.get(index).getContentsno()));
+      index += 1;
       
       String thumbs = contentsVO.getThumb();
       if (thumbs != null) { // preview 이미지가 있는지 검사

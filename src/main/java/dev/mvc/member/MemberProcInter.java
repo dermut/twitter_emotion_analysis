@@ -1,85 +1,88 @@
 package dev.mvc.member;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import dev.mvc.contents.Contents;
+
 public interface MemberProcInter {
  
   /**
-   * Áßº¹ ¾ÆÀÌµğ °Ë»ç
+   * ì¤‘ë³µ ì•„ì´ë”” ê²€ì‚¬
    * @param id
-   * @return Áßº¹ ¾ÆÀÌµğ °¹¼ö
+   * @return ì¤‘ë³µ ì•„ì´ë”” ê°¯ìˆ˜
    */
   public int checkId(String id);
   
   /**
-  È¸¿ø µî·Ï
+  íšŒì› ë“±ë¡
   @param memberVO
-  @return µî·ÏµÈ È¸¿ø¼ö 1 or 0
+  @return ë“±ë¡ëœ íšŒì›ìˆ˜ 1 or 0
   */
   public int create(MemberVO memberVO);
   
   /**
-   * È¸¿ø ÀüÃ¼ ¸ñ·Ï
+   * íšŒì› ì „ì²´ ëª©ë¡
    * @return
    */
   public List<MemberVO> list();
   
   /**
-   * ·Î±×ÀÎµÈ È¸¿ø °èÁ¤ÀÎÁö °Ë»çÇÕ´Ï´Ù.
+   * ë¡œê·¸ì¸ëœ íšŒì› ê³„ì •ì¸ì§€ ê²€ì‚¬í•©ë‹ˆë‹¤.
    * @param request
-   * @return true: °ü¸®ÀÚ
+   * @return true: ê´€ë¦¬ì
    */
   public boolean isMember(HttpSession session);
   
   /**
-   * ·Î±×ÀÎµÈ È¸¿ø °èÁ¤ÀÎÁö °Ë»çÇÕ´Ï´Ù.
+   * ë¡œê·¸ì¸ëœ íšŒì› ê³„ì •ì¸ì§€ ê²€ì‚¬í•©ë‹ˆë‹¤.
    * @param request
-   * @return true: °ü¸®ÀÚ
+   * @return true: ê´€ë¦¬ì
    */
   public boolean isMaster(HttpSession session);
   
   /**
-   * Á¶È¸
+   * ì¡°íšŒ
    * @param mno
    * @return
    */
  public MemberVO read(int memberno);
   
   /**
-   * Á¶È¸
+   * ì¡°íšŒ
    * @param id
    * @return
    */
  public MemberVO readById(String id);
  
  /**
-  * º¯°æ
+  * ë³€ê²½
   * @param memberVO
   * @return
   */
  public int update(MemberVO memberVO);
   
  /**
-  * ÆĞ½º¿öµå º¯°æ
+  * íŒ¨ìŠ¤ì›Œë“œ ë³€ê²½
   * 
-  * @param mno È¸¿ø ¹øÈ£
-  * @param passwd º¯°æÇÒ ÆĞ½º¿öµå °ª
+  * @param mno íšŒì› ë²ˆí˜¸
+  * @param passwd ë³€ê²½í•  íŒ¨ìŠ¤ì›Œë“œ ê°’
   * @return
   */
  public int passwd_update(int memberno, String passwd);
  
  /**
-  * ·¹ÄÚµå 1°Ç »èÁ¦
-  * @param mno »èÁ¦ÇÒ È¸¿ø ¹øÈ£
-  * @return »èÁ¦µÈ ·¹ÄÚµå °¹¼ö
+  * ë ˆì½”ë“œ 1ê±´ ì‚­ì œ
+  * @param mno ì‚­ì œí•  íšŒì› ë²ˆí˜¸
+  * @return ì‚­ì œëœ ë ˆì½”ë“œ ê°¯ìˆ˜
   */
  public int delete(int memberno);
  
  /**
-  * ·Î±×ÀÎ
+  * ë¡œê·¸ì¸
   * @param id
   * @param passwd
   * @return
@@ -87,15 +90,28 @@ public interface MemberProcInter {
  public int login(String id, String passwd);
  
  /**
-  * ·Î±×ÀÎ ³»¿ª »ı¼º
+  * ë¡œê·¸ì¸ ë‚´ì—­ ìƒì„±
   * @param logVO
   * @return
   */
  public int create_login_list(String ip, String sf, int memberno);
  
  /**
-  * ·Î±×ÀÎ ³»¿ª Á¶È¸(È£Ãâ)
+  * ë¡œê·¸ì¸ ë‚´ì—­ ì¡°íšŒ(í˜¸ì¶œ)
   * @return
   */
  public List<LogVO> login_list();
+ 
+ /**
+  * ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Â¡
+  * @param hashmap
+  * @return
+  */
+ public List<LogVO> login_list_paging(HashMap<String, Object> hashmap); 
+ 
+ public int search_count(int memberno);
+ 
+ public String paging(int memberno, int search_count, int nowPage);
+ 
+ 
 }

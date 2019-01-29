@@ -44,9 +44,8 @@ public class WordProc implements WordProcInter{
   }
 
   @Override
-  public int search_word(String word) {
-    return wordDAO.search_word(word);
+  public int isExist(String word) {
+    int count = wordDAO.isExist(word);
+    return count;
   }
-  
-  
 }

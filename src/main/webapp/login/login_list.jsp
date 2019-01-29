@@ -27,28 +27,27 @@
 </head> 
  
 <body>
-<div class="main_wrapper community_wrapper--index">
-  <div class="top">
-    <c:import url="/menu/top.jsp"/>
-  </div>
-  
-  <div class="top_second">
-    <c:import url="/menu/top_second.jsp"/>
-  </div>
-  
+
+
+
+<div class="main_wrapper">
+  <c:import url="/menu/top.jsp"/>
+	
+  <c:import url="/menu/top_second.jsp"/>
+	
   <div class="main_container">
-    <div class="contents" align="center">
+    <div class="contents">
  
       <div class="member_aside" >
         <ASIDE style='float: left; padding:15px 0px 15px 0px;'>
-            <A href='./member/list.do' style="font-weight: bold; color: white;">회원 목록</A>  
+            <A href='./login/login_list.do' style="font-weight: bold; color: white;">로그인 목록</A>  
         </ASIDE>
         <ASIDE style='float: right; padding: 15px 0px 15px 0px;'>
           <A href="javascript:location.reload();" style="font-weight: bold; color: white;">새로고침</A>
           <span class='menu_divide' >│</span> 
-          <A href='./create.do' style="font-weight: bold; color: white;">회원 가입</A>
+          <A href='./create.do' style="font-weight: bold; color: white;">날짜 오름차순 정렬</A>
           <span class='menu_divide' >│</span> 
-          <A href='./list.do' style="font-weight: bold; color: white;">목록</A>
+          <A href='./list.do' style="font-weight: bold; color: white;">날짜 내림차순 정렬</A>
         </ASIDE> 
       </div>
       
@@ -65,11 +64,11 @@
 		  </colgroup>
 		  
 		  <TR>
-		    <TH>번호</TH>
-		    <TH>회원 번호</TH>
-		    <TH>IP</TH>
-		    <TH>로그인 날짜</TH>
-		    <TH>성공 여부</TH>
+		    <TH style="text-align: center;">번호</TH>
+		    <TH style="text-align: center;">회원 번호</TH>
+		    <TH style="text-align: center;">IP</TH>
+		    <TH style="text-align: center;">로그인 날짜</TH>
+		    <TH style="text-align: center;">성공 여부</TH>
 		  </TR>
 		 
 		  <c:forEach var="logVO" items="${list }">
@@ -87,7 +86,11 @@
  
  
     </DIV> <!-- content END -->
-  <jsp:include page="/menu/bottom.jsp" flush='false' />
+    
+	  <div class="main_bottom">
+	    <c:import url="/menu/bottom.jsp"/>
+	  </div>
+	  
   </DIV> <!-- container END -->
 </div>
 </body>

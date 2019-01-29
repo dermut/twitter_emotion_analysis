@@ -37,5 +37,10 @@ public interface WordDAOInter {
    */
   public int wordno_by_word(String word);
   
-  public int search_word(String word);
+  /**
+   * word로 데이터 존재하는 지(중복 방지용)
+   * @param word
+   * @return
+   */
+  public int isExist(String word);
 }

@@ -8,7 +8,7 @@
 <meta charset="UTF-8"> 
 <title></title> 
  
-<link href="../css/style.css" rel="Stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/css/style.css" rel="Stylesheet" type="text/css">
  
 <script type="text/JavaScript"
           src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -27,17 +27,13 @@
 </head> 
  
 <body>
-<div class="main_wrapper community_wrapper--index">
-  <div class="top">
-    <c:import url="/menu/top.jsp"/>
-  </div>
+<div class="main_wrapper">
+  <c:import url="/menu/top.jsp"/>
+
+  <c:import url="/menu/top_second.jsp"/>
   
-  <div class="top_second">
-    <c:import url="/menu/top_second.jsp"/>
-  </div>
-  
-  <div class="main_container">
-    <div class="contents" align="center">
+  <div class="main_container" align=center>
+    <div class="contents" style="width: 80%;">
 	      
       <div class="member_aside" >
 			  <ASIDE style='float: left; padding:15px 0px 15px 0px;'>
@@ -106,7 +102,10 @@
 			</DIV>
  
     </DIV> <!-- content END -->
-  <jsp:include page="/menu/bottom.jsp" flush='false' />
+    
+    <div class="main_bottom">
+      <c:import url="/menu/bottom.jsp"/>
+    </div>
   </DIV> <!-- container END -->
 </div>
 </body>

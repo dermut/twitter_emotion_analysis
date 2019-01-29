@@ -32,11 +32,6 @@ public class ContentsDAO implements ContentsDAOInter {
   }
 
   @Override
-  public List<ContentsVO> list_by_board(int boardno) {
-    return sqlSessionTemplate.selectList("contents.list_by_board", boardno);
-  }
-
-  @Override
   public ContentsVO read(int contentsno) {
     return sqlSessionTemplate.selectOne("contents.read", contentsno);
   }
@@ -49,11 +44,6 @@ public class ContentsDAO implements ContentsDAOInter {
   @Override
   public int delete(int contentsno) {
     return sqlSessionTemplate.update("contents.delete", contentsno);
-  }
-
-  @Override
-  public List<ContentsVO> list_by_board_search(HashMap hashMap) {
-    return sqlSessionTemplate.selectList("contents.list_by_board_search", hashMap);
   }
 
   @Override

@@ -23,14 +23,7 @@ public interface ContentsDAOInter{
    * @return
    */
   public int total_count();
-  
-  /**
-   * Ä«Å×°í¸®º° ¸ñ·Ï
-   * @param boardno
-   * @return
-   */
-  public List<ContentsVO> list_by_board(int boardno);
-  
+
   /**
    * Á¶È¸
    * @param contentsno
@@ -51,13 +44,6 @@ public interface ContentsDAOInter{
    * @return
    */
   public int delete(int contentsno);
-  
-  /**
-   * °Ë»ö ¸ñ·Ï
-   * @param boardno
-   * @return
-   */
-  public List<ContentsVO> list_by_board_search(HashMap hashMap);
 
   /**
    * boardº° °Ë»öµÈ ·¹ÄÚµå °¹¼ö
@@ -84,6 +70,11 @@ public interface ContentsDAOInter{
   
   public int reply_delete(int replyno);
   
+  /**
+   * ÄÜÅÙÃ÷º° ´ñ±Û °¹¼ö ¼¼±â
+   * @param contentsno
+   * @return ÄÜÅÙÃ÷º° ´ñ±Û °¹¼ö
+   */
   public int count_reply_by_contents(int contentsno);
   
   public String id_by_reply(int memberno);

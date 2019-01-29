@@ -1,5 +1,6 @@
 package dev.mvc.member;
  
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
- 
+
 @Controller
 @SessionAttributes({"user_memberno", "user_id"})
 public class MemberCont {
@@ -40,234 +41,233 @@ public class MemberCont {
     return mav;
   }
   
-//http://localhost:9090/tea/member/create.do
- @RequestMapping(value = "/member/create.do", method = RequestMethod.GET)
- public ModelAndView create() {
-   ModelAndView mav = new ModelAndView();
+  //http://localhost:9090/tea/member/create.do
+  @RequestMapping(value = "/member/create.do", method = RequestMethod.GET)
+  public ModelAndView create() {
+    ModelAndView mav = new ModelAndView();
 
-   mav.setViewName("/member/create");
+    mav.setViewName("/member/create");
    
-   return mav;
- }
+    return mav;
+  }
  
 
- /**
-  * Áßº¹ ID °Ë»ç
-  * http://localhost:9090/tea/member/checkId.do?id=user1
-  * °á°ú: {"cnt":1}
-  * @param id
-  * @return
-  */
- @ResponseBody
- @RequestMapping(value = "/member/checkId.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
- public String checkId(String id) {
-  JSONObject json = new JSONObject();
-  int cnt = memberProc.checkId(id);
+  /**
+   * ì¤‘ë³µ ID ê²€ì‚¬
+   * http://localhost:9090/tea/member/checkId.do?id=user1
+   * ê²°ê³¼: {"cnt":1}
+   * @param id
+   * @return
+   */
+  @ResponseBody
+  @RequestMapping(value = "/member/checkId.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+  public String checkId(String id) {
+    JSONObject json = new JSONObject();
+    int cnt = memberProc.checkId(id);
   
-  json.put("cnt", cnt);
+    json.put("cnt", cnt);
   
-  return json.toString();
- }
+    return json.toString();
+  }
  
- /**
-  * È¸¿ø°¡ÀÔÃ³¸®
-  * @param redirectAttributes
-  * @param request
-  * @param memberVO
-  * @return
-  */
- @RequestMapping(value="/member/create.do", method=RequestMethod.POST)
- public ModelAndView create(RedirectAttributes redirectAttributes,
+  /**
+   * íšŒì›ê°€ì…ì²˜ë¦¬
+   * @param redirectAttributes
+   * @param request
+   * @param memberVO
+   * @return
+   */
+  @RequestMapping(value="/member/create.do", method=RequestMethod.POST)
+  public ModelAndView create(RedirectAttributes redirectAttributes,
                                        HttpServletRequest request, MemberVO memberVO){
-   // System.out.println("--> update() POST called.");
-   ModelAndView mav = new ModelAndView();
+    // System.out.println("--> update() POST called.");
+    ModelAndView mav = new ModelAndView();
    
-   int count = memberProc.checkId(memberVO.getId());
+    int count = memberProc.checkId(memberVO.getId());
    
-   if (count == 1) { // ID Áßº¹½Ã ¸Ş½ÃÁö Ãâ·Â
-     redirectAttributes.addAttribute("sw", "id");
-     redirectAttributes.addAttribute("count", count); // 1 or 0
-     
-   } else {
-     count = memberProc.create(memberVO); // µî·Ï
+    if (count == 1) { // ID ì¤‘ë³µì‹œ ë©”ì‹œì§€ ì¶œë ¥
+      redirectAttributes.addAttribute("sw", "id");
+      redirectAttributes.addAttribute("count", count); // 1 or 0
+    } else {
+      count = memberProc.create(memberVO); // ë“±ë¡
 
-     redirectAttributes.addAttribute("sw", "create");
-     redirectAttributes.addAttribute("count", count); // 1 or 0
-   }
+      redirectAttributes.addAttribute("sw", "create");
+      redirectAttributes.addAttribute("count", count); // 1 or 0
+    }
    
-   mav.setViewName("redirect:/member/create_message.jsp");
+    mav.setViewName("redirect:/member/create_message.jsp");
   
-   return mav;
- }
+    return mav;
+  }
  
- @RequestMapping(value="/member/list.do", method=RequestMethod.GET)
- public ModelAndView list(HttpSession session){
-   // System.out.println("--> create() GET called.");
-   ModelAndView mav = new ModelAndView();
-   mav.setViewName("/member/list"); // webapp/member/list.jsp
+  @RequestMapping(value="/member/list.do", method=RequestMethod.GET)
+  public ModelAndView list(HttpSession session){
+    // System.out.println("--> create() GET called.");
+    ModelAndView mav = new ModelAndView();
+    mav.setViewName("/member/list"); // webapp/member/list.jsp
     
-   if (memberProc.isMember(session) == false) {
-     mav.setViewName("redirect:/member/login_need.jsp"); 
-   } else if(memberProc.isMaster(session) == false){
-     mav.setViewName("redirect:/member/auth_need.jsp");
-   } else {
-     mav.setViewName("/member/list"); // webapp/member/list.jsp
+    if (memberProc.isMember(session) == false) {
+      mav.setViewName("redirect:/member/login_need.jsp"); 
+    } else if(memberProc.isMaster(session) == false){
+      mav.setViewName("redirect:/member/auth_need.jsp");
+    } else {
+      mav.setViewName("/member/list"); // webapp/member/list.jsp
      
-     List<MemberVO> list = memberProc.list();
-     mav.addObject("list", list);
-   }
+      List<MemberVO> list = memberProc.list();
+      mav.addObject("list", list);
+    }
    
-   return mav;
+    return mav;
  } 
  
- @RequestMapping(value="/member/read.do", method=RequestMethod.GET)
- public ModelAndView read(int memberno){
-   // System.out.println("--> read(int memberno) GET called.");
-   ModelAndView mav = new ModelAndView();
-   mav.setViewName("/member/read"); // webapp/member/read.jsp
+  @RequestMapping(value="/member/read.do", method=RequestMethod.GET)
+  public ModelAndView read(int memberno){
+    // System.out.println("--> read(int memberno) GET called.");
+    ModelAndView mav = new ModelAndView();
+    mav.setViewName("/member/read"); // webapp/member/read.jsp
    
-   MemberVO memberVO = memberProc.read(memberno);
-   mav.addObject("memberVO", memberVO);
+    MemberVO memberVO = memberProc.read(memberno);
+    mav.addObject("memberVO", memberVO);
    
-   return mav;
- }  
+    return mav;
+  }  
  
- @RequestMapping(value="/member/update.do", method=RequestMethod.POST)
- public ModelAndView update(RedirectAttributes redirectAttributes,
+  @RequestMapping(value="/member/update.do", method=RequestMethod.POST)
+  public ModelAndView update(RedirectAttributes redirectAttributes,
                                        HttpServletRequest request, MemberVO memberVO){
-   // System.out.println("--> update() POST called.");
-   ModelAndView mav = new ModelAndView();
+    // System.out.println("--> update() POST called.");
+    ModelAndView mav = new ModelAndView();
    
-   int count = memberProc.update(memberVO); // ¼öÁ¤
+    int count = memberProc.update(memberVO); // ìˆ˜ì •
 
-   redirectAttributes.addAttribute("count", count); // 1 or 0
-   redirectAttributes.addAttribute("memberno", memberVO.getMemberno()); // È¸¿ø ¹øÈ£
+    redirectAttributes.addAttribute("count", count); // 1 or 0
+    redirectAttributes.addAttribute("memberno", memberVO.getMemberno()); // íšŒì› ë²ˆí˜¸
    
-   mav.setViewName("redirect:/member/update_message.jsp");
+    mav.setViewName("redirect:/member/update_message.jsp");
   
-   return mav;
- }
+    return mav;
+  }
 
- /**
-  * ÆĞ½º¿öµå º¯°æÆû
-  * @return
-  */
- @RequestMapping(value="/member/passwd_update.do", method=RequestMethod.GET)
- public ModelAndView passwd_update(){
-   ModelAndView mav = new ModelAndView();
-   mav.setViewName("/member/passwd_update"); // webapp/member/passwd_update.jsp
+  /**
+   * íŒ¨ìŠ¤ì›Œë“œ ë³€ê²½í¼
+   * @return
+   */
+  @RequestMapping(value="/member/passwd_update.do", method=RequestMethod.GET)
+  public ModelAndView passwd_update(){
+    ModelAndView mav = new ModelAndView();
+    mav.setViewName("/member/passwd_update"); // webapp/member/passwd_update.jsp
    
-   // mav.addObject("mno", mno);
+    // mav.addObject("mno", mno);
    
-   return mav;
- }  
+    return mav;
+  }  
  
- /**
-  * ÆĞ½º¿öµå¸¦ º¯°æÇÕ´Ï´Ù.
-  * @param request
-  * @param passwd
-  * @param new_passwd
-  * @return
-  */
- @RequestMapping(value="/member/passwd_update.do", method=RequestMethod.POST)
- public ModelAndView passwd_update(HttpServletRequest request,
-                                                   HttpSession session,
-                                                   String passwd,
-                                                   String new_passwd){
-   // System.out.println("--> passwd_update() POST called.");
-   ModelAndView mav = new ModelAndView();
+  /**
+   * íŒ¨ìŠ¤ì›Œë“œë¥¼ ë³€ê²½í•©ë‹ˆë‹¤.
+   * @param request
+   * @param passwd
+   * @param new_passwd
+   * @return
+   */
+  @RequestMapping(value="/member/passwd_update.do", method=RequestMethod.POST)
+  public ModelAndView passwd_update(HttpServletRequest request,
+                                                    HttpSession session,
+                                                    String passwd,
+                                                    String new_passwd){
+    // System.out.println("--> passwd_update() POST called.");
+    ModelAndView mav = new ModelAndView();
+    
+    //String id = "user1";
+    String id = (String)session.getAttribute("id"); // session
+    // int memberno =1;
+    int memberno = (Integer)session.getAttribute("memberno"); // session
+    
+    // ë¡œê·¸ì¸ ê´€ë ¨ ì¶”ê°€ ì˜ì—­
+    //int count = memberProc.login(id, passwd); // í˜„ì¬ íŒ¨ìŠ¤ì›Œë“œ ê²€ì‚¬
+    int count = 1; // í˜„ì¬ íŒ¨ìŠ¤ì›Œë“œ ê²€ì‚¬
+    System.out.println("--> count: " + count);
+    if (count == 1) { // ë¡œê·¸ì¸í•œ íšŒì›ì˜ íŒ¨ìŠ¤ì›Œë“œ ê²€ì‚¬
+      int count_update = memberProc.passwd_update(memberno, new_passwd);
+      System.out.println("--> count_update: " + count_update);
+      mav.setViewName("redirect:/member/passwd_update_message.jsp?count=" + count_update + "&memberno=" + memberno);
+    } else {
+      mav.setViewName("redirect:/member/login.do");      
+    }
    
-   //String id = "user1";
-  String id = (String)session.getAttribute("id"); // session
-  // int memberno =1;
-   int memberno = (Integer)session.getAttribute("memberno"); // session
-   
-   // ·Î±×ÀÎ °ü·Ã Ãß°¡ ¿µ¿ª
-   //int count = memberProc.login(id, passwd); // ÇöÀç ÆĞ½º¿öµå °Ë»ç
-   int count = 1; // ÇöÀç ÆĞ½º¿öµå °Ë»ç
-   System.out.println("--> count: " + count);
-   if (count == 1) { // ·Î±×ÀÎÇÑ È¸¿øÀÇ ÆĞ½º¿öµå °Ë»ç
-     int count_update = memberProc.passwd_update(memberno, new_passwd);
-     System.out.println("--> count_update: " + count_update);
-     mav.setViewName("redirect:/member/passwd_update_message.jsp?count=" + count_update + "&memberno=" + memberno);
-   } else {
-     mav.setViewName("redirect:/member/login.do");      
-   }
-   
-   return mav;
- } 
+    return mav;
+  } 
  
- @RequestMapping(value="/member/delete.do", method=RequestMethod.GET)
- public ModelAndView delete(int memberno){
-   ModelAndView mav = new ModelAndView();
-   mav.setViewName("/member/delete"); // webapp/member/delete.jsp
-   
-   MemberVO memberVO = memberProc.read(memberno);
-   mav.addObject("memberVO", memberVO);
-   
-   return mav;
- }  
+  @RequestMapping(value="/member/delete.do", method=RequestMethod.GET)
+  public ModelAndView delete(int memberno){
+    ModelAndView mav = new ModelAndView();
+    mav.setViewName("/member/delete"); // webapp/member/delete.jsp
+    
+    MemberVO memberVO = memberProc.read(memberno);
+    mav.addObject("memberVO", memberVO);
+    
+    return mav;
+  }  
  
- @RequestMapping(value="/member/delete.do", method=RequestMethod.POST)
- public ModelAndView delete(RedirectAttributes redirectAttributes,
-                                       HttpServletRequest request, int memberno){
-   ModelAndView mav = new ModelAndView();
+  @RequestMapping(value="/member/delete.do", method=RequestMethod.POST)
+  public ModelAndView delete(RedirectAttributes redirectAttributes,
+                                        HttpServletRequest request, int memberno){
+    ModelAndView mav = new ModelAndView();
    
-   int count = memberProc.delete(memberno);
+    int count = memberProc.delete(memberno);
 
-   redirectAttributes.addAttribute("count", count); // 1 or 0
-   redirectAttributes.addAttribute("memberno", memberno); // È¸¿ø ¹øÈ£
+    redirectAttributes.addAttribute("count", count); // 1 or 0
+    redirectAttributes.addAttribute("memberno", memberno); // íšŒì› ë²ˆí˜¸
    
-   mav.setViewName("redirect:/member/delete_message.jsp");
+    mav.setViewName("redirect:/member/delete_message.jsp");
   
-   return mav;
- }
+    return mav;
+  }
  
- /**
-  * ·Î±×ÀÎ Æû
-  * @return
-  */
- // http://localhost:9090/member/member/login.do 
- @RequestMapping(value = "/member/login.do", 
+  /**
+   * ë¡œê·¸ì¸ í¼
+   * @return
+   */
+  // http://localhost:9090/member/member/login.do 
+  @RequestMapping(value = "/member/login.do", 
                             method = RequestMethod.GET)
- public ModelAndView login(HttpServletRequest request) {
-   ModelAndView mav = new ModelAndView();
-   mav.setViewName("/member/login_ck_form"); // /webapp/member/login_ck_form.jsp
+  public ModelAndView login(HttpServletRequest request) {
+    ModelAndView mav = new ModelAndView();
+    mav.setViewName("/member/login_ck_form"); // /webapp/member/login_ck_form.jsp
    
-   Cookie[] cookies = request.getCookies();
-   Cookie cookie = null;
+    Cookie[] cookies = request.getCookies();
+    Cookie cookie = null;
 
-   String ck_id = ""; // id ÀúÀå º¯¼ö
-   String ck_id_save = ""; // id ÀúÀå ¿©ºÎ¸¦ Ã¼Å©ÇÏ´Â º¯¼ö
-   String ck_passwd = ""; // passwd ÀúÀå º¯¼ö
-   String ck_passwd_save = ""; // passwd ÀúÀå ¿©ºÎ¸¦ Ã¼Å©ÇÏ´Â º¯¼ö
+    String ck_id = ""; // id ì €ì¥ ë³€ìˆ˜
+    String ck_id_save = ""; // id ì €ì¥ ì—¬ë¶€ë¥¼ ì²´í¬í•˜ëŠ” ë³€ìˆ˜
+    String ck_passwd = ""; // passwd ì €ì¥ ë³€ìˆ˜
+    String ck_passwd_save = ""; // passwd ì €ì¥ ì—¬ë¶€ë¥¼ ì²´í¬í•˜ëŠ” ë³€ìˆ˜ 
 
-   if (cookies != null) {
-     for (int i=0; i < cookies.length; i++){
-       cookie = cookies[i]; // ÄíÅ° °´Ã¼ ÃßÃâ
-       
-       if (cookie.getName().equals("ck_id")){
-         ck_id = cookie.getValue(); 
-       }else if(cookie.getName().equals("ck_id_save")){
-         ck_id_save = cookie.getValue();  // Y, N
-       }else if (cookie.getName().equals("ck_passwd")){
-         ck_passwd = cookie.getValue();         // 1234
-       }else if(cookie.getName().equals("ck_passwd_save")){
-         ck_passwd_save = cookie.getValue();  // Y, N
-       }
-     }
-   }
+    if (cookies != null) {
+      for (int i=0; i < cookies.length; i++){
+        cookie = cookies[i]; // ì¿ í‚¤ ê°ì²´ ì¶”ì¶œ
+        
+        if (cookie.getName().equals("ck_id")){
+          ck_id = cookie.getValue(); 
+        } else if(cookie.getName().equals("ck_id_save")){
+          ck_id_save = cookie.getValue();  // Y, N
+        }else if (cookie.getName().equals("ck_passwd")){
+          ck_passwd = cookie.getValue();         // 1234
+        }else if(cookie.getName().equals("ck_passwd_save")){
+          ck_passwd_save = cookie.getValue();  // Y, N 
+        }
+      }
+    }
    
-   mav.addObject("ck_id", ck_id);
-   mav.addObject("ck_id_save", ck_id_save);
-   mav.addObject("ck_passwd", ck_passwd);
-   mav.addObject("ck_passwd_save", ck_passwd_save);
-   
-   return mav;
- }
+    mav.addObject("ck_id", ck_id);
+    mav.addObject("ck_id_save", ck_id_save);
+    mav.addObject("ck_passwd", ck_passwd);
+    mav.addObject("ck_passwd_save", ck_passwd_save);
+    
+    return mav;
+  }
  
  /**
-  * ·Î±×ÀÎ Ã³¸®
+  * ë¡œê·¸ì¸ ì²˜ë¦¬
   * @param request
   * @param response
   * @param session
@@ -289,11 +289,11 @@ public class MemberCont {
    ModelAndView mav = new ModelAndView();
    
    
-   if(memberProc.readById(id) != null ){  // ·Î±×ÀÎ ½Ã ¾ÆÀÌµğ°¡ °Ë»öµÇ¾úÀ» ¶§
+   if(memberProc.readById(id) != null ){  // ë¡œê·¸ì¸ ì‹œ ì•„ì´ë””ê°€ ê²€ìƒ‰ë˜ì—ˆì„ ë•Œ
     
    
-   if (memberProc.login(id, passwd) != 1) { // ·Î±×ÀÎ ½ÇÆĞ½Ã
-     // ·Î±×ÀÎ³»¿ª ½ÇÆĞ create
+   if (memberProc.login(id, passwd) != 1) { // ë¡œê·¸ì¸ ì‹¤íŒ¨ì‹œ
+     // ë¡œê·¸ì¸ë‚´ì—­ ì‹¤íŒ¨ create
      MemberVO old_memberVO = memberProc.readById(id);
      
      String ip = request.getRemoteAddr();
@@ -303,62 +303,62 @@ public class MemberCont {
      
      mav.setViewName("redirect:/member/login_message.jsp");
      
-   } else { // ÆĞ½º¿öµå ÀÏÄ¡ÇÏ´Â °æ¿ì
+   } else { // íŒ¨ìŠ¤ì›Œë“œ ì¼ì¹˜í•˜ëŠ” ê²½ìš°
      MemberVO old_memberVO = memberProc.readById(id);
   
-     session.setAttribute("memberno",  old_memberVO.getMemberno()); // session ³»ºÎ °´Ã¼
+     session.setAttribute("memberno",  old_memberVO.getMemberno()); // session ë‚´ë¶€ ê°ì²´
      session.setAttribute("id", id);
      session.setAttribute("passwd", passwd);
      session.setAttribute("name", old_memberVO.getName());
      session.setAttribute("grade", old_memberVO.getGrade());
 
      System.out.println(id);
-     // ·Î±×ÀÎ³»¿ª ¼º°ø create
+     // ë¡œê·¸ì¸ë‚´ì—­ ì„±ê³µ create
      String ip = request.getRemoteAddr(); 
      String sf = "O";
      int memberno = old_memberVO.getMemberno();
-     mav.addObject("user_memberno", memberno); // Session¿¡ memberno ÀúÀå
+     mav.addObject("user_memberno", memberno); // Sessionì— memberno ì €ì¥
      mav.addObject("user_id", id);
      memberProc.create_login_list(ip, sf, memberno);
      // -------------------------------------------------------------------
-     // id °ü·Ã Äí±â ÀúÀå
+     // id ê´€ë ¨ ì¿ ê¸° ì €ì¥
      // -------------------------------------------------------------------
-     if (id_save.equals("Y")) { // id¸¦ ÀúÀåÇÒ °æ¿ì
+     if (id_save.equals("Y")) { // idë¥¼ ì €ì¥í•  ê²½ìš°
        Cookie ck_id = new Cookie("ck_id", id);
-       ck_id.setMaxAge(60 * 60 * 72 * 10); // 30 day, ÃÊ´ÜÀ§
+       ck_id.setMaxAge(60 * 60 * 72 * 10); // 30 day, ì´ˆë‹¨ìœ„
        response.addCookie(ck_id);
-     } else { // N, id¸¦ ÀúÀåÇÏÁö ¾Ê´Â °æ¿ì
+     } else { // N, idë¥¼ ì €ì¥í•˜ì§€ ì•ŠëŠ” ê²½ìš°
        Cookie ck_id = new Cookie("ck_id", "");
        ck_id.setMaxAge(0);
        response.addCookie(ck_id);
      }
-     // id¸¦ ÀúÀåÇÒÁö ¼±ÅÃÇÏ´Â  CheckBox Ã¼Å© ¿©ºÎ
+     // idë¥¼ ì €ì¥í• ì§€ ì„ íƒí•˜ëŠ”  CheckBox ì²´í¬ ì—¬ë¶€
      Cookie ck_id_save = new Cookie("ck_id_save", id_save);
      ck_id_save.setMaxAge(60 * 60 * 72 * 10); // 30 day
      response.addCookie(ck_id_save);
      // -------------------------------------------------------------------
 
      // -------------------------------------------------------------------
-     // Password °ü·Ã Äí±â ÀúÀå
+     // Password ê´€ë ¨ ì¿ ê¸° ì €ì¥
      // -------------------------------------------------------------------
-     if (passwd_save.equals("Y")) { // ÆĞ½º¿öµå ÀúÀåÇÒ °æ¿ì
+     if (passwd_save.equals("Y")) { // íŒ¨ìŠ¤ì›Œë“œ ì €ì¥í•  ê²½ìš°
        Cookie ck_passwd = new Cookie("ck_passwd", passwd);
        ck_passwd.setMaxAge(60 * 60 * 72 * 10); // 30 day
        response.addCookie(ck_passwd);
-     } else { // N, ÆĞ½º¿öµå¸¦ ÀúÀåÇÏÁö ¾ÊÀ» °æ¿ì
+     } else { // N, íŒ¨ìŠ¤ì›Œë“œë¥¼ ì €ì¥í•˜ì§€ ì•Šì„ ê²½ìš°
        Cookie ck_passwd = new Cookie("ck_passwd", "");
        ck_passwd.setMaxAge(0);
        response.addCookie(ck_passwd);
      }
-     // passwd¸¦ ÀúÀåÇÒÁö ¼±ÅÃÇÏ´Â  CheckBox Ã¼Å© ¿©ºÎ
+     // passwdë¥¼ ì €ì¥í• ì§€ ì„ íƒí•˜ëŠ”  CheckBox ì²´í¬ ì—¬ë¶€
      Cookie ck_passwd_save = new Cookie("ck_passwd_save", passwd_save);
      ck_passwd_save.setMaxAge(60 * 60 * 72 * 10); // 30 day
      response.addCookie(ck_passwd_save);
      // -------------------------------------------------------------------
      
-     mav.setViewName("redirect:/index.do"); // È®ÀåÀÚ ¸í½Ã 
+     mav.setViewName("redirect:/index.do"); // í™•ì¥ì ëª…ì‹œ 
      
-     } // else ¹® ³¡
+     } // else ë¬¸ ë
    } else{
      mav.setViewName("redirect:/member/login_message.jsp");
    }
@@ -368,7 +368,7 @@ public class MemberCont {
  
  
  /**
-  * ·Î±×¾Æ¿ô Ã³¸®
+  * ë¡œê·¸ì•„ì›ƒ ì²˜ë¦¬
   * @param request
   * @param session
   * @return
@@ -379,10 +379,10 @@ public class MemberCont {
    // System.out.println("--> logout() GET called.");
    ModelAndView mav = new ModelAndView();
 
-   session.invalidate(); // session ³»ºÎ °´Ã¼ÀÇ µî·ÏµÈ ¸ğµç session º¯¼ö »èÁ¦
-   
+   session.invalidate(); // session ë‚´ë¶€ ê°ì²´ì˜ ë“±ë¡ëœ ëª¨ë“  session ë³€ìˆ˜ ì‚­ì œ
+
    // webapp/member/message_logout.jsp
-   mav.setViewName("redirect:/member/logout_message.jsp"); 
+   mav.setViewName("redirect:/"); 
    
    return mav;
  }
@@ -406,5 +406,41 @@ public class MemberCont {
    
    return mav;
  } 
+ 
+ /**
+  * ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½
+  * @param memberno
+  * @param nowPage
+  * @return
+  */
+ @RequestMapping(value = "/login/login_list_paging.do", method = RequestMethod.GET)
+ public ModelAndView login_list_paging(
+     @RequestParam(value="memberno") int memberno,
+     @RequestParam(value="nowPage", defaultValue="1") int nowPage
+     ) { 
+   System.out.println("--> nowPage: " + nowPage);
+   
+   ModelAndView mav = new ModelAndView();
+   
+   mav.setViewName("/login/login_list_paging");   
+   
+   HashMap<String, Object> hashMap = new HashMap<String, Object>();
+   hashMap.put("memberno", memberno); 
+   hashMap.put("nowPage", nowPage);       
+   
+   List<LogVO> list = memberProc.login_list_paging(hashMap);
+   mav.addObject("list", list);
+   
+   int search_count = memberProc.search_count(memberno);
+   mav.addObject("search_count", search_count);
+ 
+ 
+   String paging = memberProc.paging(memberno, search_count, nowPage);
+   mav.addObject("paging", paging);
+ 
+   mav.addObject("nowPage", nowPage);
+   
+   return mav;
+ }
  
 }

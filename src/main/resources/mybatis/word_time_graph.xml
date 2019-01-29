@@ -4,23 +4,49 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="word_time_graph">
-  <!-- WordTimeGraph의 생성 -->
-  <insert id="create" parameterType="WordTimeGraphVO">
+<mapper namespace="wordTimeGraph">
+  <!-- 검색어 동향 생성   -->
+  <insert id="create">
     INSERT INTO word_time_graph(word_time_no, freq, rdate, wordno)
-    VALUES ((SELECT NVL(MAX(word_time_no), 0)+1 as word_time_no FROM word_time_graph), 1, sysdate, #{wordno})
+    VALUES((SELECT NVL(MAX(word_time_no), 0)+1 as word_time_no FROM word_time_graph), (SELECT NVL(MAX(freq), 0)+1 as freq FROM word_time_graph WHERE wordno=#{wordno}), sysdate, #{wordno})
   </insert>
   
-  <!-- WordTimeGraph의 검색 횟수 증가 -->
-  <update id="increase_freq" parameterType="int">
-    UPDATE word_time_graph
-    SET freq += 1
-    WHERE word_time_no = #{word_time_no}
-  </update>
-  
-  <!-- WordTimeGraph 전체 조회 -->
+  <!-- 검색어 동향 단순 리스트 -->
   <select id="list" resultType="WordTimeGraphVO">
-    SELECT word_time_no, freq, rdate, wordno
+    SELECT word_time_no, wordno, freq, rdate
+    FROM word_time_graph 
+    ORDER BY word_time_no ASC
+  </select>
+  
+  <!-- 날짜 별 동향() -->
+  <select id="freq_by_day" parameterType="int" resultType="int">
+    SELECT COUNT(*) 
     FROM word_time_graph
+    WHERE wordno = #{wordno} AND rdate BETWEEN TO_DATE(trunc(sysdate-#{day}))                                                     
+                                                               AND TO_DATE(trunc(sysdate+(-#{day}+1)))
+  </select>
+  
+  <!-- 날짜 별 동향 총합 -->
+  <select id="all_freq_by_day" resultType="int">
+    SELECT COUNT(*) FROM word_time_graph
+    WHERE rdate BETWEEN TO_DATE(trunc(sysdate-#{day}))
+                        AND TO_DATE(trunc(sysdate+(-#{day}+1)))
+  </select>
+  
+  <!-- 검색어들의 총 빈도의 합 -->
+  <select id="allFreq" resultType="int">
+    SELECT SUM(freq)
+    FROM(
+       SELECT wordno, MAX(freq) AS freq
+       FROM word_time_graph
+       GROUP BY wordno
+    )
+  </select>
+  
+  <!-- 검색어의 빈도 최댓값 -->
+  <select id="maxFreq" resultType="int" parameterType="int">
+    SELECT MAX(freq)
+    FROM word_time_graph
+    WHERE wordno = #{wordno}
   </select>
 </mapper>

@@ -45,13 +45,14 @@
   }
   
   function panel_img(file){
-    var panel = '';
-    panel += "<DIV id='panel' class='popup_img' style='width: 80%;'>";
-    panel += "  <A href=\"javascript: $('#main_panel').hide();\"><IMG src='./storage/"+file+"' style='width: 100%;'></A>";
-    panel += "</DIV>";
-    
-    $('#main_panel').html(panel);
-    $('#main_panel').show();
+    var img = new Image();
+    img = file;
+    var img_width = img.width;
+    var win_width = img.width + 25;
+    var win_height = img.height + 30;
+    var OpenWindow = window.open('','_blank', 'width=500, height=500, menubars=no, scrollbars=auto');
+
+    OpenWindow.document.write("<style>body{margin:0px;}</style><img src='./storage/"+ file + "' style='width=100%; height=100%;'>");
   }
   
   //등록 처리
@@ -125,7 +126,7 @@
         
         $('#main_panel').html(panel);
         $('#main_panel').show();
-
+        checkByte($('#frm_update_reply'));
       }
     });
   } 
@@ -277,19 +278,24 @@
         var panel = '';
 
         for(index=0; index < rdata.length; index++) {
-          panel += "<TR>";
-          panel += "<TD style='text-align: center ;'>"+(index+1)+"</TD>";
-          panel += "<TD>"+rdata[index].id+"</TD>";
-          panel += "<TD>"+rdata[index].content+"</TD>";
-          panel += "<TD>"+rdata[index].rdate.substring(0, 10)+"</TD>";
-          panel += "<TD>"
-          panel += "  <A href=\"javascript:reply_update_form("+rdata[index].replyno+")\"><IMG src='./images/update.png' name='수정'></A>";  
-          panel += "  <A href=\"javascript:deleteForm("+rdata[index].replyno+")\"><IMG src='./images/delete.png' name='삭제'></A>"; 
-          panel += "</TD>";
-          panel += "</TR>";
+          panel += "<div id='comment-l' class='comment-l'>";
+          panel += "  <div class='comment-meta'>";
+          panel += "    <div class='comment-name-l'>";
+          panel += "      <div class='comment-name'>" + rdata[index].id +"</div>";
+          panel += "      <div class='comment-date'> " + rdata[index].rdate.substring(0, 19)+"</div>";
+          panel += "    </div>";
+          panel += "    <div class='comment-content'>";
+          panel += "    " + rdata[index].content;
+          panel += "    </div>";
+          panel += "    <div class='comment-function'>";
+          panel += "      <A href=\'javascript:reply_update_form("+rdata[index].replyno+")\'><IMG src='./images/update.png' name='수정'></A>";  
+          panel += "      <A href=\'javascript:deleteForm("+rdata[index].replyno+")\'><IMG src='./images/delete.png' name='삭제'></A>"; 
+          panel += "    </div>"
+          panel += "  </div>";
+          panel += "</div>";
         } 
-        $('#tbody_panel').empty();
-        $('#tbody_panel').append(panel);
+        $('#comment').empty();
+        $('#comment').append(panel);
       },
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
@@ -307,116 +313,156 @@
     });
   }
   
+  function checkByte(frm) {
+    var limitByte = 1000;
+    var totalByte = 0;
+    var message = frm.content.value;
+
+    for(var i = 0; i < message.length; i++) {
+      var currentByte = message.charCodeAt(i);
+      if(currentByte > 128) totalByte += 2;
+      else totalByte++;
+    }
+    
+    $('#messagebyte').text(totalByte);
+    
+    if(totalByte > limitByte) {
+      alert(limitByte + "바이트까지 전송가능합니다.");
+      
+      frm.content.value() = message.substring(0, limitByte);
+      currentByte = limitByte;
+    }
+  }
+  
 </script>
 </head>
 
 <body>
-<DIV class='container' style='width: 90%;'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>   
+<div class="main_wrapper" align=center>
 
-  <ASIDE style='float: left;'>
-    <A href='../board/list.do?categrpno=${boardVO.categrpno }'>카테고리</A>
-    <span style='font-size: 1.2em;'>></span>  
-    <A href='./list_by_board.do?boardno=${boardVO.boardno }'>${boardVO.name }</A>
-  </ASIDE>
-  <ASIDE style='float: right;'>
-    <c:if test="${contentsVO.photo.length() > 0 }">
-      <A href='./download.do?contentsno=${contentsVO.contentsno}'>다운로드</A>
-      <span class='menu_divide' >│</span> 
-    </c:if>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do?boardno=${boardVO.boardno }'>등록</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./reply.do?boardno=${boardVO.boardno }&contentsno=${contentsVO.contentsno }&word=${param.word}&nowPage=${param.nowPage}'>답변</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./list_by_board_search_paging.do?boardno=${boardVO.boardno }&nowPage=${param.nowPage}'>목록</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./update.do?contentsno=${contentsVO.contentsno }&word=${param.word}&nowPage=${param.nowPage}'>수정</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./delete.do?contentsno=${contentsVO.contentsno }&boardno=${boardVO.boardno }&word=${param.word}&nowPage=${param.nowPage}'>삭제</A>
-  </ASIDE> 
+  <c:import url="/menu/top.jsp"/>
   
-  <div class='menu_line'></div>
+  <c:import url="/menu/top_second.jsp"/>
+  
+	<DIV class='main_container' style='width: 80%;'>
+		<DIV class='contents'>   
+		
+		<div class="contents_aside">
+		  <ASIDE style='float: left; color: white; padding: 20px 0px 10px 10px;'>
+		    <A href='../board/list.do?categrpno=${boardVO.categrpno }' style="color: white;">카테고리</A>
+		    <span style='font-size: 1.2em;'>></span>  
+		    <A href='./list_by_board.do?boardno=${boardVO.boardno }' style="color: white;">${boardVO.name }</A>
+		  </ASIDE>
+		  
+		  <ASIDE style='float: right; color: white; padding: 20px 10px 10px 0px;'>
+		    <A href="javascript:location.reload();" style="color: white;">새로고침</A>
+		    <span class='menu_divide' >│</span> 
+		    <A href='./create.do?boardno=${boardVO.boardno }' style="color: white;">등록</A>
+		    <span class='menu_divide' >│</span> 
+		    <A href='./list_by_board_search_paging.do?boardno=${boardVO.boardno }&nowPage=${param.nowPage}' style="color: white;">목록</A>
+		    <span class='menu_divide' >│</span> 
+		    <A href='./update.do?contentsno=${contentsVO.contentsno }&word=${param.word}&nowPage=${param.nowPage}' style="color: white;">수정</A>
+		    <span class='menu_divide' >│</span> 
+		    <A href='./delete.do?contentsno=${contentsVO.contentsno }&boardno=${boardVO.boardno }&word=${param.word}&nowPage=${param.nowPage}' style="color: white;">삭제</A>
+		  </ASIDE> 
+	  </div>
+		  
+	  <div class="page">
+	    <div class="page_title">
+        <p class="h1" style="font-weight: bold;">${contentsVO.name}</p>
+        <strong class="page_id">${id}</strong> <span class='menu_divide' >│</span>
+        <span class="page_date">${contentsVO.rdate.substring(0, 10)}</span> 
+        <span style="color: gray;   float: right; padding-right: 15px;">댓글 ${count_reply}</span>
+      </div>
 
-  <DIV id='main_panel'></DIV>
-  
-  <fieldset class="fieldset">
-    <ul>
-      <li class="li_none">
-        <span>${contentsVO.name}</span>
-      <li>
-       <strong>${contentsVO.memberno}</strong>
-      </li>
-        <span>${contentsVO.rdate.substring(0, 10)}</span>
-        <DIV>
-          <c:forEach var ="fileVO"  items="${file_list }">
-            <A href="javascript: panel_img('${fileVO.file }')"><IMG src='./storage/${fileVO.thumb }' style='margin-top: 2px;'></A>
-          </c:forEach>
-        </DIV>
-      </li>
-      <li class="li_none">
-        <DIV>${contentsVO.content }</DIV>
-      </li>
-    </ul>
-  </fieldset>
-  
-  <div id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #DDDDDD; width: 100%; text-align: center;'>
-    <FORM name='frm_create_reply' id="frm_create_reply" method="post" action='./reply_create.do'>
-      <input type="hidden" name="nowPage" id="nowPage" value="${param.nowPage }">
-      <input type="hidden" name="word" id="word" value="${param.word }">
-      <input type="hidden" name="contentsno" value="${contentsVO.contentsno }">
-      <input type="hidden" name="memberno" value='${user_memberno }'> <!-- 수정해야 함. 로그인되어있는 아이디! -->
-        <ul>
-          <li>
-            <span>${user_id }</span>
-          </li>
-          <li>
-            <textarea id="content" name="content" rows="5" cols="30"></textarea>
-          </li>
-        </ul>
-       <input type="submit" id="reply_create_submit">
-    </FORM>
+      <DIV class="page_content_pic" id="page_content_pic">
+        <c:forEach var ="fileVO"  items="${file_list }">
+          <A href="javascript: panel_img('${fileVO.file }')"><IMG src='./storage/${fileVO.file }' style='width: 80%; margin-top: 2px;'></A>
+        </c:forEach>
+      </DIV>
+      <DIV class="page_content">${contentsVO.content }</DIV>
+	  </div>
+
+    <div class="page_reply">
+		  <div class="page_create_reply" id='panel_create'>
+		    <div class="page_count_reply">
+	        <p class="h4">
+	          댓글
+	          <small class="text-muted" style="color: gray;">총 <small class="text-muted" style="font-weight: bold; color: #16ae81;">${count_reply}</small>개</small>
+	        </p>  
+	        <p class="h5" style="margin: auto auto;">
+             ${user_id }
+          </p>
+        </div>
+        
+        <div style="clear: both;"></div>
+          
+        <div class="md-form" style="width: 90%;">
+			    <FORM name='frm_create_reply' id="frm_create_reply" method="post" action='./reply_create.do'>
+			      <input type="hidden" name="nowPage" id="nowPage" value="${param.nowPage }">
+			      <input type="hidden" name="word" id="word" value="${param.word }">
+			      <input type="hidden" name="contentsno" value="${contentsVO.contentsno }">
+			      <input type="hidden" name="memberno" value='${user_memberno }'>
+			      
+	          <textarea class="md-textarea form-control" id="content" name="content" rows="3"  onkeydown="checkByte(this.form);" style="resize: vertical;"></textarea>
+			      <div style="float: right;"><p><em id="messagebyte">0</em>/1000 byte</p></div>			      
+			      
+			      <div style="clear: both;"></div>
+			      
+			      <div>
+			        <input class="btn btn-success" type="submit" id="reply_create_submit" style="float: right; margin: 0px 0px 10px 0px;">
+			      </div>
+			    </FORM>
+		    </div>
+		  </div>
+		  
+		  <!--  수정폼은 항상 PK 전달한다. -->
+		  <DIV class="page_update_reply" class="md-form" id='panel_update'>  
+		    <div class="page_count_reply">
+          <h4>
+            댓글
+            <small class="text-muted" style="color: gray;">총 <small class="text-muted" style="font-weight: bold; color: #16ae81;">${count_reply}</small>개</small>
+          </h4>  
+        </div>
+        
+        <div style="clear: both;"></div>
+        
+        <div class="page_reply_id">
+          <p class="h5">${user_id }</p>
+        </div>
+		    
+		    <div class="md-form" style="width: 90%;">
+          <FORM name='frm_update_reply' id="frm_update_reply">
+            <input type='hidden' name='replyno' id='replyno' value=''>             
+            
+            <textarea class="md-textarea form-control" id="content" name="content" rows="3"  onkeydown="checkByte(this.form);" style="resize: vertical;"></textarea>
+            <div style="float: right;"><p><em id="messagebyte">0</em>/1000 byte</p></div>           
+            <button class="btn btn-success" type="button" id="reply_update" onclick="reply_update_submit(${contentsVO.contentsno});">저장</button>
+            <button class="btn btn-danger" type="button" onclick="action_cancel();">취소</button>
+          </FORM>
+        </div>
+		  </DIV>
+		  
+		  <DIV class="page_delete_reply" id='panel_delete'>
+		    <FORM name='frm_delete' id='frm_delete'>
+		      <input type='hidden' name='replyno' id='replyno' value=''>
+		      <div id='msg_delete'></div>
+		    </FORM>
+		  </DIV>
+	  </div>
+	  
+	  <div style="clear: both;"></div>
+	  
+	  <div class="comment" id="comment" name="comment">
+	  </div>
+	 </DIV> <!-- contents END -->
+	  
+  <div class="main_bottom">
+    <c:import url="/menu/bottom.jsp"/>
   </div>
-  
-  <!--  수정폼은 항상 PK 전달한다. -->
-  <DIV id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #DDDDDD; width: 100%; text-align: center;'>  
-    <FORM name='frm_update_reply' id='frm_update_reply' method='POST' action='./reply_update.do'>
-      <input type='hidden' name='replyno' id='replyno' value=''> 
-      <ul>
-        <li>
-          <textarea id="content" name="content" rows="5" cols="30"></textarea>
-        </li>
-      </ul>
-      <button type="button" id="reply_update" onclick="reply_update_submit(${contentsVO.contentsno});">저장</button>
-      <button type="button" onclick="action_cancel();">취소</button>
-    </FORM>
-  </DIV>
-  
-  <DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #FFAAAA; width: 100%; text-align: center;'>
-    <FORM name='frm_delete' id='frm_delete'>
-      <input type='hidden' name='replyno' id='replyno' value=''>
-      <div id='msg_delete'></div>
-    </FORM>
-  </DIV>
-  
-  <TABLE class='table table-striped'>
-  <colgroup>
-    <col style='width: 10%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 50%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 20%;'/>
-  </colgroup>
-  
-  <tbody id='tbody_panel' data-nowPage='0' data-endPage='0'>
-  </tbody>
-  
-</TABLE>
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+
+	</DIV> <!-- container END -->
+</div>
 </body>
 
 </html>

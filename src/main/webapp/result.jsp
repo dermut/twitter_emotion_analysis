@@ -8,12 +8,13 @@
 <meta charset="UTF-8">
 <title>Tea</title>
  
-<link href="./css/style.css" rel="Stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/css/style.css" rel="Stylesheet" type="text/css">
  
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com  /bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
 
 <script type="text/javascript">
   $(function(){
@@ -24,13 +25,85 @@
  
 </head>
 <body>
-<FORM name='frm' id='frm' method='GET' action='../member_word/wordno_by_member.do' >
-    <div class="form-group">
-      회원 별 검색어번호 목록
-      <input type="hidden" name="memberno" value="<%=(Integer)session.getAttribute("memberno")%>">
+<div class="main_wrapper" align="center" style="background: #fafafa;">
+  <c:import url="/menu/top.jsp"/>
+  
+  <c:import url="/menu/top_second.jsp"/>
+	
+	<div class="main_container">
+	  <div class="row" style="width: 70%; margin: 15px 0px 10px 0px;">
+	    <div class="col-sm-4">
+	      <div class="row">
+			    <div class="col-sm-4">
+				    <div class="page_profile">
+				      <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="img-rounded img-responsive" width="100px" height="100px"></img>
+				    </div>
+			    </div>
+				  
+				  <div class="col-sm-4">
+				    <div class="page_id">
+				      <p class="h2" style="margin: 0px 0px 0px 0px; display: inline-block;">${user_id }</p>
+				    </div>
+				    <div class="page_recently_searched">
+				      3시간 전
+				    </div>
+			    </div>
+	      </div>
+			</div>
+	  </div>
+	  
+	  <div class="row" style="width: 70%;">
+	    <div class="col-sm-8" style="text-align: center;">
+	      <div class="page_id_word">    
+					<span class="badge badge-pill badge-info">엑소</span>
+					<span class="badge badge-pill badge-info">BTS</span>
+					<span class="badge badge-pill badge-info">결과</span>
+					<span class="badge badge-pill badge-info">SKY캐슬</span>
+	        <span class="badge badge-pill badge-info">아시안컵</span>
+	        <span class="badge badge-pill badge-info">아이린</span>
+	      </div>
+	    </div>
+	  </div>
+   
+    <div class="page_divide">
     </div>
-    <button type="submit">조회</button>
-</FORM>
+   
+    <div class="page_result">
+      <div class="page_side">
+        <div class="result_box">
+          <div class="result_box_image_box">
+            <img class="result_box_image" src='${pageContext.request.contextPath}/image/twitter_logo.png'>
+          </div>
+          
+          <div class="result_box_word">
+            ${word}
+          </div>
+        </div>
+        
+        <div class="result_box_freshtomato_box">
+          <img class="freshtomato_image" src='${pageContext.request.contextPath}/image/tomato.png'>
+        
+          <div class="freshtomato_rate">
+            <p class="h2">${ftrate}%</p>
+          </div>
+        </div>
+      </div>
+      <div class="page_real">
+        <div id="chartContainer" data-allfreq='${allfreq}' data-rest='${rest}' data-maxfreq='${maxfreq}' data-word='${word}' 
+                                    data-ar0='${ar0}' data-ar1='${ar1}' data-ar2='${ar2}' data-ar3='${ar3}' data-ar4='${ar4}' data-ar5='${ar5}' data-ar6='${ar6}' data-ar7='${ar7}'
+                                    data-arr0='${arr0}' data-arr1='${arr1}' data-ar2='${arr2}' data-arr3='${arr3}' data-arr4='${arr4}' data-arr5='${arr5}' data-arr6='${arr6}' data-arr7='${arr7}'
+                                    data-a0='${a0}' data-a1='${a1}' data-a2='${a2}' data-a3='${a3}' data-a4='${a4}' data-a5='${a5}' data-a6='${a6}' data-a7='${a7}' 
+                      style="height: 300px; width: 400px;"></div>
+        <button class="btn invisible" id="backButton">< Back</button>
+        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+				<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+				<script type="text/javascript" src="../js/wordtimegraph.js"></script>
+      </div>
+		</div>
+		
+
+	</div>
+</div>
 
 <%-- 수정 요망 여기 만들 차례 검색어 별 회원 목록 
 <FORM name='frm' id='frm' method='GET' action='../member_word/member_by_wordno.do' >
@@ -44,13 +117,12 @@
  
 
 
-입력한 검색어 : ${word}<br>
+입력한 검색어 : <br>
 wordno : ${wordno}<br>
-memberno : ${memberno }<br>
+memberno : ${memberno}<br>
 수정본
 <DIV class='bottom_menu'>
   <button type='button' onclick="location.href='../'">돌아가기</button>
-  
 </DIV> 
 </body>
 </html>

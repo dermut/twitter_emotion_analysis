@@ -25,34 +25,20 @@
 	<div class="login">
 	
 	  <FORM name='frm' method='POST' action='./login.do'>
-	  
-	  <div class="form-group">
-	    <label for="id" class="col-md-2 control-label">아이디</label>    
-	    <div class="col-md-10">
-	      <input type='text' class="form-control input-md" name='id' id='id' value='<%--${ck_id }--%>root3' required="required" style='width: 30%;' placeholder="아이디" autofocus="autofocus">
-	    <Label>   
-	      <input type='checkbox' name='id_save' value='Y' ${ck_id_save == 'Y' ? "checked='checked'" : "" }> 저장
-	    </Label>
-	    </div>
-	
-	  </div>   
-	
-		<div class="form-group">
-		  <label for="passwd" class="col-md-2 control-label">패스워드</label>    
-		  <div class="col-md-10">
-		    <input type='password' class="form-control input-md" name='passwd' id='passwd' value='<%-- ${ck_passwd }--%>1234' required="required" style='width: 30%;' placeholder="패스워드">
-		    <Label>
-		      <input type='checkbox' name='passwd_save' value='Y' ${ck_passwd_save == 'Y' ? "checked='checked'" : "" }> 저장
-		    </Label>
+		  <div class="form-group">
+		    <label for="id" class="control-label" style="padding: 0px 3px 3px 3px;">아이디</label>    
+	      <input type='text' class="form-control" name='id' id='id' value='<%--${ck_id }--%>root3' required="required" placeholder="아이디" autofocus="autofocus">
+	      <input class="form-check-input" type='checkbox' name='id_save' value='Y' ${ck_id_save == 'Y' ? "checked='checked'" : "" } style="margin: 10px 2px 2px 5px;"> 저장
+		  </div>   
+			<div class="form-group">
+			  <label for="passwd" class="control-label" style="padding: 0px 3px 3px 3px;">패스워드</label>    
+		    <input type='password' class="form-control" name='passwd' id='passwd' value='<%-- ${ck_passwd }--%>1234' required="required" placeholder="패스워드">
+	      <input class="form-check-input" type='checkbox' name='passwd_save' value='Y' ${ck_passwd_save == 'Y' ? "checked='checked'" : "" } style="margin: 10px 2px 2px 5px;"> 저장
+			</div>   
+			<div class="form-group" style="text-align: center;">
+		    <button type="submit" class="btn btn-primary">로그인</button>
+		    <button type="button" onclick="history.back()" class="btn btn-danger">취소</button>
 		  </div>
-		</div>   
-	
-		<div class="form-group">
-		  <div class="col-md-offset-2 col-md-10">
-		    <button type="submit" class="btn btn-primary btn-md">로그인</button>
-		    <button type="button" onclick="history.back()" class="btn btn-primary btn-md">취소</button>
-		  </div>
-	  </div>
 	
 	</FORM>
 	        

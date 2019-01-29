@@ -14,65 +14,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </insert>
   
   <select id="list_all_board" resultType="ContentsVO">
-    SELECT contentsno, name, content, views, replies, fsize, 
-           photo, thumb, rdate, boardno, memberno
-    FROM contents
-    ORDER BY contentsno ASC
+    SELECT    contentsno, name, content, views, replies, fsize, 
+              photo, thumb, rdate, boardno, memberno
+    FROM      contents
+    ORDER BY  contentsno ASC
   </select>
   
   <select id="total_count" resultType="int">
-    SELECT COUNT(*) as count
-    FROM contents
-  </select>
-  
-  <select id="list_by_board" resultType="ContentsVO" parameterType="int">
-    SELECT contentsno, name, content, views, replies, fsize, 
-           photo, thumb, rdate, boardno, memberno
-    FROM contents 
-    WHERE boardno=#{boardno}
-    ORDER BY contentsno ASC
+    SELECT  COUNT(*) as count
+    FROM    contents
   </select>
   
   <select id="read" resultType="ContentsVO" parameterType="int">
-    SELECT contentsno, name, content, views, replies, fsize, 
-           photo, thumb, rdate, boardno, memberno
-    FROM contents
-    WHERE contentsno=#{contentsno}
+    SELECT  contentsno, name, content, views, replies, fsize, 
+            photo, thumb, rdate, boardno, memberno
+    FROM    contents
+    WHERE   contentsno=#{contentsno}
   </select>
   
   <update id="update" parameterType="ContentsVO">
-    UPDATE contents
-    SET name=#{name}, content=#{content},
-        thumb=#{thumb}, photo=#{photo}, fsize=#{fsize}
-    WHERE contentsno=#{contentsno}
+    UPDATE  contents
+    SET     name=#{name}, content=#{content},
+            thumb=#{thumb}, photo=#{photo}, fsize=#{fsize}
+    WHERE   contentsno=#{contentsno}
   </update>
   
   <delete id="delete" parameterType="int">
     DELETE FROM contents
-    WHERE contentsno=#{contentsno}
+    WHERE       contentsno=#{contentsno}
   </delete>
-
-  <!-- board별 검색된 레코드 목록 -->
-  <select id="list_by_board_search" resultType="ContentsVO" parameterType="HashMap">
-    SELECT contentsno, name, content, views, replies, fsize, 
-           photo, thumb, rdate, boardno, memberno
-    FROM contents
-    <choose>
-      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
-        WHERE boardno=#{boardno}
-      </when>
-      <otherwise>
-        WHERE boardno=#{boardno} AND content LIKE '%' || #{word} || '%'  
-      </otherwise>
-    </choose>
-    ORDER BY contentsno DESC
-  </select>
-
 
   <!--   board별 검색된 레코드 갯수 -->
   <select id="search_count" resultType="int" parameterType="HashMap">
-    SELECT COUNT(*) as cnt
-    FROM contents
+    SELECT    COUNT(*) as cnt
+    FROM      contents
     <choose>
       <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
         WHERE boardno=#{boardno}
@@ -120,50 +95,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <!-- 댓글 목록 -->
   <select id="reply_list" resultType="ReplyVO">
-    SELECT replyno, content, contentsno, rdate, memberno
-    FROM reply
-    ORDER BY replyno ASC
+    SELECT    replyno, content, contentsno, rdate, memberno
+    FROM      reply
+    ORDER BY  replyno ASC
   </select>
 
   <!-- 콘텐츠별 목록 -->
   <select id="reply_by_contents" parameterType="int" resultType="ReplyIDVO">
-    SELECT replyno, content, contentsno, rdate, memberno
-    FROM reply
-    WHERE contentsno=#{contentsno}
+    SELECT  replyno, content, contentsno, rdate, memberno
+    FROM    reply
+    WHERE   contentsno=#{contentsno}
   </select>
   
   <!-- 개별 댓글 읽기 -->
   <select id="reply_read" parameterType="int" resultType="ReplyVO">
-    SELECT replyno, content, contentsno, rdate, memberno
-    FROM reply
-    WHERE replyno=#{replyno}
+    SELECT  replyno, content, contentsno, rdate, memberno
+    FROM    reply
+    WHERE   replyno=#{replyno}
   </select>
   
   <!-- 댓글 수정 -->
   <update id="reply_update" parameterType="ReplyVO">
-    UPDATE reply
-    SET content=#{content}
-    WHERE replyno=#{replyno}
+    UPDATE  reply
+    SET     content=#{content}
+    WHERE   replyno=#{replyno}
   </update>
   
   <!-- 댓글 삭제 -->
   <delete id="reply_delete" parameterType="int">
     DELETE FROM reply
-    WHERE replyno=#{replyno}
+    WHERE       replyno=#{replyno}
   </delete>
   
   <!-- 콘텐츠별 댓글 수 -->
   <select id="count_reply_by_contents" parameterType="int" resultType="int">
-    SELECT COUNT(*) as cnt
-    FROM reply
-    WHERE contentsno=#{contentsno}
+    SELECT  COUNT(*) as cnt
+    FROM    reply
+    WHERE   contentsno=#{contentsno}
   </select>
   
   <!-- 댓글의 아이디 찾기 -->
   <select id="id_by_reply" parameterType="int" resultType="String">
-    SELECT id
-    FROM member
-    WHERE memberno=#{memberno}
+    SELECT  id
+    FROM    member
+    WHERE   memberno=#{memberno}
   </select>
   
   

@@ -36,6 +36,8 @@ public class ContentsVO {
   private int boardno;
   private int memberno;
   
+  private int count_reply;
+  
   /** 첫번째 preview 이미지 */
   private String thumbnail;
   
@@ -61,9 +63,11 @@ public class ContentsVO {
     super();
   }
 
-  public ContentsVO(int contentsno, String name, String content, int views, int replies, String fsize, String photo,
-      String thumb, String rdate, int boardno, int memberno, List<MultipartFile> photoMF, String fsizesLabel) {
+  public ContentsVO(String id, int contentsno, String name, String content, int views, int replies, String fsize,
+      String photo, String thumb, String rdate, int boardno, int memberno, int count_reply, String thumbnail,
+      List<MultipartFile> photoMF, String fsizesLabel) {
     super();
+    this.id = id;
     this.contentsno = contentsno;
     this.name = name;
     this.content = content;
@@ -75,6 +79,8 @@ public class ContentsVO {
     this.rdate = rdate;
     this.boardno = boardno;
     this.memberno = memberno;
+    this.count_reply = count_reply;
+    this.thumbnail = thumbnail;
     this.photoMF = photoMF;
     this.fsizesLabel = fsizesLabel;
   }
@@ -184,6 +190,30 @@ public class ContentsVO {
 
   public void setPhotoMF(List<MultipartFile> photoMF) {
     this.photoMF = photoMF;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public int getCount_reply() {
+    return count_reply;
+  }
+
+  public void setCount_reply(int count_reply) {
+    this.count_reply = count_reply;
+  }
+
+  public String getThumbnail() {
+    return thumbnail;
+  }
+
+  public void setThumbnail(String thumbnail) {
+    this.thumbnail = thumbnail;
   }
 
  

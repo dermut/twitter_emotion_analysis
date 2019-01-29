@@ -19,37 +19,37 @@
 </head>
 <body>
 
-
-<div class="top">
+<div class="main_wrapper">
   <c:import url="/menu/top.jsp"/>
-</div>
-
-<div class="container">
-  <div class="contents" align="center">
-    <div class="main_logo">
-      <img alt="TEA Guide Logo" src="./guide-logo-fixed.jpg" class="Image">
-    </div>
-    
-    <div class="main_search_form">
-      <FORM name='frm' id='frm' method='POST' action='./word/create.do' >
-        <input class="main_search_bar" type="text" id="word" name="word" placeholder="키워드..." autocomplete="off">
-        <button type="submit" class="main_search_button">검색</button>
-      </FORM>
-    </div>
-    
-    <div align="center">
-      TEA는 트위터에서 낸 통계를 기반으로 <br>
-      여러분에게 통찰을 주고자 하는 사이트입니다. <br>
-      알고 싶은 내용을 검색해주세요.<br>
-    </div>
-    
-  </div> <!-- contents END -->
-</div> <!-- container END -->
-
-<div class="bottom">
-  <c:import url="/menu/bottom.jsp"/>
-</div>
-
+  
+  <c:import url="/menu/top_second.jsp"/>
+	
+	<div class="main_container">
+	    <div class="contents" align="center">
+		    <div class="main_logo">
+		      <img alt="TEA Guide Logo" src="./guide-logo-fixed.jpg" class="Image">
+		    </div>
+	    
+	      <FORM class="main_search_bar_frm" name='frm' id='frm' method='POST' action='./create.do' >
+	         <input class="main_search_bar_txt" type="text" id="word" name="word" placeholder="키워드..." autocomplete="off">
+	        <button type="submit" class="main_search_button">검색
+	          <i class="__Image__Image-42" style="background-image: ${pageContext.request.contextPath}/image/button.png"></i>
+	        </button>
+	      </FORM>
+		    
+		    <div class="guide_main" align="center">
+		      TEA는 트위터에서 크롤링한 트윗을 기반으로 <br>
+		      통계를 내 여러분에게 통찰을 주고자 하는 사이트입니다. <br>
+		      알고 싶은 내용을 검색해주세요.<br>
+		    </div>
+	    
+		  </div> <!-- contents END -->
+		</div> <!-- container END -->
+		
+		<div class="bottom">
+		  <c:import url="/menu/bottom.jsp"/>
+		</div>
+	</div>
 
 </body>
 </html>

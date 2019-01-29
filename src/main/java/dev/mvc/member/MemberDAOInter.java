@@ -1,5 +1,6 @@
 package dev.mvc.member;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,5 +80,8 @@ public int passwd_update(Map<String, Object> map);
   * @return
   */
  public List<LogVO> login_list();
+
+ public List<LogVO> login_list_paging(HashMap<String, Object> hashmap); 
  
+ public int search_count(int memberno);
 }

@@ -34,7 +34,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dev.mvc.board.BoardProcInter;
 import dev.mvc.board.BoardVO;
-import dev.mvc.board.Categrp_BoardVO;
 import nation.web.tool.Tool;
 import nation.web.tool.Upload;
 
@@ -89,10 +88,6 @@ public class ContentsCont {
     List<MultipartFile> photoMF = contentsVO.getPhotoMF(); // Spring이 File 객체를
                                                            // 저장해둠.
 
-
-//     System.out.println("--> photoMF.get(0).getSize(): " +
-//     photoMF.get(0).getSize());
-
     String photo = ""; // 컬럼에 저장할 파일명
     String photo_item = ""; // 하나의 파일명
     String sizes = "";
@@ -102,14 +97,12 @@ public class ContentsCont {
 
     int count = photoMF.size(); // 업로드된 파일 갯수
 
-//     Spring은 파일 선택을 안해도 1개의 MultipartFile 객체가 생성됨.
-     System.out.println("--> 업로드된 파일 갯수 count: " + count);
+    // Spring은 파일 선택을 안해도 1개의 MultipartFile 객체가 생성됨.
 
     if (count > 0) { // 전송 파일이 존재한다면
       // for (MultipartFile multipartFile: photoMF) {
       for (int i = 0; i < count; i++) {
         MultipartFile multipartFile = photoMF.get(i); // 0 ~
-        System.out.println("multipartFile.getName(): " + multipartFile.getName());
 
         // if (multipartFile.getName().length() > 0) { // 전송파일이 있는지 체크, photoMF
         if (multipartFile.getSize() > 0) { // 전송파일이 있는지 체크
@@ -178,27 +171,6 @@ public class ContentsCont {
   }
 
   /**
-   * 카테고리별 목록
-   * 
-   * @return
-   */
-  // http://localhost:9090/ojt/contents/list_by_board.do?boardno=1
-  @RequestMapping(value = "/contents/list_by_board.do", method = RequestMethod.GET)
-  public ModelAndView list_by_board(int boardno) {
-    ModelAndView mav = new ModelAndView();
-
-    BoardVO boardVO = boardProc.read(boardno);
-    mav.addObject("boardVO", boardVO);
-
-    List<ContentsVO> list = contentsProc.list_by_board(boardno);
-    mav.addObject("list", list);
-
-    mav.setViewName("/contents/list_by_board"); // /webapp/contents/list_by_board.jsp
-
-    return mav;
-  }
-
-  /**
    * 조회
    * 
    * @param contentsno
@@ -211,10 +183,11 @@ public class ContentsCont {
 
     ContentsVO contentsVO = contentsProc.read(contentsno);
     mav.addObject("contentsVO", contentsVO);
-
+    mav.addObject("id", contentsProc.id_by_reply(contentsVO.getMemberno()));
+    
     BoardVO boardVO = boardProc.read(contentsVO.getBoardno()); // 카테고리
                                                                // 정보
-                                                               // 추출
+    mav.addObject("count_reply", contentsProc.count_reply_by_contents(contentsno));                                                           // 추출
     mav.addObject("boardVO", boardVO);
 
     ArrayList<FileVO> file_list = contentsProc.getThumbs(contentsVO);
@@ -521,45 +494,6 @@ public class ContentsCont {
   }
 
   /**
-   * 검색 목록
-   * 
-   * @param boardno
-   * @param word
-   * @return
-   */
-  @RequestMapping(value = "/contents/list_by_board_search.do", method = RequestMethod.GET)
-  public ModelAndView list_by_board_search(int boardno, String word) {
-    ModelAndView mav = new ModelAndView();
-
-    // 검색 기능 추가, webapp/contents/list_by_board_search.jsp
-    mav.setViewName("/contents/list_by_board_search");
-
-    // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
-    HashMap<String, Object> hashMap = new HashMap<String, Object>();
-    hashMap.put("boardno", boardno); // #{boardno}
-    hashMap.put("word", word); // #{word}
-
-    // System.out.println("boardno: " + boardno);
-    // System.out.println("word_find: " + word_find);
-
-    // 검색 목록
-    List<ContentsVO> list = contentsProc.list_by_board_search(hashMap);
-    mav.addObject("list", list);
-
-    // 검색된 레코드 갯수
-    int search_count = contentsProc.search_count(hashMap);
-    mav.addObject("search_count", search_count);
-
-    BoardVO boardVO = boardProc.read(boardno);
-    mav.addObject("boardVO", boardVO);
-
-    // mav.addObject("word", word);
-
-    return mav;
-  }
-
-
-  /**
    * 목록 + 검색 + 페이징 지원
    * @param boardno
    * @param word
@@ -573,9 +507,6 @@ public class ContentsCont {
       @RequestParam(value="word", defaultValue="") String word,
       @RequestParam(value="nowPage", defaultValue="1") int nowPage
       ) { 
-    // System.out.println("--> list_by_board() GET called.");
-    System.out.println("--> nowPage: " + nowPage);
-    
     ModelAndView mav = new ModelAndView();
     
     // 검색 기능 추가,  /webapp/contents/list_by_board_search_paging.jsp
@@ -589,6 +520,7 @@ public class ContentsCont {
     
     // 검색 목록
     List<ContentsVO> list = contentsProc.list_by_board_search_paging(hashMap);
+    
     mav.addObject("list", list);
     
     // 검색된 레코드 갯수

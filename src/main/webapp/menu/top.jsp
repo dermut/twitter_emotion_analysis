@@ -12,17 +12,18 @@
 </head>
 <body>
 <div class="top_container">
-  
     <ul class="sites">
       <li class="site">
-        <a href="${pageContext.request.contextPath}"><img alt="TEA Home Logo" src="${pageContext.request.contextPath}/image/home.png"></a>
+        <a href="${pageContext.request.contextPath}"><img class="imgHome" alt="TEA Home Logo" src="${pageContext.request.contextPath}/image/transparent-logo7.png"></a>
       </li>
     </ul>
       
 	  <ul class="login_list">
-	    <li class="login">
+	    <li class="login_set">
 		    <c:choose>
 	        <c:when test="${sessionScope.grade == null}">
+            <A href='./create.do' style="font-weight: bold; color: white;">회원 가입 </A>
+            <span class='menu_divide' style="color: white; display: inline-block;"> │ </span> 
 	          <button type="button" class="login_button" id="login" name="login" onclick="location.href='${pageContext.request.contextPath}/member/login.do'">로그인</button>
 	        </c:when>
 	        <c:otherwise>

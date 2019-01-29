@@ -1,6 +1,7 @@
 package dev.mvc.member;
  
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import dev.mvc.contents.Contents;
+import dev.mvc.contents.ContentsVO;
+import nation.web.tool.Tool;
  
 @Component("dev.mvc.member.MemberProc")
 public class MemberProc implements MemberProcInter {
@@ -124,7 +129,85 @@ public class MemberProc implements MemberProcInter {
     return list;
   }
 
-  
+  @Override
+  public List<LogVO> login_list_paging(HashMap<String, Object> hashmap) {
+   int beginOfPage = ((Integer)hashmap.get("nowPage") - 1) * Log.RECORD_PER_PAGE;
+   
+   int startNum = beginOfPage + 1; 
+   int endNum = beginOfPage + Log.RECORD_PER_PAGE;   
+   hashmap.put("startNum", startNum);
+   hashmap.put("endNum", endNum);
+     
+    List<LogVO> list = memberDAO.login_list_paging(hashmap);
+    return list;
+  }
 
+  @Override
+  public int search_count(int memberno) {
+    int num = memberDAO.search_count(memberno);
+    return num;
+  }
+
+  @Override
+  public String paging(int memberno, int search_count, int nowPage){ 
+    int totalPage = (int)(Math.ceil((double)search_count/Log.RECORD_PER_PAGE)); 
+    int totalGrp = (int)(Math.ceil((double)totalPage/Log.PAGE_PER_BLOCK));
+    int nowGrp = (int)(Math.ceil((double)nowPage/Log.PAGE_PER_BLOCK)); 
+    int startPage = ((nowGrp - 1) * Log.PAGE_PER_BLOCK) + 1;
+    int endPage = (nowGrp * Log.PAGE_PER_BLOCK); 
+     
+    StringBuffer str = new StringBuffer(); 
+     
+    str.append("<style type='text/css'>"); 
+    str.append("  #paging {text-align: center; margin-top: 5px; font-size: 1em;}"); 
+    str.append("  #paging A:link {text-decoration:none; color:black; font-size: 1em;}"); 
+    str.append("  #paging A:hover{text-decoration:none; background-color: #FFFFFF; color:black; font-size: 1em;}"); 
+    str.append("  #paging A:visited {text-decoration:none;color:black; font-size: 1em;}"); 
+    str.append("  .span_box_1{"); 
+    str.append("    text-align: center;");    
+    str.append("    font-size: 1em;"); 
+    str.append("    border: 1px;"); 
+    str.append("    border-style: solid;"); 
+    str.append("    border-color: #cccccc;"); 
+    str.append("    padding:1px 6px 1px 6px;"); 
+    str.append("    margin:1px 2px 1px 2px;"); 
+    str.append("  }"); 
+    str.append("  .span_box_2{"); 
+    str.append("    text-align: center;");    
+    str.append("    background-color: #668db4;"); 
+    str.append("    color: #FFFFFF;"); 
+    str.append("    font-size: 1em;"); 
+    str.append("    border: 1px;"); 
+    str.append("    border-style: solid;"); 
+    str.append("    border-color: #cccccc;"); 
+    str.append("    padding:1px 6px 1px 6px;"); 
+    str.append("    margin:1px 2px 1px 2px;"); 
+    str.append("  }"); 
+    str.append("</style>"); 
+    str.append("<DIV id='paging'>"); 
+    int _nowPage = (nowGrp-1) * Log.PAGE_PER_BLOCK;  
+    if (nowGrp >= 2){ 
+      str.append("<span class='span_box_1'><A href='./login_list_paging.do?&nowPage="+_nowPage+"&memberno="+memberno+">이전</A></span>"); 
+    } 
+
+    for(int i=startPage; i<=endPage; i++){ 
+      if (i > totalPage){ 
+        break; 
+      } 
   
+      if (nowPage == i){ 
+        str.append("<span class='span_box_2'>"+i+"</span>"); 
+      }else{
+        str.append("<span class='span_box_1'><A href='./login_list_paging.do?&nowPage="+i+"&memberno="+memberno+"'>"+i+"</A></span>");   
+      } 
+    } 
+    _nowPage = (nowGrp * Log.PAGE_PER_BLOCK)+1;  
+    if (nowGrp < totalGrp){ 
+      str.append("<span class='span_box_1'><A href='./login_list_paging.do?&nowPage="+_nowPage+"&memberno="+memberno+"'>다음</A></span>"); 
+    } 
+    str.append("</DIV>"); 
+     
+    return str.toString(); 
+  }
+
 }

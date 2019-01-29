@@ -17,31 +17,31 @@
 
 </head>
 <body>
-<div class="container" style="padding-left: 0px;">
-  <div class="navbar-collaspe collaspe">
+<div class="top_second_container">
+  <div class="navbar-collaspe collaspe" style="margin-left: 100px;">
 	  <ul class="nav navbar-nav navbar-left">
-		  <li>
-		    <a class="top_second_font" href ="${pageContext.request.contextPath}"> 홈</a>
+		  <li class="top_second_nav_button">
+		    <a class="top_second_font" href ="${pageContext.request.contextPath}" style="padding: 12px 12px 12px 12px;"> 홈</a>
 		  </li>
 		  
-		  <li>
-		    <A class="top_second_font" href='${pageContext.request.contextPath}/categrp/list.do'>카테고리 그룹</A>
+		  <li class="top_second_nav_button">
+		    <A class="top_second_font" href='${pageContext.request.contextPath}/categrp/list.do' style="padding: 12px 12px 12px 12px;">카테고리 그룹</A>
 		  </li>
 		  
-		  <li>
-		    <a class="top_second_font" href='${pageContext.request.contextPath}/board/list.do'>게시판 목록</a>
+		  <li class="top_second_nav_button">
+		    <a class="top_second_font" href='${pageContext.request.contextPath}/board/list.do' style="padding: 12px 12px 12px 12px;">게시판 목록</a>
 		  </li>
 		  
-		  <li>
-		    <A class="top_second_font" href='${pageContext.request.contextPath}/member/list.do'>회원 목록</A>
+		  <li class="top_second_nav_button">
+		    <A class="top_second_font" href='${pageContext.request.contextPath}/member/list.do' style="padding: 12px 12px 12px 12px;">회원 목록</A>
 		  </li>
 		  
-		  <li>
-		    <A class="top_second_font" href='${pageContext.request.contextPath}/login/login_list.do'>로그인 내역</A>
+		  <li class="top_second_nav_button">
+		    <A class="top_second_font" href='${pageContext.request.contextPath}/login/login_list_paging.do?memberno=${sessionScope.memberno}' style="padding: 12px 12px 12px 12px;">로그인 내역</A>
 		  </li>
 		  
-	    <li>
-        <a class="top_second_font" href='${pageContext.request.contextPath}/contents/list_by_board_search_paging.do?boardno=1'>게시판</a>		    
+	    <li class="top_second_nav_button">
+        <a class="top_second_font" href='${pageContext.request.contextPath}/contents/list_by_board_search_paging.do?boardno=1' style="padding: 12px 12px 12px 12px;">게시판</a>		    
 	    </li>
 	  </ul>
   </div>

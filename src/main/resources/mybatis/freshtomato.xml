@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <insert id="create" parameterType="TomatoVO">
     INSERT INTO freshtomato(ftno, ftrate, rdate, wordno)
-    VALUES((SELECT NVL(MAX(ftno), 0)+1 as ftno FROM ftno), #{ftrate}, sysdate, #{wordno})
+    VALUES((SELECT NVL(MAX(ftno), 0)+1 as ftno FROM freshtomato), #{ftrate}, sysdate, #{wordno})
   </insert>
   
   <select id="read" parameterType="int" resultType="TomatoVO">

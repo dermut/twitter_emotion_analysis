@@ -1051,3 +1051,4 @@ COMMENT ON COLUMN word_sentiment.wordno is '검색어번호';
 SELECT min(wordno)
 FROM word
 WHERE word='바다' and TO_CHAR(rdate, 'YYYY/MM/DD')=TO_CHAR(sysdate, 'YYYY/MM/DD'); /***** if) 이게 0이면, 새로 word_time_graph를 create *****/
+	

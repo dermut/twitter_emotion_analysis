@@ -1,34 +1,12 @@
   
   /*-------------------------Commons---------------------------*/
-    
+  
+  @font-face {
+    font-family="Nanum Gothic";
+  }
+  
   *{
     font-family: "Apple SD Gothic Neo", Apple Gothic, Helvetica, "Malgun Gothic", Dotum, Arial, Tahoma;
-    font-size: 14px;
-  }
-  
-  dl, dt, dd, ol, ul, li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  ul, menu, dir {
-    display: block;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
-  }
-  
-  .container {
-    padding-right: 0px;
-    padding-left: 0px;
-    font-size: 20px;
-  }
-  
-  .content {
     font-size: 14px;
   }
   
@@ -37,8 +15,9 @@
   }
   
   .title_l {
-    margin: 20px 0px 20px 0px;
+    margin: 35px 0px 20px 0px;
     color: white;
+    font-weight: bold;
   }
   
   .main_panel {
@@ -54,36 +33,14 @@
   .main_wrapper {
     min-width: 1080px;
     min-height: 100%;
-    position: relative;
+    height: 100%;
     overflow: hidden;
-  }
-  
-  .main_wrapper--index {
-    background: #00b2ff;
     background: linear-gradient(52deg, #5383e8, #3991ef 31%, #3892f0 32%, #3594f1 36%, #00b2ff);
-  }
-  
-    
-  .main_wrapper--index .top {
-    background: none;
-  }
-  
-  .main_wrapper--index .top_container {
-    padding-top: 25px;
-    padding-bottom: 25px;
-  }
-  
-  .main_wrapper--index .top_container .login_list {
-/*     top: 25px; */
-  }
-  
-  .main_wrapper .main_container {
-    width: 1080px;
-    margin: 0 auto;
   }
   
   .main_container {
     position: relative;
+    top: 125px;
     min-height: 700px;
     padding-bottom: 120px;
   }
@@ -138,42 +95,44 @@
   /*--------------------------TOP-----------------------------*/
   
   .top_container {
-    position: relative;
-    max-width: 1300px;
-    margin: 0 auto;
-    vertical-align: middle;
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    z-index: 1;
+    background: linear-gradient(52deg, #003a70, #00498c, #005baf, #0072db);
   }
   
-  .top_container .login_list {
-    position: absolute;
-    right: 0;
+  .sites {
+    position:absolute;
+    top: 20px;
+    left: 100px;
+    margin-bottom: 0px;
+    list-style: none;
   }
   
   .site {
-    display: inline-block;
-    vertical-align: middle;
-    height: 16px;
-    line-height: 16px;
-    font-size: 12px;
-    color: #fff;
-    position: absolute;
-    margin-left: 20px;
+  
+  }
+  
+  .imgHome {
+
   }
   
   .login_list {
-    top: 25px;
     position: absolute;
-    right: 0;
+    top: 27px;
+    right: 100px;
+    list-style: none;
   }
   
-  .login {
+  .login_set {
     margin-left: 20px;
   }
   
   .top {
+    position: relative;
     height: 100px;
     background-color: rgb(30, 161, 247);
-    position: relative;
   }
   
   .login_button {
@@ -182,7 +141,7 @@
     padding: 0 20px;
     border: none;
     border-radius: 2px;
-    line-height: 26px;
+    line-height: 26px;  
     font-size: 12px;
     letter-spacing: -0.5px;
     color: #ffffff;
@@ -194,16 +153,24 @@
   
   /*-----------------------TOP_SECOND--------------------------*/
   
-  .top_second {
+  .top_second_container {
+    position: absolute;
+    width: 100%;
+    height: 45px;
+    top: 80px;
     background-color: rgb(29, 46, 81);
   }
   
   .top_second_font {
-    font-size: 16px;
+    font-size: 14px;
     color: rgb(115, 161, 203);
   }
   
-  /*---------------------TOP_SECOND END------------------------*/
+  .top_second_nav_button {
+  
+  }
+  
+  /*----------------------TOP_SECOND END------------------------*/
   
   /*--------------------------BOTTOM-----------------------------*/
   
@@ -241,8 +208,11 @@
   
   /*--------------------------MEMBER-----------------------------*/
   
-  
   .member_aside {
+    color: white;
+  }
+  
+  .member_aside_a {
     color: white;
   }
   
@@ -250,21 +220,258 @@
   
   /*-----------------------COMMUNITY-----------------------------*/
   
-  .community_wrapper--index {
-    background: #00b2ff;
-    background: linear-gradient(52deg, #5383e8, #3991ef 31%, #3892f0 32%, #3594f1 36%, #00b2ff);
-  }
   
   /*---------------------COMMUNITY END---------------------------*/
   
   
-  /*--------------------------LOG IN-----------------------------*/
+  /*---------------------------WORD------------------------------*/
+  
+  .guide_main {
+    color: white;
+    font-size: 18px;
+    padding-top: 30px;
+  }
+  
+  /*-------------------------WORD END----------------------------*/
+  
+  
+  /*--------------------------RESULT----------------------------*/
+  
+  .page_id {
+  
+  }
+  
+  .page_id_word {
+    float: left;
+  }
+  
+  .page_recently_serached {
+    margin: 12px 0px 5px 0px;
+    padding: 12px 0px 5px 0px;
+    font-size: 10px;
+  }
+  
+  .page_divide {
+    border-bottom: 1px solid #c6cbcb;
+    margin-top: 25px;
+  }
+  
+  .page_result {
+    display: block;
+    margin-top: 15px;
+  }
+  
+  .page_side {
+    display: inline-block;
+    width: 300px;
+    vertical-align: top;
+  }
+  
+  .result_box {
+    margin-top: 10px;
+    display: table;
+    position: relative;
+    width: 100%;
+    border: 1px solid #cdd2d2;
+    box-shadow: 0 1px #dcdfdf;
+    background: #f2f2f2;
+    border-radius: 2px;
+  }
+  
+  .result_box_image_box {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 20px;
+    width: 120px;
+    height: 124px;
+    text-align: center;
+  }
+  
+  .result_box_image {
+    width: 104px;
+    heigth: 104px;
+    margin: -5px 0 -10px 0;
+  }
+  
+  .result_box_word {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 25px;
+    color: #879292;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: left;
+  }
+  
+  .result_box_freshtomato_box {
+    margin-top: 8px;
+    padding: 16px 0;
+    display: flex;
+    background-color: #f2f2f2;
+    border: solid 1px #cdd2d2;
+  }
+  
+  .freshtomato_image {
+    width: 64px;
+    height: 64px;
+    margin: 0 28px;
+  }
+  
+  .freshtomato_rate {
+    display: flex;
+  }
+  
+  .page_real {
+    display: inline-block;
+    width: 690px;
+    margin-left: 10px;
+    vertical-align: top;
+  }
+  
+  /*------------------------RESULT END---------------------------*/
+  
+  /*--------------------------LOGIN-----------------------------*/
   
   .login_root {
     height: 100%;
     width: 100%;
-    text-align: center;
   }
   
-  /*-------------------------LOG OUT------------------------------*/
+  .login {
+    margin: 5% 40% 0% 40%;
+    height: 100%;
+    width: 20%;
+  }
   
+  /*-------------------------LOGIN END---------------------------*/
+  
+  
+  
+  
+  /*-----------------------------READ-----------------------------*/
+  
+  .contents_aside {
+    height: 70px;
+    width: 90%;
+  }
+  
+  .page {
+    background: white;
+    width: 70%;
+    box-shadow: 5px 5px 10px gray;  
+  }
+
+  .page_title {
+    text-align: left;
+    padding: 10px 0px 15px 20px; 
+    border-bottom: thin dotted;
+  }
+  
+  .page_id {
+    color: gray;
+  }
+  
+  .page_date {
+    color: gray;
+  }
+  
+  .page_reply {
+    color: gray;
+    float: right;
+  }
+  
+  .page_content_pic {
+    padding: 30px 0px 15px 20px;
+  }
+  
+  .page_content {
+    text-align: left;
+    padding: 15px 0px 15px 20px;
+  }
+  
+  .contents_read_ul {
+    list-style: none;
+  }
+  
+  /*--------------------------READ END----------------------------*/
+  
+  /*---------------------------REPLY------------------------------*/
+  
+  .page_reply {
+    width: 70%;
+    border-radius: 2px;
+    box-shadow: 5px 5px 10px gray;
+    margin: 10px 0px 10px 15%;
+    float: left;
+    background-color: #DDDDDD; 
+  }
+  
+  .page_create_reply {
+    width: 100%;
+  }
+  
+  .page_count_reply {
+    float: left;
+    padding: 10px 0px 5px 10px;
+  }
+    
+  .comment {
+    width: 70%;
+    border-radius: 2px;
+    background: #fafafa;
+    box-shadow: 5px 5px 10px gray;
+  }
+  
+  .comment-l {
+    display: flow-root;
+    border: 5px gray;
+    padding: 10px 0px 10px 0px;
+    border-bottom: solid 1px #cdd2d2;
+  }
+  
+  .comment-meta {
+    position: relative;
+    width: 70%;
+  }
+
+  .comment-name-l {
+    display: flow-root;
+    padding: 10px 0px 10px 0px;
+    border-bottom: dotted 1px gray;
+  }
+    
+  .comment-name {
+    color: blck;
+    float: left;
+    padding-left: 18px;
+    font-weight: bold;
+    font-size: medium;
+  }
+  
+  .comment-date {
+    color: gray;
+    display: inline-block;
+    float: right;
+    padding-right: 15px;
+    font-size: x-small;
+  }
+  
+  .comment-content {
+    font-family: Gothic A1;
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 15px 10px 15px 10px;
+    float: left;
+    color: gray;
+  }
+  
+  .comment-function {
+    float: right;
+    padding-top: 10px;
+    padding-right: 10px;
+  }
+  
+  
+  
+  /*-------------------------REPLY END----------------------------*/

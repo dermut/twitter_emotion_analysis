@@ -18,14 +18,10 @@
 </head>
 <body>
 
-<div class="main_wrapper main_wrapper--index">
-	<div class="top">
-	  <c:import url="/menu/top.jsp"/>
-	</div>
+<div class="main_wrapper">
+  <c:import url="/menu/top.jsp"/>
 	
-	<div class="top_second">
-	  <c:import url="/menu/top_second.jsp"/>
-	</div>
+  <c:import url="/menu/top_second.jsp"/>
 	
 	<div class="main_container">
 	  <div class="contents" align="center">

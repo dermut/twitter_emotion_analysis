@@ -1,9 +1,6 @@
 package dev.mvc.board;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -21,19 +21,18 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+  <context:component-scan base-package="dev.mvc.tea"/>
+  
   <context:component-scan base-package="dev.mvc.board"/>
   <context:component-scan base-package="dev.mvc.categrp"/>
   <context:component-scan base-package="dev.mvc.contents"/>   
   <context:component-scan base-package="dev.mvc.crawling_data"/>
   <context:component-scan base-package="dev.mvc.freshtomato"/>
-  <context:component-scan base-package="dev.mvc.log"/>   
   <context:component-scan base-package="dev.mvc.member"/> 
   <context:component-scan base-package="dev.mvc.member_word"/> 
-  <context:component-scan base-package="dev.mvc.tea"/> 
   <context:component-scan base-package="dev.mvc.word"/>      
   <context:component-scan base-package="dev.mvc.word_sentiment"/> 
   <context:component-scan base-package="dev.mvc.word_time_graph"/>
-  <context:component-scan base-package="dev.mvc.tea"/>
   
   <context:component-scan base-package="nation.web.tool" />   
 	

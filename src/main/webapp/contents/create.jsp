@@ -1,4 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -25,20 +27,27 @@
 </head> 
 
 <body>
-<DIV class='container'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>     
+<div class="main_wrapper" align=center>
 
-  <ASIDE style='float: left;'>
-      <A href='../board/list.do'>게시판 목록</A>  
-      >
-      <A href='./list.do?boardno=${boardVO.boardno }'>${boardVO.name }</A>
-  </ASIDE>
-  <ASIDE style='float: right;'>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>등록</A>
-  </ASIDE> 
+  <c:import url="/menu/top.jsp"/>
+  
+  <c:import url="/menu/top_second.jsp"/>
+  
+  <DIV class='main_container' style='width: 80%;'>
+    <DIV class='contents'>   
+
+    <div class="contents_aside">
+		  <ASIDE style='float: left; color: white; padding: 20px 0px 10px 10px;'>
+		      <A href='../board/list.do' style="color: white;">게시판 목록</A>  
+		      >
+		      <A href='./list.do?boardno=${boardVO.boardno }' style="color: white;">${boardVO.name }</A>
+		  </ASIDE>
+		  <ASIDE style='float: right; color: white; padding: 20px 0px 10px 10px;'>
+		    <A href="javascript:location.reload();" style="color: white;">새로고침</A>
+		    <span class='menu_divide'  style="color: white;">│</span> 
+		    <A href='./create.do' style="color: white;">등록</A>
+		  </ASIDE> 
+		</div>
 
   <div class='menu_line'></div>
   <DIV class='content' style='width: 100%;'>
@@ -46,9 +55,7 @@
                enctype="multipart/form-data" class="form-horizontal">
                
       <input type='hidden' name='boardno' id='boardno' value='${param.boardno }'>
-      <input type='hidden' name='memberno' id='memberno' value='1'>
-      
-      <%-- ${sessionScope.memberno } --%>
+      <input type='hidden' name='memberno' id='memberno' value='${user_memberno }'>
       
       <div class="form-group">   
         <label for="name" class="col-md-1 control-label">글 제목</label>
@@ -79,9 +86,15 @@
   </DIV>
 
 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+  </DIV> <!-- content END -->
+  
+  <div class="main_bottom">
+    <c:import url="/menu/bottom.jsp"/>
+  </div>
+  
+  </DIV> <!-- container END -->
+
+</div>
 </body>
 
 </html> 

@@ -13,28 +13,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   <!-- 목록 -->
   <select id="list" resultType="Categrp_BoardVO">
-    SELECT c.categrpno, c.name as categrp_name,
-           t.boardno, t.name as board_name, t.memberno, t.rdate
-    FROM categrp c, board t
-    WHERE c.categrpno = t.categrpno
-    ORDER BY c.categrpno ASC, t.boardno ASC
+    SELECT    c.categrpno, c.name as categrp_name,
+              t.boardno, t.name as board_name, t.memberno, t.rdate
+    FROM      categrp c, board t
+    WHERE     c.categrpno = t.categrpno
+    ORDER BY  c.categrpno ASC, t.boardno ASC
   </select>
 
   <!-- categrp별 목록 -->
   <select id="list_by_categrp" resultType="Categrp_BoardVO" parameterType="int">
-    SELECT c.categrpno, c.name as categrp_name,
-    t.boardno, t.categrpno, t.name as board_name, t.memberno, t.rdate
-    FROM categrp c, board t
-    WHERE (c.categrpno = #{categrpno}) AND (c.categrpno = t.categrpno)
-    ORDER BY c.categrpno ASC, t.boardno ASC
+    SELECT    c.categrpno, c.name as categrp_name,
+              t.boardno, t.categrpno, t.name as board_name, t.memberno, t.rdate
+    FROM      categrp c, board t
+    WHERE     (c.categrpno = #{categrpno}) AND (c.categrpno = t.categrpno)
+    ORDER BY  c.categrpno ASC, t.boardno ASC
   </select>
-
-<!--   <select id="read" resultType="Categrp_BoardVO" parameterType="int"> -->
-<!--     SELECT   c.categrpno, c.name as categrp_name, -->
-<!-- 			          t.boardno, t.categrpno, t.name as board_name, t.memberno -->
-<!--     FROM categrp c, board t -->
-<!--     WHERE t.boardno=#{boardno} AND c.categrpno = t.categrpno -->
-<!--   </select> -->
 
   <select id="read" resultType="BoardVO" parameterType="int">
     SELECT  boardno, name, rdate, categrpno, memberno
@@ -44,44 +37,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   <!-- record update -->
   <update id="update" parameterType="BoardVO">
-    UPDATE board 
-    SET name=#{name}, categrpno=#{categrpno}, memberno=#{memberno}
-    WHERE boardno=#{boardno}
+    UPDATE  board 
+    SET     name=#{name}, categrpno=#{categrpno}, memberno=#{memberno}
+    WHERE   boardno=#{boardno}
   </update>
   
   <delete id="delete" parameterType="int">
     DELETE FROM board 
-    WHERE boardno=#{boardno}
+    WHERE       boardno=#{boardno}
   </delete>
 
   <!-- Count by categrpno -->
   <select id="count_by_categrp" resultType="int" parameterType="int">
-    SELECT COUNT(*) as cnt
-    FROM board
-    WHERE categrpno=#{categrpno}  
+    SELECT  COUNT(*) as cnt
+    FROM    board
+    WHERE   categrpno=#{categrpno}  
   </select>
 
   <!-- Delete by categrpno -->
   <delete id="delete_by_categrp" parameterType="int">
     DELETE FROM board
-    WHERE categrpno=#{categrpno}  
+    WHERE       categrpno=#{categrpno}  
   </delete>  
   
   <select id="count_by_board" resultType="int" parameterType="int">
-    SELECT COUNT(*) as cnt
-    FROM contents
-    WHERE boardno=#{boardno}
+    SELECT  COUNT(*) as cnt
+    FROM    contents
+    WHERE   boardno=#{boardno}
   </select>
   
   <delete id="delete_contents_by_board" parameterType="int">
     DELETE FROM contents
-    WHERE boardno=#{boardno}
+    WHERE       boardno=#{boardno}
   </delete>
   
   <select id="getId" resultType="String" parameterType="int">
-    SELECT id
-    FROM member
-    WHERE memberno=#{memberno}
+    SELECT  id
+    FROM    member
+    WHERE   memberno=#{memberno}
   </select>
 </mapper>
 

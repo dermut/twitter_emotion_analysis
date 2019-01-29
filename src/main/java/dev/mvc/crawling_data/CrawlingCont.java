@@ -1,7 +1,5 @@
 package dev.mvc.crawling_data;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +51,8 @@ public class CrawlingCont {
     int count = 0;
     Date first = null;
     Date last = null;
+    double word_weight = 0;
+    int freshtomato = 0;
     
     Twitter twitter = new TwitterFactory().getInstance();
     
@@ -73,11 +73,6 @@ public class CrawlingCont {
         
         count += tweets.size();
         
-//        last = tweets.get(0).getCreatedAt(); // 가장 먼 시점에 생성된 트윗의 날짜
-//        first = tweets.get(count-1).getCreatedAt(); // 가장 최근에 생성된 트윗의 날짜
-//        first = tweets.get(0).getCreatedAt(); // 쿼리 결과 제일 첫번째에 있는 값의 날짜
-//        last = tweets.get(tweets.size()).getCreatedAt(); // 쿼리 결과 제일 마지막에 있는 값의 날짜
-         
         for (Status tweet : tweets) {
           System.out.println(tweet.getText());
                 
@@ -92,15 +87,36 @@ public class CrawlingCont {
       System.out.println("마지막 날짜는 " + last);
       
       if(first != null && last != null) {
-        System.out.println("첫 날짜와 마지막 날짜의 차이는 " + (last.getTime()-first.getTime())/1000 + "초 입니다.");
+        long seconds = (last.getTime()-first.getTime())/1000;
+        System.out.println("첫 날짜와 마지막 날짜의 차이는 " + seconds + "초 입니다.");
+        
+        
+        if(seconds == 0) {  // 만약 나온 초가 0이면 1을 강제로 부여한다.
+          seconds = 1;
+        }
+        
+        word_weight = (double)count/seconds;  // 계산할 가중치를 (나온 갯수 / 트윗을 올린 시간)의 차이로 구한다.
+        freshtomato = (int) ((word_weight / 1.03218391) * 100);
+        
+        if(freshtomato >= 100) {
+          freshtomato = 100;
+        }
+        
+        
       }
+      
+      System.out.println("word_weight는 " + String.format("%.10f", word_weight ) + " 입니다.");
+      System.out.println("freshtomato 수치는 " + freshtomato + " 입니다.");
+      
       mav.setViewName("/error");
     } catch (TwitterException e) {
       e.printStackTrace();
       System.out.println("Failed to search tweets: " + e.getMessage());
     }
     
-    mav.setViewName("/result");      
+    request.setAttribute("freshtomato", freshtomato);
+    
+    mav.setViewName("forward:/freshtomato/create.do");
     
     return mav;
   } 

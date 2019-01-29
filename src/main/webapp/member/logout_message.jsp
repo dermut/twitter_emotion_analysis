@@ -27,26 +27,34 @@
 
 </head> 
 <body>
-<DIV class='container' style='width: 90%;'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>
-
-<DIV class='title_line'>알림</DIV>
-  <DIV class='message'>
-    <fieldset class='fieldset_basic'>
-      <ul>
-        <li class='li_none'>이용해 주셔서감사합니다.</li>
-        <li class='li_none'>
-          [<A href='${pageContext.request.contextPath}/index.do'>확인</A>]
-        </li>
-        
-      </ul>
-    </fieldset>    
-  </DIV>
-
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+<div class="main_wrapper" align=center style="background: white;">
+  <c:import url="/menu/top.jsp"/>
+  
+  <c:import url="/menu/top_second.jsp"/>
+  
+  <div class="main_container" style="width: 65%;">
+		<DIV class='contents'>
+		
+		<DIV>알림</DIV>
+		  <DIV class='message'>
+		    <fieldset class='fieldset_basic'>
+		      <ul>
+		        <li class='li_none'>이용해 주셔서감사합니다.</li>
+		        <li class='li_none'>
+		          [<A href='${pageContext.request.contextPath}/index.do'>확인</A>]
+		        </li>
+		      </ul>
+		    </fieldset>    
+		  </DIV>
+		
+		</DIV> <!-- contents END -->
+		
+	  <div class="main_bottom">
+      <c:import url="/menu/bottom.jsp"/>
+    </div>
+    
+  </DIV> <!-- container END -->
+</div>
 </body>
 
 </html> 

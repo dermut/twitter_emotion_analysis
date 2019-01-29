@@ -13,12 +13,6 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<%-- <link href="${pageContext.request.contextPath}/bootstrap/bootstrap/css/font-awesome.min.css" rel="stylesheet"> --%>
-<%-- <link href="${pageContext.request.contextPath}/bootstrap/css/font-awesome.min.css" rel="stylesheet"> --%>
-<%-- <link href="${pageContext.request.contextPath}/bootstrap/css/style.css" rel="stylesheet"> --%>
-<%-- <link href="${pageContext.request.contextPath}/bootstrap/css/blog-single.css" rel="stylesheet"> --%>
-<%-- <link href="${pageContext.request.contextPath}/bootstrap/css/responsive.css" rel="stylesheet"> --%>
-
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
@@ -274,17 +268,12 @@
 </head> 
 
 <body>
-<div class="main_wrapper community_wrapper--index">
-  <div class="top">
-    <c:import url="/menu/top.jsp"/>
-  </div>
+<div class="main_wrapper">
+  <c:import url="/menu/top.jsp"/>
   
-  <div class="top_second">
-    <c:import url="/menu/top_second.jsp"/>
-  </div>
+  <c:import url="/menu/top_second.jsp"/>
   
-  <div class="main_container">
-    <div class="contents" align="center">
+  <div class="main_container" align="center">
     
 	  <DIV class="main_panel" id='main_panel'></DIV>
 		  
@@ -292,53 +281,60 @@
 	      <h2>카테고리 그룹</h2>
 		  </div>
 		  
-		  <DIV class="form-group" id='panel_create' style='padding: 10px 0px 10px 0px;  background-color: #F9F9F9; width: 50%;'>
+		  <DIV class="form-group" id='panel_create' style='padding: 10px 0px 10px 0px;  background-color: #F9F9F9; width: 40%;'>
 		    <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
-		      <label class="control-label" style="padding:5px 0px 5px 0px;">카테고리 그룹 등록</label>
-		      <div class="input-group">
-            <span class="input-group addon" style="padding:0px 0px 3px 0px;">그룹 분류 코드</span>
+		      <div class="form-group">
+            <input type='hidden' name='categrpno' id='categrpno' value=''>
+            <label class="control-label" style="padding:5px 0px 5px 0px;">카테고리 그룹 등록</label>
+          </div>
+          
+          <div class="form-group">
+            <label for="group-code" class="control-label" style="padding:3px 55% 3px 0px;">그룹 분류 코드</label>
             
-			      <select class="form-control" name='classification' id='classification' style="padding:0px 0px 3px 0px;">
-			        <option value='1' selected="selected">1-공지사항</option>
-			        <option value='2'>2-게시판</option>
-			        <option value='9'>9-기타</option>
-			      </select> 
-			          
-			      <span class="input-group addon" style="padding:3px 0px 3px 0px;">그룹 이름</span>
-			      
-            <input class="form-control" type='text' name='name' id='name' value='' required="required">
-			      
-			      <span class="button-group">
-		          <button class="btn btn-primary btn-info" type="button" id='submit' onclick="create();" style="background-image:none;" >등록</button>
-		          &nbsp
-		          <button class="btn btn-secondary btn-info" type="button" onclick="create_update_cancel();" style="background-image:none;">취소</button>
-		        </span>
-		      </div>
+            <select class="form-control" name='classification' id='classification' style="width:70%; padding:0px 0px 3px 0px;">
+              <option value='1' selected="selected">1-공지사항</option>
+              <option value='2'>2-게시판</option>
+              <option value='9'>9-기타</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="group-name" class="control-label" style="padding:3px 59% 3px 0px;">그룹 이름</label>
+            <input class="form-control" type='text' name='name' id='name' size='15' value='' required="required" style="width:70%;">
+          </div>
+          
+          <div class="form-group">
+            <button class="btn btn-primary btn-info" type="submit" id="submit" style="background-image:none;">저장</button>
+            <button class="btn btn-secondary btn-info" type="button" onclick="create_update_cancel();" style="background-image:none;">취소</button>
+          </div>
 		    </FORM> 
 		  </DIV>
 		
-		  <DIV class="form-group" id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 50%;'>
+		  <DIV class="form-group" id='panel_update' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 40%;'>
 		    <FORM name='frm_update' id='frm_update' method='POST' action='./update.do'>
-          <input type='hidden' name='categrpno' id='categrpno' value=''>
-		      <label class="control-label" style="padding:5px 0px 5px 0px;">카테고리 그룹 수정</label>
-          <div class="input-group">
+		      <div class="form-group">
+	          <input type='hidden' name='categrpno' id='categrpno' value=''>
+			      <label class="control-label" style="padding:5px 0px 5px 0px;">카테고리 그룹 수정</label>
+		      </div>
+		      
+          <div class="form-group">
+            <label for="group-code" class="control-label" style="padding:3px 55% 3px 0px;">그룹 분류 코드</label>
             
-            <span class="input-group addon" style="padding:0px 0px 3px 0px;">그룹 분류 코드</span>
-            
-			      <select class="form-control" name='classification' id='classification' style="padding:0px 0px 3px 0px;">
+			      <select class="form-control" name='classification' id='classification' style="width:70%; padding:0px 0px 3px 0px;">
 			        <option value='1' selected="selected">1-공지사항</option>
 			        <option value='2'>2-게시판</option>
 			        <option value='9'>9-기타</option>
 			      </select>
-			            
-			      <span class="input-group addon" style="padding:3px 0px 3px 0px;">그룹 이름</span>
-			      <input class="form-control" type='text' name='name' id='name' size='15' value='' required="required">
-			      
-			      <div class="button-group">
-			        <button class="btn btn-primary btn-info" type="submit" id="submit" style="background-image:none;">저장</button>
-			        &nbsp
-			        <button class="btn btn-secondary btn-info" type="button" onclick="create_update_cancel();" style="background-image:none;">취소</button>
-			      </div>
+          </div>
+          
+          <div class="form-group">
+		        <label for="group-name" class="control-label" style="padding:3px 59% 3px 0px;">그룹 이름</label>
+		        <input class="form-control" type='text' name='name' id='name' size='15' value='' required="required" style="width:70%;">
+		      </div>
+		      
+		      <div class="form-group">
+		        <button class="btn btn-primary btn-info" type="submit" id="submit" style="background-image:none;">저장</button>
+		        <button class="btn btn-secondary btn-info" type="button" onclick="create_update_cancel();" style="background-image:none;">취소</button>
 		      </div>
 		    </FORM>
 		  </DIV>
@@ -352,7 +348,7 @@
 		  </DIV>
 		
 		  
-		<TABLE class='table table-striped table-hover' style='background-color: #F9F9F9;'>
+		<TABLE class='table table-striped table-hover' style='width: 90%; background-color: #F9F9F9;'>
 		  <colgroup>
 		    <col style='width: 10%;'/>
 		    <col style='width: 20%;'/>
@@ -378,8 +374,10 @@
 		
 		</TABLE>
 		
-		</DIV> <!-- content END -->
-		<jsp:include page="/menu/bottom.jsp" />
+	  <div class="main_bottom">
+      <c:import url="/menu/bottom.jsp"/>
+    </div>
+    
 	</DIV> <!-- container END -->
 </div>
 </body>

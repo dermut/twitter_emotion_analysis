@@ -26,19 +26,26 @@
 </head> 
 
 <body>
-<DIV class='container' style='width: 100%;'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>
-  <DIV class='message'>
-    <H3>로그인이 필요한 페이지입니다.</H3>
-    <BR><BR>
-    [<A href='${pageContext.request.contextPath}/member/login.do'>로그인</A>]
-    [<A href='${pageContext.request.contextPath}/member/create.do'>회원 가입</A>]
-  </DIV>
+<div class="main_wrapper">
+  <c:import url="/menu/top.jsp"/>
+  
+  <c:import url="/menu/top_second.jsp"/>
+  <DIV class='container' style='width: 100%;'>
+  
+  <DIV class='content'>
+	  <DIV class='message'>
+	    <H3>로그인이 필요한 페이지입니다.</H3>
+	    <BR><BR>
+	    [<A href='${pageContext.request.contextPath}/member/login.do'>로그인</A>]
+	    [<A href='${pageContext.request.contextPath}/member/create.do'>회원 가입</A>]
+	  </DIV>
 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+  </DIV> <!-- content END -->
+    <div class="main_bottom">
+      <c:import url="/menu/bottom.jsp"/>
+    </div>
+  </DIV> <!-- container END -->
+</div>
 </body>
 
 </html> 

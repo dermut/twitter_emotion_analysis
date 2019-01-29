@@ -37,6 +37,8 @@ public class Member_WordCont {
     int memberno = (Integer)request.getAttribute("memberno");
 
     member_wordProc.create(memberno, wordno); 
+    
+    
     request.setAttribute("wordno", wordno);
     mav.setViewName("forward:/crawling_data/create.do");      
     

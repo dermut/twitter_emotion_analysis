@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
  
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -15,7 +17,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
- 
+<script type="text/javascript">
+  jQuery.noConflict();
+  var jq$ = jQuery;
+</script>
 <script type="text/javascript" src="../js/jquery.cookie.js"></script>
  
 <script type="text/javascript">
@@ -116,138 +121,132 @@
  
  
 <body>
-<DIV class='container'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>
- 
-  <DIV id='main_panel'></DIV>
- 
-  <!-- Modal -->
-  <div class="modal fade" id="modal_panel" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title" id='modal_title'></h4>
-        </div>
-        <div class="modal-body">
-          <p id='modal_content'></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div> <!-- Modal END -->
-    
+<div class="main_wrapper" align=center style="background: white;">
+  <c:import url="/menu/top.jsp"/>
   
-  <ASIDE style='float: left;'>
-      <A href='./member/list.do'>회원 목록</A>  
-  </ASIDE>
-  <ASIDE style='float: right;'>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>회원 가입</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./list.do'>목록</A>
-  </ASIDE> 
- 
-  <div class='menu_line'></div>
+  <c:import url="/menu/top_second.jsp"/>
   
- 
-  <DIV class='title_line'>회원가입</DIV>
- 
-  <FORM name='frm' id='frm' method='POST' action='./create.do' 
-              onsubmit="return send();" class="form-horizontal">
- 
-    <div class="form-group">
-      <label for="id" class="col-md-2 control-label">아이디</label>    
-      <div class="col-md-10">
-        <input type='text' class="form-control input-md" name='id' id='id' value='user' required="required" style='width: 30%;' placeholder="아이디" autofocus="autofocus">
-        <button type='button' onclick="checkId()" class="btn btn-info btn-md">중복확인</button>
-        <SPAN id='id_span'></SPAN> <!-- ID 중복 관련 메시지 -->        
-      </div>
-    </div>   
-                
-    <div class="form-group">
-      <label for="passwd" class="col-md-2 control-label">패스워드</label>    
-      <div class="col-md-10">
-        <input type='password' class="form-control input-md" name='passwd' id='passwd' value='1234' required="required" style='width: 30%;' placeholder="패스워드">
-      </div>
-    </div>   
- 
-    <div class="form-group">
-      <label for="passwd2" class="col-md-2 control-label">패스워드 확인</label>    
-      <div class="col-md-10">
-        <input type='password' class="form-control input-md" name='passwd2' id='passwd2' value='1234' required="required" style='width: 30%;' placeholder="패스워드">
-      </div>
-    </div>   
-    
-    <div class="form-group">
-      <label for="name" class="col-md-2 control-label">성명</label>    
-      <div class="col-md-10">
-        <input type='text' class="form-control input-md" name='name' id='name' 
-                   required="required" style='width: 30%;' placeholder="성명">
-      </div>
-    </div>   
-    
-    <div class="form-group">
-      <label for="email" class="col-md-2 control-label">이메일</label>    
-      <div class="col-md-10">
-        <input type='text' class="form-control input-md" name='email' id='email' 
-                   required="required" style='width: 30%;' placeholder="이메일">
-      </div>
-    </div>   
- 
-    <div class="form-group">
-      <label for="phone" class="col-md-2 control-label">전화번호</label>    
-      <div class="col-md-10">
-        <input type='text' class="form-control input-md" name='phone' id='phone' 
-                   value='010-0000-0000' required="required" style='width: 30%;' placeholder="전화번호"> 예) 01000000000
-      </div>
-    </div>   
- 
-    <div class="form-group">
-      <label for="birth" class="col-md-2 control-label">생년월일</label>    
-      <div class="col-md-10">
-        <input type='date' class="form-control input-md" name='birth' id='birth' 
-                   required="required" style='width: 30%;' placeholder="생년월일">
-      </div>
-    </div>  
- 
-    <div class="form-group">
-      <label for="sex" class="col-md-2 control-label">성별</label>    
-      <div class="col-md-10">
-        <input type='radio' name='sex' 
-                   value='남' required="required" style='width: 3%;' placeholder="남자" checked>남자
-                   <input type='radio'name='sex'  
-                   value='여' required="required" style='width: 3%;' placeholder="여자">여자
-                   <input type='radio' name='sex' 
-                   value='중' required="required" style='width: 3%;' placeholder="해당없음">해당없음
-      </div>
-    </div>   
- 
-    <div class="form-group">
-      <div class="col-md-12">
- 
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <div class="col-md-offset-2 col-md-10">
-        <button type="submit" class="btn btn-primary btn-md">가입</button>
-        <button type="button" onclick="location.href='../index.jsp'" class="btn btn-primary btn-md">취소</button>
- 
-      </div>
-    </div>   
-  </FORM>
- 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+  <div class="main_container" style="width: 65%;">
+		 
+		  <DIV id='main_panel'></DIV>
+		 
+		  <!-- Modal -->
+		  <div class="modal fade" id="modal_panel" role="dialog">
+		    <div class="modal-dialog">
+		    
+		      <!-- Modal content-->
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">×</button>
+		          <h4 class="modal-title" id='modal_title'></h4>
+		        </div>
+		        <div class="modal-body">
+		          <p id='modal_content'></p>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		      
+		    </div>
+		  </div> <!-- Modal END -->
+
+		  <ASIDE style='float: right; padding: 10px 0px 10px 0px;'>
+		    <A href="javascript:location.reload();">새로고침</A>
+		    <span class='menu_divide' >│</span> 
+		    <A href='./create.do'>회원 가입</A>
+		    <span class='menu_divide' >│</span> 
+		    <A href='./list.do'>회원 목록</A>
+		  </ASIDE> 
+	  
+      <DIV class='contents' style="width: 50%;">
+			  <FORM name='frm' id='frm' method='POST' action='./create.do' 
+			              onsubmit="return send();" class="form-horizontal"
+			              style="padding:40px 0px 10px 0px;">
+			 
+			    <div class="form-group">
+			      <label for="id" class="col-md-4 control-label">아이디</label>    
+			      <div class="col-md-8" align="left">
+			        <input type='text' class="form-control input-md" name='id' id='id' value='user' required="required" placeholder="아이디" autofocus="autofocus">
+			        <button type='button' onclick="checkId()" class="btn btn-info btn-md" style="margin:5px 0px 0px 0px;">중복확인</button>
+			        <SPAN id='id_span'></SPAN> <!-- ID 중복 관련 메시지 -->        
+			      </div>
+			    </div>   
+			                
+			    <div class="form-group">
+			      <label for="passwd" class="col-md-4 control-label">패스워드</label>    
+			      <div class="col-md-8">
+			        <input type='password' class="form-control input-md" name='passwd' id='passwd' value='1234' required="required" placeholder="패스워드">
+			      </div>
+			    </div>   
+			 
+			    <div class="form-group">
+			      <label for="passwd2" class="col-md-4 control-label">패스워드 확인</label>    
+			      <div class="col-md-8">
+			        <input type='password' class="form-control input-md" name='passwd2' id='passwd2' value='1234' required="required" placeholder="패스워드 확인">
+			      </div>
+			    </div>   
+			    
+			    <div class="form-group">
+			      <label for="name" class="col-md-4 control-label">성명</label>    
+			      <div class="col-md-8">
+			        <input type='text' class="form-control input-md" name='name' id='name' 
+			                   required="required" placeholder="성명">
+			      </div>
+			    </div>   
+			    
+			    <div class="form-group">
+			      <label for="email" class="col-md-4 control-label">이메일</label>    
+			      <div class="col-md-8">
+			        <input type='text' class="form-control input-md" name='email' id='email' 
+			                   required="required" placeholder="이메일">
+			      </div>
+			    </div>   
+			 
+			    <div class="form-group">
+			      <label for="phone" class="col-md-4 control-label">전화번호</label>    
+			      <div class="col-md-8" align="left">
+			        <input type='text' class="form-control input-md" name='phone' id='phone' 
+			                   value='' required="required" placeholder="예) 01000000000" style="margin:5px 0px 0px 0px;"> 
+			      </div>
+			    </div>   
+			 
+			    <div class="form-group">
+			      <label for="birth" class="col-md-4 control-label">생년월일</label>    
+			      <div class="col-md-8">
+			        <input type='date' class="form-control input-md" name='birth' id='birth' 
+			                   required="required" placeholder="생년월일">
+			      </div>
+			    </div>  
+			 
+			    <div class="form-group" style="vertical-align: middle;">
+			      <label for="sex" class="col-md-4 control-label">성별</label>    
+			      <div class="col-md-8" align="left" style="vertical-align: middle;">
+			        <label class="radio-inline">
+			        <input type='radio' name='sex' 
+	                   value='M' required="required" style='width: 3%;' placeholder="남자" checked>남자</label>
+              <label class="radio-inline">
+              <input type='radio'name='sex'  
+	                   value='F' required="required" style='width: 3%;' placeholder="여자">여자</label>
+              <label class="radio-inline">
+              <input type='radio' name='sex' 
+                     value='U' required="required" style='width: 3%;' placeholder="해당없음">해당없음</label>
+			      </div>
+			    </div>   
+			 
+			    
+			    <div class="form-group">
+			      <div class="col-md-offset-2 col-md-10">
+			        <button type="submit" class="btn btn-primary btn-md">가입</button>
+			        <button type="button" onclick="location.href='../index.jsp'" class="btn btn-danger btn-md">취소</button>
+			 
+			      </div>
+			    </div>   
+			  </FORM>
+		</DIV> <!-- content END -->
+	<jsp:include page="/menu/bottom.jsp" flush='false' />
+	</DIV> <!-- container END -->
+</div>
 </body>
  
 </html> 
