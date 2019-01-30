@@ -23,37 +23,8 @@
     
     action_cancel();
     
-    imgResize();
     reply_by_contents(contentsno);
   });
-
-  //<div id='photoPanel'> 태그의 width에 맞추어 자동 축소
-  function imgResize() {
-    var photo = $('#photo');
-    var width = photo.width();
-        
-    if (photo != null) {
-      // 이미지 width가 화면의 70%보다 크다면
-      if (width > screen.width-(screen.width * 0.4)) {
-        $('#photoPanel').attr('width', '100%');  // 할당된 영역을 100%로 설정함.
-        photo.css('width', '900'); // <div id='photoPanel'> 태그의 width에 맞추어 자동 축소
-      } else {
-        // 작은 이미지는 그대로 출력
-      }
-    }
-
-  }
-  
-  function panel_img(file){
-    var img = new Image();
-    img = file;
-    var img_width = img.width;
-    var win_width = img.width + 25;
-    var win_height = img.height + 30;
-    var OpenWindow = window.open('','_blank', 'width=500, height=500, menubars=no, scrollbars=auto');
-
-    OpenWindow.document.write("<style>body{margin:0px;}</style><img src='./storage/"+ file + "' style='width=100%; height=100%;'>");
-  }
   
   //등록 처리
   function reply_create() {
@@ -351,7 +322,7 @@
 		  <ASIDE style='float: left; color: white; padding: 20px 0px 10px 10px;'>
 		    <A href='../board/list.do?categrpno=${boardVO.categrpno }' style="color: white;">카테고리</A>
 		    <span style='font-size: 1.2em;'>></span>  
-		    <A href='./list_by_board.do?boardno=${boardVO.boardno }' style="color: white;">${boardVO.name }</A>
+		    <A href='./list_by_board_search_paging.do?boardno=${boardVO.boardno }' style="color: white;">${boardVO.name }</A>
 		  </ASIDE>
 		  
 		  <ASIDE style='float: right; color: white; padding: 20px 10px 10px 0px;'>

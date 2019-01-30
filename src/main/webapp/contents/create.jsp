@@ -58,19 +58,19 @@
       <input type='hidden' name='memberno' id='memberno' value='${user_memberno }'>
       
       <div class="form-group">   
-        <label for="name" class="col-md-1 control-label">글 제목</label>
+        <label for="name" class="col-md-1 control-label" style="color: white;">글 제목</label>
         <div class="col-md-11">
-          <input type='text' class="form-control input-lg" name='name' id='name' value='바다건너' required="required" style='width: 80%;'>
+          <input type='text' class="form-control input-lg" name='name' id='name' value='' required="required">
         </div>
       </div>   
       <div class="form-group">   
-        <label for="content" class="col-md-1 control-label">내용</label>
+        <label for="content" class="col-md-1 control-label" style="color: white;">내용</label>
         <div class="col-md-11">
-          <textarea class="form-control input-lg" name='content' id='content'  rows='10'>크리스마스에 갔던곳</textarea>
+          <textarea class="form-control input-lg" name='content' id='content' required="required" rows='10'></textarea>
         </div>
       </div>
       <div class="form-group">   
-        <label for="photoMF" class="col-md-1 control-label">업로드 파일</label>
+        <label for="photoMF" class="col-md-1 control-label" style="color: white;">업로드 파일</label>
         <div class="col-md-11">
           <input type="file" class="form-control input-lg" name='photoMF' id='photoMF' size='40' multiple="multiple">
           <br>
