@@ -22,8 +22,8 @@
 	    <li class="login_set">
 		    <c:choose>
 	        <c:when test="${sessionScope.grade == null}">
-            <A href='./create.do' style="font-weight: bold; color: white;">회원 가입 </A>
-            <span class='menu_divide' style="color: white; display: inline-block;"> │ </span> 
+            <A href='./member/create.do' style="font-weight: bold; color: white;">회원 가입 </A>
+            <span class='menu_divide' style="color: white; display: inline-block;">&nbsp&nbsp | &nbsp&nbsp</span> 
 	          <button type="button" class="login_button" id="login" name="login" onclick="location.href='${pageContext.request.contextPath}/member/login.do'">로그인</button>
 	        </c:when>
 	        <c:otherwise>

@@ -83,5 +83,37 @@ public int passwd_update(Map<String, Object> map);
 
  public List<LogVO> login_list_paging(HashMap<String, Object> hashmap); 
  
+ /**
+  * memberno별 레코드 갯수
+  * @param memberno
+  * @return
+  */
  public int search_count(int memberno);
+ 
+ /**
+  * 회원 목록 페이징 
+  * @param hashmap
+  * @return
+  */
+ public List<MemberVO> member_list_paging(HashMap<String, Object> hashmap);
+ 
+ 
+ /**
+  * 총 회원 수
+  * @return
+  */
+ public int member_count();
+ 
+ /**
+  * 아이디 찾기
+  * @return
+  */
+ public String find_id(HashMap<String, Object> hashmap);
+ 
+ /**
+  * 비밀번호 찾기
+  * @param hashmap
+  * @return
+  */
+ public int find_passwd(HashMap<String, Object> hashmap);
 }

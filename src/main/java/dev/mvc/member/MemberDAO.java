@@ -96,4 +96,29 @@ public class MemberDAO implements MemberDAOInter {
     int num = sqlSessionTemplate.selectOne("member.search_count", memberno);
     return num; 
   }
+  
+
+  @Override
+  public List<MemberVO> member_list_paging(HashMap<String, Object> hashmap) {
+    List<MemberVO> list = sqlSessionTemplate.selectList("member.member_list_paging", hashmap);
+    return list;
+  }
+
+  @Override
+  public int member_count() {
+    int num = sqlSessionTemplate.selectOne("member.member_count");
+    return num;
+  }
+
+  @Override
+  public String find_id(HashMap<String, Object> hashmap) {
+    String id = sqlSessionTemplate.selectOne("member.find_id", hashmap);
+    return id;
+  }
+
+  @Override
+  public int find_passwd(HashMap<String, Object> hashmap) {
+    int num = sqlSessionTemplate.selectOne("member.find_passwd", hashmap);
+    return num;
+  }
 }

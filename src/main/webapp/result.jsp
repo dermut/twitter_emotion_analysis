@@ -70,30 +70,36 @@
    
     <div class="page_result">
       <div class="page_side">
-        <div class="result_box">
+        <div class="result_box hover_box-1">
           <div class="result_box_image_box">
             <img class="result_box_image" src='${pageContext.request.contextPath}/image/twitter_logo.png'>
+
           </div>
           
           <div class="result_box_word">
             ${word}
           </div>
+          
+          <p class="arrow_box">안녕하세요</p>
         </div>
         
-        <div class="result_box_freshtomato_box">
+        <div class="result_box_freshtomato_box hover_box-1">
           <img class="freshtomato_image" src='${pageContext.request.contextPath}/image/tomato.png'>
         
           <div class="freshtomato_rate">
             <p class="h2">${ftrate}%</p>
           </div>
+          
+          <p class="arrow_box">반갑습니다</p>
         </div>
+        
       </div>
       <div class="page_real">
         <div id="chartContainer" data-allfreq='${allfreq}' data-rest='${rest}' data-maxfreq='${maxfreq}' data-word='${word}' 
                                     data-ar0='${ar0}' data-ar1='${ar1}' data-ar2='${ar2}' data-ar3='${ar3}' data-ar4='${ar4}' data-ar5='${ar5}' data-ar6='${ar6}' data-ar7='${ar7}'
                                     data-arr0='${arr0}' data-arr1='${arr1}' data-ar2='${arr2}' data-arr3='${arr3}' data-arr4='${arr4}' data-arr5='${arr5}' data-arr6='${arr6}' data-arr7='${arr7}'
                                     data-a0='${a0}' data-a1='${a1}' data-a2='${a2}' data-a3='${a3}' data-a4='${a4}' data-a5='${a5}' data-a6='${a6}' data-a7='${a7}' 
-                      style="height: 300px; width: 400px;"></div>
+                      style="height: 350px; width: 500px;"></div>
         <button class="btn invisible" id="backButton">< Back</button>
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 				<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -115,14 +121,5 @@
 </FORM>
  --%>
  
-
-
-입력한 검색어 : <br>
-wordno : ${wordno}<br>
-memberno : ${memberno}<br>
-수정본
-<DIV class='bottom_menu'>
-  <button type='button' onclick="location.href='../'">돌아가기</button>
-</DIV> 
 </body>
 </html>

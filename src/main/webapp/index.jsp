@@ -32,7 +32,6 @@
 	    <FORM class="main_search_bar_frm" name='frm' id='frm' method='POST' action='./word/create.do' >
         <input class="main_search_bar_txt" type="text" id="word" name="word" placeholder="키워드..." autocomplete="off">
 	      <button type="submit" class="main_search_button">검색
-	        <i class="__Image__Image-42" style="background-image: ${pageContext.request.contextPath}/image/button.png"></i>
         </button>
 	    </FORM>
 		  

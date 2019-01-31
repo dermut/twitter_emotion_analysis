@@ -27,55 +27,60 @@
 </head> 
  
 <body>
-<DIV class='container'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>
- 
-  <div class='menu_line'></div>
-  
- 
-  <table class="table table-striped" style='width: 100%; text-align: center;'>
-  <caption>로그인 내역</caption>
-  <colgroup>
-    <col style='width: 5%;'/>
-    <col style='width: 5%;'/>
-    <col style='width: 20%;'/>
-    <col style='width: 15%;'/>
-    <col style='width: 10%;'/>
-  </colgroup>
-  <TR >
-    <TH class='th'>번호</TH>
-    <TH class='th'>회원 번호</TH>
-    <TH class='th'>IP</TH>
-    <TH class='th'>로그인 날짜</TH>
-    <TH class='th'>성공 여부</TH>
-  </TR>
- 
-  <c:forEach var="logVO" items="${list }">
-    <c:set var="logno" value ="${logVO.logno }" /> 
-  <TR>
-    <TD class='td'>${logno}</TD>
-    <TD class='td'><A href="../member/read.do?memberno=${logVO.memberno}">${logVO.memberno}</A></TD>
-    <TD class='td'>${logVO.ip}</TD> <!-- 등급 -->
-    <TD class='td'>${logVO.rdate.substring(0, 19)}</TD>
-    <TD class='td'>${logVO.sf}</TD>   
-  </TR>
-  </c:forEach>
-  
-</TABLE>
-  <DIV class='bottom_menu_paging'>${paging }</DIV>
-  <br><br>
-  
+<div class="main_wrapper" align=center>
 
- <DIV>
-  <button type='button' onclick="location.href='../'">돌아가기</button>
+  <c:import url="/menu/top.jsp"/>
   
-</DIV> 
+  <c:import url="/menu/top_second.jsp"/>
   
- 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+  <DIV class='main_container' style='width: 80%;'>
+    <DIV class='contents'>   
+	 
+	  <div class='menu_line'></div>
+	  
+	 
+		<table class="table table-striped table-hover" style='background-color: #F9F9F9; text-align: center; box-shadow: 5px 5px 10px gray;'>
+		  <caption style="color: white; padding: 20px 0px 20px 0px;">로그인 내역</caption>
+		  <colgroup>
+		    <col style='width: 5%;'/>
+		    <col style='width: 5%;'/>
+		    <col style='width: 20%;'/>
+		    <col style='width: 15%;'/>
+		    <col style='width: 10%;'/>
+		  </colgroup>
+		  
+		  <TR>
+		    <TH class='th'>번호</TH>
+		    <TH class='th'>회원 번호</TH>
+		    <TH class='th'>IP</TH>
+		    <TH class='th'>로그인 날짜</TH>
+		    <TH class='th'>성공 여부</TH>
+		  </TR>
+		 
+		  <c:forEach var="logVO" items="${list }">
+		    <c:set var="logno" value ="${logVO.logno }" /> 
+		  <TR>
+		    <TD class='td'>${logno}</TD>
+		    <TD class='td'><A href="../member/read.do?memberno=${logVO.memberno}">${logVO.memberno}</A></TD>
+		    <TD class='td'>${logVO.ip}</TD> <!-- 등급 -->
+		    <TD class='td'>${logVO.rdate.substring(0, 19)}</TD>
+		    <TD class='td'>${logVO.sf}</TD>   
+		  </TR>
+		  </c:forEach>
+		
+		</TABLE>
+		  
+	   <DIV class='bottom_menu_paging'>${paging }</DIV>
+	 
+	 </DIV> <!-- content END -->
+	 
+	  <div class="main_bottom">
+      <c:import url="/menu/bottom.jsp"/>
+    </div>
+    
+	</DIV> <!-- container END -->
+
+</div>
 </body>
  
 </html>

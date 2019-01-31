@@ -23,57 +23,66 @@
  
 </head> 
 <body>
-<DIV class='container'>
-<c:import url="/menu/top.jsp" />
-<DIV class='content'>
- 
-<DIV class='title_line'>알림</DIV>
- 
-<DIV class='message'>
-  <fieldset class='fieldset_basic'>
-    <UL>
-      <c:choose>
-        <c:when test="${param.sw == 'id'}">
-          <li class='li_none'>이미 존재하는 아이디입니다.</li>
-          <li class='li_none'>다시한번 시도해주세요.</li>
-          <li class='li_none'>
-            <br>
-            <button type='button' onclick='history.back()'>다시 시도</button>
-            <button type='button' onclick="location.href='${pageContext.request.contextPath}'">취소</button>
-          </li>
-        </c:when>
-        <c:when test="${param.sw == 'create'}">
-          <c:choose>
-            <c:when test="${param.count == 0}">
-              <li class='li_none'>회원 가입에 실패했습니다.</li>
-              <li class='li_none'>다시한번 시도해주세요.</li>
-              <li class='li_none'>
-                <br>
-                <button type='button' onclick='history.back()'>다시 시도</button>
-                <button type='button' onclick="location.href='${pageContext.request.contextPath}'">취소</button>
-              </li>
-            </c:when>
-            <c:when test="${param.count == 1 }">
-              <li class='li_none'>회원 가입에 성공했습니다.</li>
-              <li class='li_none'>
-                <br>
-                <button type='button' onclick="location.href='./list.do'">확인</button>
-              </li>          
- 
-            </c:when>
-          </c:choose>
-        
-        </c:when>
-      </c:choose>    
- 
-    </UL>
-  </fieldset>
- 
-</DIV>
- 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+<div class="main_wrapper" align="center" >
+  <c:import url="/menu/top.jsp"/>
+  
+  <c:import url="/menu/top_second.jsp"/>
+  
+  <DIV class='main_container' style="width: 80%;">
+	  <DIV class='contents'  style="width: 100%;">  
+	 
+		<DIV class='title_line'>알림</DIV>
+		 
+		<DIV class='message'>
+		  <fieldset class='fieldset_basic'>
+		    <UL>
+		      <c:choose>
+		        <c:when test="${param.sw == 'id'}">
+		          <li class='li_none'>이미 존재하는 아이디입니다.</li>
+		          <li class='li_none'>다시한번 시도해주세요.</li>
+		          <li class='li_none'>
+		            <br>
+		            <button type='button' onclick='history.back()'>다시 시도</button>
+		            <button type='button' onclick="location.href='${pageContext.request.contextPath}'">취소</button>
+		          </li>
+		        </c:when>
+		        <c:when test="${param.sw == 'create'}">
+		          <c:choose>
+		            <c:when test="${param.count == 0}">
+		              <li class='li_none'>회원 가입에 실패했습니다.</li>
+		              <li class='li_none'>다시한번 시도해주세요.</li>
+		              <li class='li_none'>
+		                <br>
+		                <button type='button' onclick='history.back()'>다시 시도</button>
+		                <button type='button' onclick="location.href='${pageContext.request.contextPath}'">취소</button>
+		              </li>
+		            </c:when>
+		            <c:when test="${param.count == 1 }">
+		              <li class='li_none'>회원 가입에 성공했습니다.</li>
+		              <li class='li_none'>
+		                <br>
+		                <button type='button' onclick="location.href='./list.do'">확인</button>
+		              </li>          
+		 
+		            </c:when>
+		          </c:choose>
+		        
+		        </c:when>
+		      </c:choose>    
+		 
+		    </UL>
+		  </fieldset>
+		 
+		</DIV>
+		 
+		</DIV> <!-- content END -->
+		
+	  <div class="main_bottom">
+      <c:import url="/menu/bottom.jsp"/>
+    </div>
+    
+	</DIV> <!-- container END -->
+</div>
 </body>
  
 </html> 

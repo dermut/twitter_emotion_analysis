@@ -70,6 +70,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY logno DESC
   </select>
   
+  <!-- 회원 목록 페이징 -->
+  <select id="member_list_paging" resultType="MemberVO">
+    SELECT memberno, id, name, passwd, phone, email, birth, sex, grade, rdate, r
+    FROM (
+      SELECT memberno, id, name, passwd, phone, email, birth, sex, grade, rdate, rownum as r
+      FROM member
+      WHERE grade NOT IN('D')
+      ORDER BY memberno ASC
+    )
+    WHERE <![CDATA[ r >= #{startNum} AND r <= #{endNum} ]]>
+  </select>
+  
+  <!-- 총 회원수 -->
+  <select id="member_count" resultType="int">
+    SELECT COUNT(*) as cnt
+    FROM member 
+    WHERE grade NOT IN('D')
+  </select>
+  
   <!-- 로그인 리스트 페이징 -->
   <select id="login_list_paging" resultType="LogVO">
     SELECT logno, ip, rdate, sf, memberno, r
@@ -91,5 +110,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM log
     WHERE memberno=#{memberno}
   </select>
-
+  
+  <!-- 아이디 찾기 -->
+  <select id="find_id" parameterType="HashMap" resultType="String">
+    SELECT id
+    FROM member
+    WHERE name=#{name} AND email=#{email}
+  </select>
+  
+  <!-- 비밀번호 찾기 -->
+  <select id="find_passwd" parameterType="HashMap" resultType="int">
+    SELECT COUNT(*) as cnt
+    FROM member
+    WHERE id=#{id} AND name=#{name} AND email=#{email}  
+  </select>
 </mapper> 

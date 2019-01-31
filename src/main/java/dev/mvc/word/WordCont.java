@@ -38,28 +38,35 @@ public class WordCont {
   }
   
   /**
-   * word 테이블 create 하는 것 결국 result.jsp를 표시
+   * word 테이블 create 하는 것
    * @param word
    * @return
    */
   @RequestMapping(value="/word/create.do", method=RequestMethod.POST)
   public ModelAndView create(String word, HttpSession session, HttpServletRequest request){
     ModelAndView mav = new ModelAndView();
+    
+    // 로그인 안했을 때 검색 처리 불가능하게 처리하는 로직
+    if(memberProc.isMember(session) == false){
+      
+      mav.setViewName("redirect:/member/login_need.jsp");
 
-    // word로 word테이블을 검색해서 존재하지 않으면 create
-    if(wordProc.isExist(word) == 0){
-      wordProc.create(word);
+    }else{
+    
+      // word로 word테이블을 검색해서 존재하지 않으면 create
+      if(wordProc.isExist(word) == 0){
+        wordProc.create(word);
+      }
+
+      int wordno = wordProc.wordno_by_word(word); 
+      int memberno = (Integer)session.getAttribute("memberno");
+
+      request.setAttribute("word", word);
+      request.setAttribute("wordno", new Integer(wordno));
+      request.setAttribute("memberno", new Integer(memberno));
+    
+      mav.setViewName("forward:/member_word/create.do");
     }
-    
-    int wordno = wordProc.wordno_by_word(word);
-    int memberno = (Integer)session.getAttribute("memberno");
-    
-    request.setAttribute("word", word);
-    request.setAttribute("wordno", new Integer(wordno));
-    request.setAttribute("memberno", new Integer(memberno));
-    
-    mav.setViewName("forward:/member_word/create.do");
-    
     return mav;
   } 
   

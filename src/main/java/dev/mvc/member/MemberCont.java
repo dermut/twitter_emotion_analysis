@@ -443,4 +443,102 @@ public class MemberCont {
    return mav;
  }
  
+ 
+ /**
+  * 목록 + 페이징 지원
+  * @param nowPage
+  * @return
+  */
+ @RequestMapping(value = "/member/member_list_paging.do", method = RequestMethod.GET)
+ public ModelAndView member_list_paging(
+     @RequestParam(value="nowPage", defaultValue="1") int nowPage
+     ) { 
+   System.out.println("--> nowPage: " + nowPage);
+   
+   ModelAndView mav = new ModelAndView();
+   
+   mav.setViewName("/member/member_list_paging");   
+   
+   // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
+   HashMap<String, Object> hashMap = new HashMap<String, Object>();
+   hashMap.put("nowPage", nowPage);       
+   
+   // 검색 목록
+   List<MemberVO> list = memberProc.member_list_paging(hashMap);
+   mav.addObject("list", list);
+   
+   // 검색된 레코드 갯수
+   int member_count = memberProc.member_count();
+   mav.addObject("member_count", member_count); 
+ 
+   /*
+    * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 
+    * 현재 페이지: 11 / 22   [이전] 11 12 13 14 15 16 17 18 19 20 [다음] 
+    *
+    * @param search_count 검색(전체) 레코드수 
+    * @param nowPage     현재 페이지
+    * @return 페이징 생성 문자열
+    */  
+   String paging2 = memberProc.paging2(member_count, nowPage);
+   mav.addObject("paging2", paging2);
+ 
+   mav.addObject("nowPage", nowPage);
+   
+   return mav;
+ }
+ 
+ 
+ @RequestMapping(value = "/member/find_id.do", method = RequestMethod.GET)
+ public ModelAndView find_id(String name, String email){
+   
+   ModelAndView mav = new ModelAndView();
+   
+   String id = "";
+   id = memberProc.find_id(name, email);
+   
+   // 이름과 이메일로 찾을수 없는 경우   AND  찾을 수 있는 경우 처리
+   if(id.equals("")){
+     
+     mav.setViewName("/member/find_fail"); // 일치하는 회원정보가 없다는 페이지 비밀번호랑 같은 페이지
+   } else{
+     mav.addObject("id", id);
+     mav.setViewName("/member/find_id_success"); // 아이디 안내 페이지
+   }
+   
+   return mav;
+ }
+ 
+ @RequestMapping(value = "/member/find_passwd.do", method = RequestMethod.GET)
+ public ModelAndView find_id(String id, String name, String email){
+   
+   ModelAndView mav = new ModelAndView();
+   
+   /*return이 1이면 일치하는 게 있으니까 비밀번호를 업데이트 한 후 새로운 비밀번호 부여 
+   일치하지 않는다면 일치하지 않는다는 페이지 출력*/
+   if(memberProc.find_passwd(id, name, email) != 1){ // 일치하지 않음
+     
+     mav.setViewName("/member/find_fail"); // 입력한 정보와 일치하는 회원정보가 없다는 페이지
+   } else if(memberProc.find_passwd(id, name, email) == 1){ // 일치함
+     MemberVO memberVO = memberProc.readById(id);
+     int memberno = memberVO.getMemberno();
+     String passwd = "1234";
+     
+     memberProc.passwd_update(memberno, passwd);
+     
+     mav.setViewName("/member/find_passwd_success"); // 새로운 비밀번호 안내하고 바꾸라고 알려주는 페이지
+   }
+   
+   return mav;
+ }
+ 
+ 
+ @RequestMapping(value = "/member/find_form.do", method = RequestMethod.GET)
+ public ModelAndView find_form(){
+   
+   ModelAndView mav = new ModelAndView();
+   
+   mav.setViewName("/member/find_form");
+   return mav;
+ }
+ 
 }

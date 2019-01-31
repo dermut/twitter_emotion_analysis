@@ -8,7 +8,7 @@
 <meta charset="UTF-8"> 
 <title></title> 
 
-<link href="../css/style.css" rel="Stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/css/style.css" rel="Stylesheet" type="text/css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
@@ -16,11 +16,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 
 <script type="text/JavaScript">
   window.onload=function(){
-    CKEDITOR.replace('content');  // <TEXTAREA>태그 id 값
+
   };
 </script>
 
@@ -66,7 +67,7 @@
       <div class="form-group">   
         <label for="content" class="col-md-1 control-label" style="color: white;">내용</label>
         <div class="col-md-11">
-          <textarea class="form-control input-lg" name='content' id='content' required="required" rows='10'></textarea>
+          <textarea name='content' id='content'></textarea>
         </div>
       </div>
       <div class="form-group">   
@@ -74,10 +75,46 @@
         <div class="col-md-11">
           <input type="file" class="form-control input-lg" name='photoMF' id='photoMF' size='40' multiple="multiple">
           <br>
-          Preview(미리보기) 이미지는 자동 생성됩니다.
+          <font style="color: white;">Preview(미리보기) 이미지는 자동 생성됩니다.</font>
         </div>
       </div>
       
+      <script>
+	      ClassicEditor 
+	      .create(document.querySelector('#content'),{
+	        toolbar: {
+	          items: [
+	              'heading',
+	              '|',
+	              'alignment',
+	              'bold',
+	              'italic',
+	              'link',
+	              'bulletedList',
+	              'numberedList',
+	              'blockQuote',
+	              'undo',
+	              'redo'
+	          ]
+	        },
+	        image: {
+	          toolbar: [
+	              'imageStyle:full',
+	              'imageStyle:side',
+	              '|',
+	              'imageTextAlternative'
+	          ]
+	        },
+	        language: 'kor'
+	      })
+	      .then(editor => {
+	        console.log(editor);
+	      })
+	      .catch(error => {
+	        console.error(error);
+	      });
+      </script>
+          
       <DIV style='text-align: right;'>
         <button type="submit">등록</button>
         <button type="button" onclick="location.href='./list_by_board_search_paging.do?boardno=${boardVO.boardno}'">취소[목록]</button>

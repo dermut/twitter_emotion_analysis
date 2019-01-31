@@ -45,6 +45,13 @@ public interface MemberProcInter {
   public boolean isMaster(HttpSession session);
   
   /**
+   * 로그인된 회원 계정인지 검사합니다.
+   * @param request
+   * @return true: 관리자
+   */
+  public boolean isDelete(HttpSession session);
+  
+  /**
    * 조회
    * @param mno
    * @return
@@ -114,4 +121,38 @@ public interface MemberProcInter {
  public String paging(int memberno, int search_count, int nowPage);
  
  
+ /**
+  * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작
+  * @param memberno
+  * @param search_count
+  * @param nowPage
+  * @return
+  */
+ public String paging2(int search_count, int nowPage);
+ 
+ /**
+  * 총 회원 수
+  * @return
+  */
+ public int member_count();
+ 
+ /**
+  * 회원 목록 페이징
+  * @param hashmap
+  * @return
+  */
+ public List<MemberVO> member_list_paging(HashMap<String, Object> hashmap);
+ 
+ /**
+  * 아이디 찾기
+  * @return
+  */
+ public String find_id(String name, String email);
+ 
+ /**
+  * 비밀번호 찾기
+  * @param hashmap
+  * @return
+  */
+ public int find_passwd(String id, String name, String email);
 }
