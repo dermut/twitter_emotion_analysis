@@ -119,8 +119,8 @@ $(function(){
 	            <td style='vertical-align: middle;'>${contentsVO.rdate.substring(0, 10)}</td>
 	            <td style='vertical-align: middle;'>${contentsVO.id}</td>
 	            <td style='vertical-align: middle;'>
-	              <a href="./update.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><img src="./images/update.png" title="수정" border='0'/></a>
-	              <a href="./delete.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><img src="./images/delete.png" title="삭제"  border='0'/></a>
+	              <a href="./update.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><span class="glyphicon glyphicon-edit" title="수정"></span></a>
+	              <a href="./delete.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><span class="glyphicon glyphicon-remove" title="삭제" ></span></a>
 	            </td>
 	          </tr>
 	        </c:forEach>

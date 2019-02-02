@@ -26,19 +26,21 @@
 </head> 
 
 <body>
-<DIV class='container' style='width: 100%;'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>
-  <DIV class='message'>
-    <H3>정보가 일치합니다.</H3>
-    <H3>찾으시려는 아이디는 ${id} 입니다.</H3>
-    <BR><BR>
-    
-  </DIV>
+<div class="login_root">
+  <div class="login" style="width: 40%;">
+	  <DIV class='message'>
+	    <H3>정보가 일치합니다.</H3>
+	    <H3>찾으시려는 아이디는 ${id} 입니다.</H3>
+	    <BR><BR>
+	  </DIV>
+	  
+	  <div class="form-group">
+	    <button type="button" onclick="location.href='/tea'" class="btn btn-primary btn-md">홈으로</button>
+      <button type="button" onclick="location.href='./login.do'" class="btn btn-primary btn-md">로그인</button>
+	  </div>
 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+  </DIV> <!-- login END -->
+</DIV> <!-- login_root END -->
 </body>
 
 </html> 

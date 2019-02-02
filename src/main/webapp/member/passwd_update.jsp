@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
  
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -43,82 +45,84 @@
  
  
 <body>
-<DIV class='container'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content' style='width: 80%;'>
- 
-  <!-- Modal -->
-  <div class="modal fade" id="modal_panel" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title" id='modal_title'></h4>
-        </div>
-        <div class="modal-body">
-          <p id='modal_content'></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div> <!-- Modal END -->
- 
-  <ASIDE style='float: left;'>
-      <A href='./member/list.do'>회원 목록</A>  
-  </ASIDE>
-  <ASIDE style='float: right;'>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>회원 가입</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./list.do'>목록</A>
-  </ASIDE> 
- 
-  <div class='menu_line'></div>
-    
-  <DIV class='title_line'>패스워드 변경</DIV>
- 
-  <FORM name='frm' method='POST' action='./passwd_update.do' 
-             onsubmit="return send();" class="form-horizontal">
- 
-    <div class="form-group">
-      <label for="passwd" class="col-md-6 control-label">현재 패스워드</label>    
-      <div class="col-md-6">
-        <input type='password' class="form-control input-md" name='passwd' id='passwd' value='' required="required" style='width: 30%;' placeholder="패스워드">
-      </div>
-    </div>   
-                    
-    <div class="form-group">
-      <label for="passwd" class="col-md-6 control-label">새로운 패스워드</label>    
-      <div class="col-md-6">
-        <input type='password' class="form-control input-md" name='new_passwd' id='new_passwd' value='' required="required" style='width: 30%;' placeholder="패스워드">
-      </div>
-    </div>   
- 
-    <div class="form-group">
-      <label for="passwd2" class="col-md-6 control-label">새로운 패스워드 확인</label>    
-      <div class="col-md-6">
-        <input type='password' class="form-control input-md" name='new_passwd2' id='new_passwd2' value='' required="required" style='width: 30%;' placeholder="패스워드">
-      </div>
-    </div>   
-    
-    <div class="form-group">
-      <div class="col-md-offset-6 col-md-6">
-        <button type="submit" class="btn btn-primary btn-md">변경</button>
-        <button type="button" onclick="location.href='./list.do'" class="btn btn-primary btn-md">취소</button>
- 
-      </div>
-    </div>   
-</FORM>
- 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+<div class="main_wrapper">
+  <c:import url="/menu/top.jsp"/>
+
+  <c:import url="/menu/top_second.jsp"/>
+  
+  <div class="main_container" align=center>
+    <div class="contents" style="width: 80%;">
+		 
+		  <!-- Modal -->
+		  <div class="modal fade" id="modal_panel" role="dialog">
+		    <div class="modal-dialog">
+		    
+		      <!-- Modal content-->
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">×</button>
+		          <h4 class="modal-title" id='modal_title'></h4>
+		        </div>
+		        <div class="modal-body">
+		          <p id='modal_content'></p>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		      
+		    </div>
+		  </div> <!-- Modal END -->
+		 
+		  <div class="member_aside">
+			  <ASIDE style='float: left; padding:25px 0px 15px 0px;'>
+			      <A href='./member/list.do' style="font-weight: bold; color: white;">회원 목록</A>  
+			  </ASIDE>
+			  <ASIDE style='float: right; padding: 25px 0px 15px 0px;'>
+			    <A href="javascript:location.reload();" style="font-weight: bold; color: white;">새로고침</A>
+			    <span class='menu_divide' >│</span> 
+			    <A href='./create.do' style="font-weight: bold; color: white;">회원 가입</A>
+			    <span class='menu_divide' >│</span> 
+			    <A href='./list.do' style="font-weight: bold; color: white;">목록</A>
+			  </ASIDE> 
+		  </div>
+		  
+	
+		  
+		  <div class='menu_line'></div>
+		    
+		  <DIV class='title_l'>패스워드 변경</DIV>
+		 
+		 
+		  <FORM name='frm' method='POST' action='./passwd_update.do' 
+		             onsubmit="return send();" style="padding-top: 30px; width: 50%;">
+		 
+		    <div class="form-group">
+          <label for="passwd" class="control-label" style="float: left; color: white; padding: 0px 3px 3px 3px;">현재 패스워드</label>    
+          <input type='password' class="form-control" name='passwd' id='passwd' value='' required="required" placeholder="현재 패스워드">
+		    </div>   
+		                    
+		    <div class="form-group">
+		      
+		      <label for="passwd" class="control-label" style="float: left; color: white; padding: 0px 3px 3px 3px;">새로운 패스워드</label>    
+	        <input type='password' class="form-control" name='new_passwd' id='new_passwd' value='' required="required" placeholder="새로운 패스워드">
+		    </div>   
+		 
+		    <div class="form-group">
+		      <label for="passwd2" class="control-label" style="float: left; color: white; padding: 0px 3px 3px 3px;">새로운 패스워드 확인</label>    
+	        <input type='password' class="form-control" name='new_passwd2' id='new_passwd2' value='' required="required" placeholder="새로운 패스워드 확인">
+		    </div>   
+		    
+		    <div class="form-group">
+	        <button type="submit" class="btn btn-primary btn-md">변경</button>
+	        <button type="button" onclick="location.href='./list.do'" class="btn btn-danger btn-md">취소</button>
+		    </div>   
+		 </FORM>
+		 
+		</DIV> <!-- content END -->
+	<jsp:include page="/menu/bottom.jsp" flush='false' />
+	</DIV> <!-- container END -->
+</div>
 </body>
  
 </html> 

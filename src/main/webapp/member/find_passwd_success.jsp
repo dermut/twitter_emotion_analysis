@@ -26,19 +26,20 @@
 </head> 
 
 <body>
-<DIV class='container' style='width: 100%;'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>
-  <DIV class='message'>
-    <H3>비밀버호가 1234로 초기화되었습니다.</H3>
-    <H3>로그인 후 비밀번호를 변경해주세요.</H3>
-    <BR><BR>
-    
-  </DIV>
+<div class="login_root">
+  <div class="login" style="width: 40%;">
+	  <DIV class='message'>
+	    <H3>비밀버호가 1234로 초기화되었습니다.</H3>
+	    <H3>로그인 후 비밀번호를 변경해주세요.</H3>
+	  </DIV>
+	  
+    <div class="form-group">
+      <button type="button" onclick="location.href='/tea'" class="btn btn-primary btn-md">홈으로</button>
+      <button type="button" onclick="location.href='./login.do'" class="btn btn-primary btn-md">로그인</button>
+    </div>
 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+  </DIV> <!-- login END -->
+</DIV> <!-- login_root   END -->
 </body>
 
 </html> 

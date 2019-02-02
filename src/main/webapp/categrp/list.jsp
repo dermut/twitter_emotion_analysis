@@ -51,8 +51,8 @@
 		      panel += " <TD>" + rdata[index].cnt + "</TD>";
 		      panel += " <TD style='text-align: center;'>"+rdata[index].rdate.substring(0,10)+"</TD>";
 		      panel += "  <TD style='text-align: center;'>";
-		      panel += "   <A href='javascript:update("+rdata[index].categrpno+")'><IMG src='./images/update.png' title='수정'></A>";
-		      panel += "   <A href='javascript:deleteOne("+rdata[index].categrpno+")'><IMG src='./images/delete.png' title='삭제'></A>";
+		      panel += "   <A href='javascript:update("+rdata[index].categrpno+")'><span class='glyphicon glyphicon-edit' title='수정'></span></A>";
+		      panel += "   <A href='javascript:deleteOne("+rdata[index].categrpno+")'><span class='glyphicon glyphicon-remove' title='삭제' ></A>";
 		      panel += "  </TD>";
 		      panel += "</TR>";
         }

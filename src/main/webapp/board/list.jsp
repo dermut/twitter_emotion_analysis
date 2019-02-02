@@ -45,9 +45,9 @@
           panel += "<TD>"+rdata[index].id+"</TD>";
           panel += "<TD>"+rdata[index].rdate.substring(0, 10)+"</TD>";
           panel += "<TD style='text-align: center;'>"; 
-          panel += "  <A href='../contents/create.do?boardno="+rdata[index].boardno+"'><IMG src='./images/create.png' name='등록'></A>";
-          panel += "  <A href=\"javascript:update("+rdata[index].boardno+")\"><IMG src='./images/update.png' name='수정'></A>";  
-          panel += "  <A href=\"javascript:deleteForm("+rdata[index].boardno+")\"><IMG src='./images/delete.png' name='삭제'></A>"; 
+          panel += "  <A href='../contents/create.do?boardno="+rdata[index].boardno+"'><span class='glyphicon glyphicon-pencil' title='등록'></span></A>";
+          panel += "  <A href=\"javascript:update("+rdata[index].boardno+")\"><span class='glyphicon glyphicon-edit' title='수정'></span></A>";  
+          panel += "  <A href=\"javascript:deleteForm("+rdata[index].boardno+")\"><span class='glyphicon glyphicon-remove' title='삭제' ></span></A>"; 
           panel += "</TD>";
           panel += "</TR>";
         } 

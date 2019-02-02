@@ -86,9 +86,9 @@
 		    <TD class='td'>${memberVO.email}</TD>
 		    <TD class='td'>${memberVO.rdate.substring(0, 10)}</TD> <!-- 년월일 -->
 		    <TD class='td'>
-		      <A href="./passwd_update.do?memberno=${memberno}"><IMG src='./images/passwd.png' title='패스워드 변경'></A>
-		      <A href="./read.do?memberno=${memberno}"><IMG src='./images/update.png' title='수정'></A>
-		      <A href="./delete.do?memberno=${memberno}"><IMG src='./images/delete.png' title='삭제'></A>
+		      <A href="./passwd_update.do?memberno=${memberno}"><span class='glyphicon glyphicon-lock' title='패스워드 변경'></span></A>
+		      <A href="./read.do?memberno=${memberno}"><span class="glyphicon glyphicon-edit" title="수정"></span></A>
+		      <A href="./delete.do?memberno=${memberno}"><span class="glyphicon glyphicon-remove" title="삭제" ></span></A>
 		    </TD>
 		    
 		  </TR>
