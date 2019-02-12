@@ -259,8 +259,8 @@
           panel += "    " + rdata[index].content;
           panel += "    </div>";
           panel += "    <div class='comment-function'>";
-          panel += "      <A href=\'javascript:reply_update_form("+rdata[index].replyno+")\'><IMG src='./images/update.png' name='수정'></A>";  
-          panel += "      <A href=\'javascript:deleteForm("+rdata[index].replyno+")\'><IMG src='./images/delete.png' name='삭제'></A>"; 
+          panel += "      <A href=\'javascript:reply_update_form("+rdata[index].replyno+")\'><span class='glyphicon glyphicon-edit' title='수정'></span></A>";  
+          panel += "      <A href=\'javascript:deleteForm("+rdata[index].replyno+")\'><span class='glyphicon glyphicon-remove' title='삭제' ></span></A>"; 
           panel += "    </div>"
           panel += "  </div>";
           panel += "</div>";

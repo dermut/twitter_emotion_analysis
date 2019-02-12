@@ -141,7 +141,7 @@ rdate DATE NOT NULL,
 sf CHAR(1) NOT NULL,
 memberno INT NOT NULL, 
 PRIMARY KEY(logno),
-    FOREIGN KEY(memberno) REFERENCES member(memberno)
+FOREIGN KEY(memberno) REFERENCES member(memberno)
 );
 
 
@@ -433,7 +433,7 @@ categrpno INT NOT NULL,
 classification INT NOT NULL,
 name VARCHAR(50) NOT NULL,
 rdate DATE NOT NULL,
-PRIMARY KEY(categrpno)
+PRIMARY KEY(categr3pno)
 );
 
 

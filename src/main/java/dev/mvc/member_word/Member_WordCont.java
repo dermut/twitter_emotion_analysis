@@ -1,5 +1,6 @@
 package dev.mvc.member_word;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.word.WordProcInter;
+import dev.mvc.word.WordVO;
+
 @Controller
 public class Member_WordCont {
 
   @Autowired
   @Qualifier("dev.mvc.member_word.Member_WordProc")
   private Member_WordProcInter member_wordProc = null;
+  
+  @Autowired
+  @Qualifier("dev.mvc.word.WordProc")
+  private WordProcInter wordProc = null;
   
   public Member_WordCont(){
     System.out.println("--> Member_WordCont created.");
@@ -38,8 +46,23 @@ public class Member_WordCont {
 
     member_wordProc.create(memberno, wordno); 
     
+    List<Word_MemberWordVO> list = member_wordProc.wordno_by_member(memberno);
+    
+    List<WordVO> wordlist = new ArrayList<WordVO>();
+    
+    if(list.isEmpty()){
+      wordlist.add(wordProc.word_by_wordno(0));
+    }
+    else {
+      for(int index=0; index<list.size(); index++) {
+        wordlist.add(wordProc.word_by_wordno(list.get(index).getWordno()));
+      }
+    }
     
     request.setAttribute("wordno", wordno);
+    request.setAttribute("wordlist", wordlist);
+    
+    
     mav.setViewName("forward:/crawling_data/create.do");      
     
     return mav;
@@ -63,7 +86,7 @@ public class Member_WordCont {
       mav.setViewName("redirect:/member/auth_need.jsp");
     } else {*/
       mav.setViewName("/member_word/wordno_by_member"); // webapp/member/list.jsp
-       
+      
       List<Word_MemberWordVO> list = member_wordProc.wordno_by_member(memberno);
       mav.addObject("list", list);
     /*}*/ 

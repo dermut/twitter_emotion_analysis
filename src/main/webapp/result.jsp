@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
  
 <!DOCTYPE html>
@@ -55,12 +56,9 @@
 	  <div class="row" style="width: 70%;">
 	    <div class="col-sm-8" style="text-align: center;">
 	      <div class="page_id_word">    
-					<span class="badge badge-pill badge-info">엑소</span>
-					<span class="badge badge-pill badge-info">BTS</span>
-					<span class="badge badge-pill badge-info">결과</span>
-					<span class="badge badge-pill badge-info">SKY캐슬</span>
-	        <span class="badge badge-pill badge-info">아시안컵</span>
-	        <span class="badge badge-pill badge-info">아이린</span>
+	        <c:forEach var="WordVO" begin="${fn:length(wordlist)-10 }"  end="${fn:length(wordlist) }" items="${wordlist }">
+						<span class="badge badge-pill badge-info"><A class="badge badge-pill badge-info" href="#">${WordVO.word}</A></span>
+	        </c:forEach>
 	      </div>
 	    </div>
 	  </div>
@@ -84,8 +82,23 @@
         </div>
         
         <div class="result_box_freshtomato_box hover_box-1">
-          <img class="freshtomato_image" src='${pageContext.request.contextPath}/image/tomato.png'>
-        
+          
+          <c:choose>
+            <c:when test="${ftrate >= 75}">
+              <img class="freshtomato_image" src='${pageContext.request.contextPath}/image/tomato_certified_fresh.png'>
+            </c:when>
+            <c:when test="${ftrate >= 50 }">
+              <img class="freshtomato_image" src='${pageContext.request.contextPath}/image/tomato_fresh.png'>
+            </c:when>
+            <c:when test="${ftrate >= 25 }">
+              <img class="freshtomato_image" src='${pageContext.request.contextPath}/image/tomato_ripe.png'>
+            </c:when>
+            <c:when test="${ftrate >= 0 }">
+              <img class="freshtomato_image" src='${pageContext.request.contextPath}/image/tomato_rotten.png'>
+            </c:when>
+          </c:choose>
+          
+          
           <div class="freshtomato_rate">
             <p class="h2">${ftrate}%</p>
           </div>
@@ -104,6 +117,31 @@
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 				<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 				<script type="text/javascript" src="../js/wordtimegraph.js"></script>
+				
+				<div class="page_crawling" id="page_crawling">
+				  <div class="page_crawling_head">
+				    실제 트위터에서 크롤링한 결과 (트윗과 RT를 합해 10개만 출력됩니다.):
+				  </div>
+				  <div style="clear: both;"></div>
+				  <c:choose>
+				    <c:when test="${fn:length(crawling_list)>=10 }">
+						  <c:forEach var="CrawlingVO" begin="${fn:length(crawling_list)-10 }" end="${fn:length(crawling_list) }" items="${crawling_list }">
+						    <div class="page_crawling_l">
+							    ${CrawlingVO.content } 
+							    ${CrawlingVO.rdate }
+						    </div>
+						  </c:forEach>
+				    </c:when>
+				    <c:otherwise>
+              <c:forEach var="CrawlingVO" begin="0" end="${fn:length(crawling_list) }" items="${crawling_list }">
+                <div class="page_crawling_l">
+                  ${CrawlingVO.content } 
+                  ${CrawlingVO.rdate }
+                </div>
+              </c:forEach>
+            </c:otherwise>
+				  </c:choose>
+				</div>
       </div>
 		</div>
 		

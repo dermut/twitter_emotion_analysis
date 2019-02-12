@@ -37,6 +37,14 @@ public interface WordProcInter {
    */
   public int wordno_by_word(String word);
   
+  
+  /**
+   * 검색어 번호로 검색어 알아내기
+   * @param wordno
+   * @return
+   */
+  public WordVO word_by_wordno(int wordno);
+  
   /**
    * word로 데이터 존재하는 지(중복 방지용)
    * @param word

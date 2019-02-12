@@ -30,8 +30,8 @@
 		  <FORM name='frm' method='GET' action='./find_id.do'>
 		     <!-- 아이디 찾기 div -->
 		    <div class="form-group">
-		      <label for="id" class="col-sm-3 control-label" style="padding: 0px 3px 3px 3px;">이름</label>    
-	        <input type='text' class="col-sm-9 form-control" name='name' id='name' value='' required="required" placeholder="이름" autofocus="autofocus">        
+		      <label for="id" class="control-label" style="padding: 0px 3px 3px 3px;">이름</label>    
+	        <input type='text' class="form-control" name='name' id='name' value='' required="required" placeholder="이름" autofocus="autofocus">        
 	      </div>
 	      
 	      <div class="form-group">

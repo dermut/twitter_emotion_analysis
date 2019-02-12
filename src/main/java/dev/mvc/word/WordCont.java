@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.member.MemberProcInter;
 import dev.mvc.member_word.Member_WordProcInter;
-import dev.mvc.word_time_graph.WordTimeGraphProcInter;
 
 
 @Controller

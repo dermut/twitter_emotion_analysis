@@ -1,6 +1,5 @@
 package dev.mvc.freshtomato;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;

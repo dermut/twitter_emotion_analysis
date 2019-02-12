@@ -1,9 +1,7 @@
 package dev.mvc.word_time_graph;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import dev.mvc.crawling_data.CrawlingProcInter;
+import dev.mvc.crawling_data.CrawlingVO;
+import dev.mvc.word.WordVO;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -24,6 +28,10 @@ public class WordTimeGraphCont {
   @Autowired
   @Qualifier("dev.mvc.word_time_graph.WordTimeGraphProc")
   private WordTimeGraphProcInter wordTimeGraphProc = null;
+  
+  @Autowired
+  @Qualifier("dev.mvc.crawling_data.CrawlingProc")
+  private CrawlingProcInter crawlingProc = null;
   
   private WordTimeGraphVO wordTimeGraphVO = new WordTimeGraphVO();
   
@@ -44,6 +52,11 @@ public class WordTimeGraphCont {
     int wordno = (Integer)request.getAttribute("wordno");
     wordTimeGraphVO.setWordno(wordno);
     String word = (String) request.getAttribute("word");
+    List<WordVO> wordlist = (ArrayList<WordVO>) request.getAttribute("wordlist");
+    List<CrawlingVO> crawling_list = (ArrayList<CrawlingVO>) request.getAttribute("crawling_list");
+    
+    mav.addObject("wordlist", wordlist);
+    mav.addObject("crawling_list", crawling_list);
     
     wordTimeGraphProc.create(wordTimeGraphVO);
     
@@ -81,9 +94,9 @@ public class WordTimeGraphCont {
     mav.addObject("rest", rest);
     mav.addObject("word", word);
     
-    mav.setViewName("/result");
+    
     //mav.setViewName("/wtgChart");
-    //mav.setViewName("/result");      
+    mav.setViewName("/result");      
      
     return mav;
   } 

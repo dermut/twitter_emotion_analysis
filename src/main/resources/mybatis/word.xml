@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
   <!-- wordno로 word 가져오기 -->
-  <select id="word_by_wordno" parameterType="int" resultType="String">
+  <select id="word_by_wordno" parameterType="int" resultType="WordVO">
     SELECT word
     FROM word
     WHERE wordno = #{wordno}
@@ -50,5 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM word
     WHERE word = #{word}    
   </select> 
+  
+
 
 </mapper> 

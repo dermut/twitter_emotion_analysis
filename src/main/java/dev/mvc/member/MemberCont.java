@@ -122,7 +122,6 @@ public class MemberCont {
  
   @RequestMapping(value="/member/read.do", method=RequestMethod.GET)
   public ModelAndView read(int memberno){
-    // System.out.println("--> read(int memberno) GET called.");
     ModelAndView mav = new ModelAndView();
     mav.setViewName("/member/read"); // webapp/member/read.jsp
    
@@ -135,7 +134,6 @@ public class MemberCont {
   @RequestMapping(value="/member/update.do", method=RequestMethod.POST)
   public ModelAndView update(RedirectAttributes redirectAttributes,
                                        HttpServletRequest request, MemberVO memberVO){
-    // System.out.println("--> update() POST called.");
     ModelAndView mav = new ModelAndView();
    
     int count = memberProc.update(memberVO); // 수정
@@ -157,8 +155,6 @@ public class MemberCont {
     ModelAndView mav = new ModelAndView();
     mav.setViewName("/member/passwd_update"); // webapp/member/passwd_update.jsp
    
-    // mav.addObject("mno", mno);
-   
     return mav;
   }  
  
@@ -174,12 +170,9 @@ public class MemberCont {
                                                     HttpSession session,
                                                     String passwd,
                                                     String new_passwd){
-    // System.out.println("--> passwd_update() POST called.");
     ModelAndView mav = new ModelAndView();
     
-    //String id = "user1";
     String id = (String)session.getAttribute("id"); // session
-    // int memberno =1;
     int memberno = (Integer)session.getAttribute("memberno"); // session
     
     // 로그인 관련 추가 영역

@@ -6,17 +6,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace = "member_word">
 
-   <insert id="create" parameterType="int">
+  <insert id="create" parameterType="int">
     INSERT INTO member_word(mwno, memberno, wordno) 
     VALUES((SELECT NVL(MAX(mwno), 0)+1 as mwno FROM member_word), #{memberno}, #{wordno})
   </insert>
   
   <!-- 회원 별 검색어번호 목록 -->  
   <select id="wordno_by_member" parameterType="int" resultType="Word_MemberWordVO">
-      SELECT DISTINCT m.mwno, m.memberno, w.word
-      FROM word w, member_word m
-      WHERE w.wordno = m.wordno AND m.memberno = #{memberno}
-      ORDER BY m.mwno ASC
+    SELECT DISTINCT m.mwno, m.memberno, w.word, w.wordno
+    FROM word w, member_word m
+    WHERE w.wordno = m.wordno AND m.memberno = #{memberno}
+    ORDER BY m.mwno ASC
   </select>
   
   <!-- 특정 검색어를 어떤 회원이 검색했는지 -->

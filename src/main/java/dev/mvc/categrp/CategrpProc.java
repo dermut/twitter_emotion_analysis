@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 public class CategrpProc  implements CategrpProcInter {
   @Autowired
   @Qualifier("dev.mvc.categrp.CategrpDAO")
-  // @Qualifier("dev.mvc.categrp.CategrpDAO2016")
-  // @Qualifier("dev.mvc.categrp.CategrpDAO2017")
   private CategrpDAOInter categrpDAO = null;
 
   public CategrpProc() {

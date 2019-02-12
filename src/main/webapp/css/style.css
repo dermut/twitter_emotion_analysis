@@ -10,6 +10,10 @@
     font-size: 14px;
   }
   
+  div {
+    display: block;
+  }
+  
   .li_none {
     color: white;
   }
@@ -37,6 +41,7 @@
   .main_wrapper {
     min-width: 1080px;
     min-height: 1080px;
+    position: relative;
     height: 100%;
     overflow: hidden;
     background: linear-gradient(52deg, #5383e8, #3991ef 31%, #3892f0 32%, #3594f1 36%, #00b2ff);
@@ -249,7 +254,7 @@
     float: left;
   }
   
-  .page_recently_serached {
+  .page_recently_searched {
     margin: 12px 0px 5px 0px;
     padding: 12px 0px 5px 0px;
     font-size: 10px;
@@ -372,6 +377,23 @@
     width: 690px;
     margin-left: 10px;
     vertical-align: top;
+  }
+  
+  .page_crawling_head {
+    display: block;
+    float: left;
+    padding-left: 10px;
+    width: 100%;
+    border-bottom: 1px dotted gray;
+    margin-bottom: 5px;
+  }
+  
+  .page_crawling_l {
+    width: 70%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid black;
+    margin-bottom: 5px;
   }
   
   /*------------------------RESULT END---------------------------*/

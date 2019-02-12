@@ -1,5 +1,6 @@
 package dev.mvc.crawling_data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,12 +48,16 @@ public class CrawlingCont {
     String word = (String)request.getAttribute("word");
     int wordno = (Integer)request.getAttribute("wordno");
     crawlingVO.setWordno(wordno);
-    
+    List<CrawlingVO> crawling_list = new ArrayList<CrawlingVO>();
+        
     int count = 0;
     Date first = null;
     Date last = null;
     double word_weight = 0;
-    int freshtomato = 0;
+    int freshtomato = 0; 
+    
+    String test1 = null;
+    String test2 = null;
     
     Twitter twitter = new TwitterFactory().getInstance();
     
@@ -63,33 +68,38 @@ public class CrawlingCont {
         result = twitter.search(query);
         
         List<Status> tweets = result.getTweets();
-        
+
         if (count == 0) {
+          test1 = "wow";
           last = tweets.get(0).getCreatedAt(); // 가장 최근에 생성된 트윗의 날짜
+          System.out.println(last);
         }
-        if(result.nextQuery() == null && tweets.size() != 0) {
-          first = tweets.get(tweets.size()-1).getCreatedAt(); // 가장 먼 시점에 생성된 트윗의 날짜
+        
+        if(result.nextQuery() == null && tweets.size() == 0) {
+          test2 = "hey";
+          System.out.println(first);
+        } else {
+          first = tweets.get(tweets.size()-1).getCreatedAt();
         }
         
         count += tweets.size();
         
         for (Status tweet : tweets) {
           System.out.println(tweet.getText());
-                
+          System.out.println(tweet.getCreatedAt());
           //crawlingProc create
-          crawlingVO.setContent(tweet.getText()+" /시간/ "+tweet.getCreatedAt());
+          crawlingVO.setContent(tweet.getText());
           crawlingProc.create(crawlingVO);
         }
       } while ((query = result.nextQuery()) != null);
-
-      System.out.println(word + " 쿼리 결과의 갯수는 " + count + " 개 입니다.");
-      System.out.println("첫 날짜는 " + first);
-      System.out.println("마지막 날짜는 " + last);
+      
+      System.out.println(test1);
+      System.out.println(test2);
+      System.out.println(last);
+      System.out.println(first);
       
       if(first != null && last != null) {
         long seconds = (last.getTime()-first.getTime())/1000;
-        System.out.println("첫 날짜와 마지막 날짜의 차이는 " + seconds + "초 입니다.");
-        
         
         if(seconds == 0) {  // 만약 나온 초가 0이면 1을 강제로 부여한다.
           seconds = 1;
@@ -101,8 +111,7 @@ public class CrawlingCont {
         if(freshtomato >= 100) {
           freshtomato = 100;
         }
-        
-        
+        System.out.println("걸린 시간은 " + seconds + " 입니다.");
       }
       
       System.out.println("word_weight는 " + String.format("%.10f", word_weight ) + " 입니다.");
@@ -114,6 +123,7 @@ public class CrawlingCont {
       System.out.println("Failed to search tweets: " + e.getMessage());
     }
     
+    request.setAttribute("crawling_list", crawling_list);
     request.setAttribute("freshtomato", freshtomato);
     
     mav.setViewName("forward:/freshtomato/create.do");
