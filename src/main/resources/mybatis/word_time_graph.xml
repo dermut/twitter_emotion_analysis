@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="wordTimeGraph">
   <!-- 검색어 동향 생성   -->
-  <insert id="create">
+  <insert id="create" parameterType="WordTimeGraphVO">
     INSERT INTO word_time_graph(word_time_no, freq, rdate, wordno)
     VALUES((SELECT NVL(MAX(word_time_no), 0)+1 as word_time_no FROM word_time_graph), (SELECT NVL(MAX(freq), 0)+1 as freq FROM word_time_graph WHERE wordno=#{wordno}), sysdate, #{wordno})
   </insert>

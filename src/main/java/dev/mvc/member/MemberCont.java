@@ -303,7 +303,7 @@ public class MemberCont {
      session.setAttribute("id", id);
      session.setAttribute("passwd", passwd);
      session.setAttribute("name", old_memberVO.getName());
-     session.setAttribute("grade", old_memberVO.getGrade());
+     session.setAttribute("grade", old_memberVO.getGrade());  // session에 회원등급 저장(top_second에서 사용하기)
 
      System.out.println(id);
      // 로그인내역 성공 create
@@ -401,7 +401,7 @@ public class MemberCont {
  } 
  
  /**
-  * ��� + ����¡ ����
+  * 로그인 내역 페이징
   * @param memberno
   * @param nowPage
   * @return
@@ -531,6 +531,19 @@ public class MemberCont {
    ModelAndView mav = new ModelAndView();
    
    mav.setViewName("/member/find_form");
+   return mav;
+ }
+ 
+ /**
+  * 로그인이 필요한 페이지 do
+  * @return
+  */
+ @RequestMapping(value = "/member/login_need.do", method = RequestMethod.GET)
+ public ModelAndView login_need(){
+   
+   ModelAndView mav = new ModelAndView();
+   
+   mav.setViewName("/member/login_need");
    return mav;
  }
  

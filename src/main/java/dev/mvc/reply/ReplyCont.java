@@ -35,6 +35,7 @@ public class ReplyCont {
     ModelAndView mav = new ModelAndView();
     
     Contents_ReplyVO contentsVO = contentsProc.reply(contentsno);
+    //Contents_ReplyVO contentsVO = contentsProc.read(contentsno);
     mav.addObject("contentsVO", contentsVO);
     mav.setViewName("/reply/create"); // /webapp/contents/create.jsp
 

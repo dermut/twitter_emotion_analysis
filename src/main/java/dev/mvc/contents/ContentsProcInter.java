@@ -7,74 +7,74 @@ import java.util.List;
 public interface ContentsProcInter {
 
   /**
-   * ÄÁÅÙÃ÷ µî·Ï
+   * ì»¨í…ì¸  ë“±ë¡
    * @param contentsVO
    * @return
    */
   public int create(ContentsVO contentsVO);
   
   /**
-   * ÀüÃ¼ ¸ñ·Ï
+   * ì „ì²´ ëª©ë¡
    * @return
    */
   public List<ContentsVO> list_all_board();
   
   /**
-   * ÀüÃ¼ ±Û¼ö
+   * ì „ì²´ ê¸€ìˆ˜
    * @return
    */
   public int total_count();
   
   /**
-   * Á¶È¸
+   * ì¡°íšŒ
    * @param contentsno
    * @return
    */
   public ContentsVO read(int contentsno);
 
   /**
-   * ÆÄÀÏ ¸ñ·Ï ÃßÃâ
+   * íŒŒì¼ ëª©ë¡ ì¶”ì¶œ
    * @param contentsVO
    * @return
    */
   public ArrayList<FileVO> getThumbs(ContentsVO contentsVO);
   
   /**
-   * ¼öÁ¤Ã³¸®
+   * ìˆ˜ì •ì²˜ë¦¬
    * @param vo
    * @return
    */
   public int update(ContentsVO contentsVO);
    
   /**
-   * »èÁ¦
+   * ì‚­ì œ
    * @param contentsno
    * @return
    */
   public int delete(int contentsno);
   
   /**
-   * boardº° °Ë»öµÈ ·¹ÄÚµå °¹¼ö
+   * boardë³„ ê²€ìƒ‰ëœ ë ˆì½”ë“œ ê°¯ìˆ˜
    * @return
    */
   public int search_count(HashMap hashMap);
   
   /**
-   * °Ë»ö ¸ñ·Ï + ÆäÀÌÂ¡
+   * ê²€ìƒ‰ ëª©ë¡ + í˜ì´ì§•
    * @param hashMap
    * @return
    */
   public List<ContentsVO> list_by_board_search_paging(HashMap<String, Object> hashMap);
 
   /** 
-   * SPANÅÂ±×¸¦ ÀÌ¿ëÇÑ ¹Ú½º ¸ğµ¨ÀÇ Áö¿ø, 1 ÆäÀÌÁöºÎÅÍ ½ÃÀÛ 
-   * ÇöÀç ÆäÀÌÁö: 11 / 22   [ÀÌÀü] 11 12 13 14 15 16 17 18 19 20 [´ÙÀ½] 
+   * SPANíƒœê·¸ë¥¼ ì´ìš©í•œ ë°•ìŠ¤ ëª¨ë¸ì˜ ì§€ì›, 1 í˜ì´ì§€ë¶€í„° ì‹œì‘ 
+   * í˜„ì¬ í˜ì´ì§€: 11 / 22   [ì´ì „] 11 12 13 14 15 16 17 18 19 20 [ë‹¤ìŒ] 
    *
-   * @param boardno Ä«Å×°í¸®¹øÈ£ 
-   * @param search_count °Ë»ö(ÀüÃ¼) ·¹ÄÚµå¼ö 
-   * @param nowPage     ÇöÀç ÆäÀÌÁö
-   * @param word °Ë»ö¾î
-   * @return ÆäÀÌÂ¡ »ı¼º ¹®ÀÚ¿­
+   * @param boardno ì¹´í…Œê³ ë¦¬ë²ˆí˜¸ 
+   * @param search_count ê²€ìƒ‰(ì „ì²´) ë ˆì½”ë“œìˆ˜ 
+   * @param nowPage     í˜„ì¬ í˜ì´ì§€
+   * @param word ê²€ìƒ‰ì–´
+   * @return í˜ì´ì§• ìƒì„± ë¬¸ìì—´
    */ 
   public String paging(int boardno, int search_count, int nowPage, String word);
   
@@ -91,18 +91,11 @@ public interface ContentsProcInter {
   public int reply_delete(int replyno);
   
   /**
-   * ÄÜÅÙÃ÷º° ´ñ±Û °¹¼ö ¼¼±â
+   * ì½˜í…ì¸ ë³„ ëŒ“ê¸€ ê°¯ìˆ˜ ì„¸ê¸°
    * @param contentsno
-   * @return ÄÜÅÙÃ÷º° ´ñ±Û °¹¼ö
+   * @return ì½˜í…ì¸ ë³„ ëŒ“ê¸€ ê°¯ìˆ˜
    */
   public int count_reply_by_contents(int contentsno);
   
   public String id_by_reply(int memberno);
 }
-
-
-
-
-
-
-

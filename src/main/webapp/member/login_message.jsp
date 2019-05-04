@@ -28,11 +28,15 @@
 
 </head> 
 <body>
-<DIV class='container' style='width: 90%;'>
-<jsp:include page="/menu/top.jsp" flush='false' />
+<DIV class="main_wrapper" align=center>
+  <c:import url="/menu/top.jsp"/>
+  
+  <c:import url="/menu/top_second.jsp"/>
+<DIV class='main_container' style='width: 80%;'>
+
 <DIV class='content'>
 
-<DIV class='title_line'>알림</DIV>
+<DIV class='title_line'>알림</DIV> <!-- 여기부터 수정 요망 글씨색 수정 & 배경색 흰색 ?  -->
   <DIV class='message'>
     <fieldset class='fieldset_basic'>
       <ul>
@@ -50,6 +54,7 @@
 </DIV> <!-- content END -->
 <jsp:include page="/menu/bottom.jsp" flush='false' />
 </DIV> <!-- container END -->
+</DIV>
 </body>
 
 </html> 

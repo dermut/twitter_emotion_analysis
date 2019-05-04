@@ -31,7 +31,7 @@
 	  
 	    <div class="form-group">
         <label for="id" class="control-label" style="padding: 0px 3px 3px 3px;">아이디</label>    
-        <input type='text' class="form-control" name='id' id='id' value='<%--${ck_id }--%>root3' required="required" placeholder="아이디" autofocus="autofocus">
+        <input type='text' class="form-control" name='id' id='id' value='<%--${ck_id }--%>root' required="required" placeholder="아이디" autofocus="autofocus">
         <input class="form-check-input" type='checkbox' name='id_save' value='Y' ${ck_id_save == 'Y' ? "checked='checked'" : "" } style="margin: 10px 2px 2px 5px;"> 저장
       </div>   
       <div class="form-group">

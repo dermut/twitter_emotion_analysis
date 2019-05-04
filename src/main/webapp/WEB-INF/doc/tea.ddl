@@ -40,7 +40,7 @@ INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, 
 VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'root', '박우진', '1234', '01000000000', 'park@naver.com', '1993-00-00', 'M', 'A', sysdate);
 
 INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, rdate) 
-VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'root2', 'girl', '1234', '01000000000', 'girl@gmail.com', '1993-00-00', 'F', 'A', sysdate);
+VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'root2', 'girl', '1234', '01000000000', 'girl@gmail.com', '1993-00-00', 'F', 'M', sysdate);
 
 INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, rdate) 
 VALUES((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), 'root3', 'master', '1234', '01000000000', 'girl@gmail.com', '1993-00-00', 'F', 'M', sysdate);
@@ -433,7 +433,7 @@ categrpno INT NOT NULL,
 classification INT NOT NULL,
 name VARCHAR(50) NOT NULL,
 rdate DATE NOT NULL,
-PRIMARY KEY(categr3pno)
+PRIMARY KEY(categrpno)
 );
 
 
@@ -448,6 +448,9 @@ VALUES((SELECT NVL(MAX(categrpno), 0)+1 as categrpno FROM categrp), 2, '게시판',
 
 /* 모든 레코드 검색 */
 SELECT classification, name, rdate
+FROM categrp;
+
+SELECT *
 FROM categrp;
 
 /* 검색 */
@@ -515,7 +518,7 @@ FOREIGN KEY(memberno) REFERENCES member(memberno)
 
 /* 한 건 등록 */
 INSERT INTO board(boardno, name, rdate, categrpno, memberno)
-VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardno FROM board), '게시판1', sysdate, 1, 1);
+VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardno FROM board), '공지사항', sysdate, 1, 1);
 
 INSERT INTO board(boardno, name, rdate, categrpno, memberno)
 VALUES((SELECT NVL(MAX(boardno), 0)+1 as boardno FROM board), '게시판2', sysdate, 1, 2);
@@ -930,7 +933,7 @@ CREATE TABLE word_time_graph (
     rdate DATE NOT NULL,
     wordno INT NOT NULL,
     PRIMARY KEY(word_time_no),
-    FOREIGN KEY(word_time_no) REFERENCES word(wordno)
+    FOREIGN KEY(wordno) REFERENCES word(wordno)
 );
 
 
@@ -1051,4 +1054,13 @@ COMMENT ON COLUMN word_sentiment.wordno is '검색어번호';
 SELECT min(wordno)
 FROM word
 WHERE word='바다' and TO_CHAR(rdate, 'YYYY/MM/DD')=TO_CHAR(sysdate, 'YYYY/MM/DD'); /***** if) 이게 0이면, 새로 word_time_graph를 create *****/
-	
+
+
+select * from word;
+select * from member_word;
+select * from member;
+select * from crawling_data;
+select * from word_crawling;
+select * from word_sentiment;
+select * from word_time_graph;
+select * from categrp;

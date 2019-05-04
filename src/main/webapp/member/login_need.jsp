@@ -26,14 +26,14 @@
 </head> 
 
 <body>
-<div class="main_wrapper">
+<div class="main_wrapper" align=center>
   <c:import url="/menu/top.jsp"/>
   
   <c:import url="/menu/top_second.jsp"/>
-  <DIV class='container' style='width: 100%;'>
+  <DIV class='main_container' style='width: 80%;'>
   
   <DIV class='content'>
-	  <DIV class='message'>
+	  <DIV class='message' style="color: white">
 	    <H3>로그인이 필요한 페이지입니다.</H3>
 	    <BR><BR>
 	    [<A href='${pageContext.request.contextPath}/member/login.do'>로그인</A>]

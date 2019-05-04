@@ -53,7 +53,7 @@
 			</div>
 	  </div>
 	  
-	  <div class="row" style="width: 70%;">
+	  <%-- <div class="row" style="width: 70%;">
 	    <div class="col-sm-8" style="text-align: center;">
 	      <div class="page_id_word">    
 	        <c:forEach var="WordVO" begin="${fn:length(wordlist)-10 }"  end="${fn:length(wordlist) }" items="${wordlist }">
@@ -61,7 +61,7 @@
 	        </c:forEach>
 	      </div>
 	    </div>
-	  </div>
+	  </div> --%>
    
     <div class="page_divide">
     </div>
@@ -118,7 +118,7 @@
 				<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 				<script type="text/javascript" src="../js/wordtimegraph.js"></script>
 				
-				<div class="page_crawling" id="page_crawling">
+			<%-- 	<div class="page_crawling" id="page_crawling">
 				  <div class="page_crawling_head">
 				    실제 트위터에서 크롤링한 결과 (트윗과 RT를 합해 10개만 출력됩니다.):
 				  </div>
@@ -141,7 +141,7 @@
               </c:forEach>
             </c:otherwise>
 				  </c:choose>
-				</div>
+				</div> --%>
       </div>
 		</div>
 		

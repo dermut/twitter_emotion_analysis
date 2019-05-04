@@ -48,7 +48,7 @@ public class WordCont {
     // 로그인 안했을 때 검색 처리 불가능하게 처리하는 로직
     if(memberProc.isMember(session) == false){
       
-      mav.setViewName("redirect:/member/login_need.jsp");
+      mav.setViewName("redirect:/member/login_need.do");
 
     }else{
     

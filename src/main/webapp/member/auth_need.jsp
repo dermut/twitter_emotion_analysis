@@ -26,11 +26,16 @@
 </head> 
 
 <body>
-<DIV class='container' style='width: 100%;'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>
+<DIV class="main_wrapper" align="center">
+
+  <c:import url="/menu/top.jsp"/>
+  
+  <c:import url="/menu/top_second.jsp"/>
+<DIV class='main_container' style='width: 80%;'>
+
+<DIV class='contents'>
   <DIV class='message'>
-    <H3>권한이 없습니다.</H3>
+    <H3>권한이 없습니다.</H3><br>
     <H3>회원 목록과 로그인 내역은 관리자만 조회할 수 있습니다.</H3>
     <BR><BR>
     
@@ -39,6 +44,7 @@
 </DIV> <!-- content END -->
 <jsp:include page="/menu/bottom.jsp" flush='false' />
 </DIV> <!-- container END -->
+</DIV>
 </body>
 
 </html> 
