@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <insert id="create" parameterType="MemberVO" > 
     INSERT INTO member(memberno, id, name, passwd, phone, email, birth, sex, grade, rdate)
-    VALUES ((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), #{id}, #{name}, #{passwd}, #{phone}, #{email}, #{birth}, #{sex}, 'N', sysdate)
+    VALUES ((SELECT NVL(MAX(memberno), 0)+1 as memberno FROM member), #{id}, #{name}, #{passwd}, #{phone}, #{email}, #{birth}, #{sex}, 'M', sysdate)
   </insert>
   
   <select id="list" resultType="MemberVO">

@@ -68,6 +68,7 @@ var color;
 var wordFreqChart = {
   "Main Title": [{
     click: wordFreqChartHandler,
+    backgroundColor: "white",
     cursor: "pointer",
     explodeOnClick: false,
     innerRadius: "75%",

@@ -28,6 +28,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE     (c.categrpno = #{categrpno}) AND (c.categrpno = t.categrpno)
     ORDER BY  c.categrpno ASC, t.boardno ASC
   </select>
+  
+    <!-- categrp별 목록 -->
+  <select id="list_by_categrp_id" resultType="Categrp_Board_memberVO" parameterType="int">
+    SELECT    c.categrpno, c.name as categrp_name,
+              t.boardno, t.categrpno, t.name as board_name, t.memberno, t.rdate, m.memberno, m.id
+    FROM      categrp c, board t, member m
+    WHERE     (c.categrpno = #{categrpno}) AND (c.categrpno = t.categrpno) AND (t.memberno = m.memberno)
+    ORDER BY  c.categrpno ASC, t.boardno ASC
+  </select>
 
   <select id="read" resultType="BoardVO" parameterType="int">
     SELECT  boardno, name, rdate, categrpno, memberno

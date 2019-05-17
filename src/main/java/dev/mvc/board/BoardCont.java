@@ -125,6 +125,12 @@ public class BoardCont {
     CategrpVO categrpVO = categrpProc.read(categrpno);
     mav.addObject("categrpVO", categrpVO);
     
+    /* 카테고리 그룹에서 대분류명 클릭 후 넘어갔을 때 관리자명 미출력 해결하기 위한 코드
+    List<Categrp_BoardVO> list = boardProc.list_by_categrp(categrpno);
+    mav.addObject("list_name" ,list);
+    */
+
+    
     mav.setViewName("/board/list_by_categrp"); // /webapp/board/list_by_categrp.jsp
 
     return mav;
@@ -139,7 +145,7 @@ public class BoardCont {
   @RequestMapping(value = "/board/list_by_categrp_json.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
   public ResponseEntity list_by_categrp_json(int categrpno) {
     HttpHeaders responseHeaders = new HttpHeaders();
-    List<Categrp_BoardVO> list = boardProc.list_by_categrp(categrpno);
+    List<Categrp_BoardVO> list = boardProc.list_by_categrp_id(categrpno);
 
     JSONArray json = new JSONArray(list);
 

@@ -367,7 +367,7 @@
       <DIV class="form-group" id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F5F5F5; width: 40%;'>
         <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
           <div class="form-group">
-            <input type='hidden' name='categrpno' id='categrpno' value=''>
+            <!-- <input type='hidden' name='categrpno' id='categrpno' value=''> -->
             <label class="control-label" style="padding:5px 0px 5px 0px;">게시판 등록</label>
           </div>
           
@@ -448,7 +448,7 @@
 		    <TH style='text-align: center ;'>번호</TH>
 		    <TH style='text-align: center ;'>그룹</TH>
 		    <TH style='text-align: center ;'>게시판</TH>
-		    <TH style='text-align: center ;'>접근계정</TH>
+		    <TH style='text-align: center ;'>관리자</TH>
 		    <TH style='text-align: center ;'>등록일자</TH>
 		    <TH style='text-align: center ;'>기타</TH>
 		    

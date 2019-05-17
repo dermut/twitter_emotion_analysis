@@ -29,6 +29,12 @@ public class BoardDAO implements BoardDAOInter {
   public List<Categrp_BoardVO> list_by_categrp(int categrpno) {
     return sqlSessionTemplate.selectList("board.list_by_categrp", categrpno);
   }
+  
+  @Override
+  public List<Categrp_BoardVO> list_by_categrp_id(int categrpno) {
+    return sqlSessionTemplate.selectList("board.list_by_categrp_id", categrpno);
+  }
+
 
   @Override
   public BoardVO read(int boardno) {

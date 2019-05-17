@@ -52,16 +52,23 @@
         </c:choose>     
 
         <c:choose>
+          <c:when test="${sessionScope.grade.equals('A')}"> <!-- 비로그인 상태 -->  
+            <li class="top_second_nav_button">
+              <A class="top_second_font" href='${pageContext.request.contextPath}/member/list.do' style="padding: 12px 12px 12px 12px;">회원 목록</A>
+            </li>
+          </c:when>
+          
           <c:when test="${sessionScope.grade == null}"> <!-- 비로그인 상태 -->  
             <li class="top_second_nav_button">
               <a class="top_second_font" href='${pageContext.request.contextPath}/member/login_need.do' style="padding: 12px 12px 12px 12px;">회원 목록</a>
             </li>
           </c:when>
-          <c:otherwise>  <!-- 로그인 상태 -->		  
-		        <li class="top_second_nav_button">
+          
+          <%--<c:otherwise>  <!-- 로그인 상태 -->		  
+		         <li class="top_second_nav_button">
 		          <A class="top_second_font" href='${pageContext.request.contextPath}/member/list.do' style="padding: 12px 12px 12px 12px;">회원 목록</A>
-		        </li>
-          </c:otherwise>
+		        </li> 
+          </c:otherwise>--%>
         </c:choose>
 
         <c:choose>

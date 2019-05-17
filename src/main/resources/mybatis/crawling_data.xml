@@ -24,7 +24,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="list_by_content" parameterType="String" resultType="CrawlingVO">
     SELECT crno, content, rdate, wordno
     FROM crawling_data
-    WHERE content like #{word} <!-- 입력된 단어를 이용해 그 단어가 들어간 내용을 검색 -->
+    WHERE content like '%' ||  #{word} || '%' <!-- 입력된 단어를 이용해 그 단어가 들어간 내용을 검색 -->
+    ORDER BY crno DESC
   </select>
   
   <select id="count" resultType="int"> <!-- 크롤링데이터 전체 카운트 -->
@@ -48,5 +49,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE DATE(rdate) = #{rdate}
   </delete>
   
+
   
 </mapper>

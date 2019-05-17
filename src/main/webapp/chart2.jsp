@@ -24,6 +24,7 @@
 var ctx = document.getElementById("logChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
+    backgroundColor: "#F9F9F9",
     data: {
         labels: ["7일 전", "6일 전", "5일 전", "4일 전", "3일 전", "2일 전", "1일 전", "오늘"],
         datasets: [{

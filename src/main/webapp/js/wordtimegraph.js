@@ -59,6 +59,7 @@ var visitorsData = {
 
 var newVSReturningVisitorsOptions = {
   animationEnabled: true,
+  backgroundColor: "#F9F9F9",
   theme: "light2",
   title: {
     text: "최근 7일 간 검색 횟수 동향"
@@ -82,6 +83,7 @@ var newVSReturningVisitorsOptions = {
 
 var visitorsDrilldownedChartOptions = {
   animationEnabled: true,
+  backgroundColor: "#F9F9F9",
   theme: "light2",
   axisX: {
     labelFontColor: "#717171",

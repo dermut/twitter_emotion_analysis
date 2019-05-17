@@ -52,7 +52,8 @@ public class CategrpCont {
     
     int count = categrpProc.create(categrpVO);
     
-    mav.setViewName("redirect:/board/create_message.jsp?count=" + count); // /webapp/categrp/list.jsp
+    //mav.setViewName("redirect:/board/create_message.jsp?count=" + count); // /webapp/categrp/list.jsp
+    mav.setViewName("redirect:/categrp/create_message.jsp?count=" + count); // /webapp/categrp/list.jsp
     
     return mav;
   }

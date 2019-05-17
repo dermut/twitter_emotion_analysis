@@ -317,14 +317,14 @@ COMMENT ON COLUMN word.rdate is '검색시간';
 /**********************************/
 CREATE TABLE crawling_data(
 crno INT NOT NULL,
-content VARCHAR(500) NOT NULL,
+content VARCHAR(1000) NOT NULL,
 rdate DATE NOT NULL,
 wordno INT NOT NULL,
 PRIMARY KEY(crno),
 FOREIGN KEY(wordno) REFERENCES word(wordno)
 );
 
-
+drop table crawling_data;
 
 /********************* DML 시작 *********************/
 
@@ -512,7 +512,11 @@ FOREIGN KEY(categrpno) REFERENCES categrp(categrpno),
 FOREIGN KEY(memberno) REFERENCES member(memberno)
 );
 
+select *
+from board;
 
+select *
+from categrp;
 
 /********************* DML 시작 *********************/
 

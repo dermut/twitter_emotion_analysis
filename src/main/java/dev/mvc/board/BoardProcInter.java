@@ -24,6 +24,13 @@ public interface BoardProcInter {
   public List<Categrp_BoardVO> list_by_categrp(int categrpno);
   
   /**
+   * 목록
+   * @param categrpno 카테고리 그룹 번호
+   * @return Join 목록
+   */
+  public List<Categrp_BoardVO> list_by_categrp_id(int categrpno);
+  
+  /**
    * 한건의 레코드 조회
    * @param categrpno
    * @return

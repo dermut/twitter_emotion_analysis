@@ -197,7 +197,7 @@
           str += '<span class="button-group">';
           str += '<button class="btn btn-danger" type="submit" id="submit" style="background-image:none;">삭제</button>';
           str += '&nbsp';
-          str += '<button class="btn btn-info" type="button" onclick="create_update_cancel(); style="background-image:none;">취소</button>'; 
+          str += '<button class="btn btn-info" type="button" onclick="create_update_cancel();" style="background-image:none;">취소</button>'; 
           str += '</span>';
         }
         $('#msg_delete').html(str);
@@ -284,7 +284,7 @@
 		  <DIV class="form-group" id='panel_create' style='padding: 10px 0px 10px 0px;  background-color: #F9F9F9; width: 40%;'>
 		    <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
 		      <div class="form-group">
-            <input type='hidden' name='categrpno' id='categrpno' value=''>
+            <!-- <input type='hidden' name='categrpno' id='categrpno' value=''> -->
             <label class="control-label" style="padding:5px 0px 5px 0px;">카테고리 그룹 등록</label>
           </div>
           
@@ -341,7 +341,7 @@
 		  
 		  <DIV class="form-group" id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 50%;'>
 		    <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete.do'> 
-		      <input type='hidden' name='categrpno' id='categrpno' value=''>
+		      <!-- <input type='hidden' name='categrpno' id='categrpno' value=''> -->
 		
 		      <DIV id='msg_delete' style='margin: 20px auto;'></DIV>
 		    </FORM>
