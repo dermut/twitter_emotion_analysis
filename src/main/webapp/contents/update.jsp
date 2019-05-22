@@ -117,7 +117,7 @@
 		      </div>
 		      <div class="form-group">   
 		        <label for="photoMF" class="col-md-1 control-label">파일</label>
-		        <div class="col-md-11">
+		        <div class="col-md-11" style="color: white;">
 		          <input type="file" class="form-control input-md" name='photoMF' id='photoMF' size='40' multiple="multiple">
 		          <br>
 		          Preview(미리보기) 이미지는 자동 생성됩니다.

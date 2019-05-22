@@ -74,8 +74,13 @@ public class CrawlingCont {
         List<Status> tweets = result.getTweets();
 
         if (count == 0) {
-          last = tweets.get(0).getCreatedAt(); // 가장 최근에 생성된 트윗의 날짜
-          System.out.println(last);
+          if(tweets.isEmpty()){
+            System.out.println("으악!!!!!!!!!");
+          }
+          else {
+            last = tweets.get(0).getCreatedAt(); // 가장 최근에 생성된 트윗의 날짜
+            System.out.println(last);
+          }
         }
 
         if(result.nextQuery() == null && tweets.size() == 0) {

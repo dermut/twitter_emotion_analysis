@@ -56,10 +56,19 @@
 
     <div class="row" style="width: 70%;">
       <div class="col-sm-8" style="text-align: center;">
-        <div class="page_id_word">    
-          <c:forEach var="WordVO" begin="${fn:length(wordlist)-10 }"  end="${fn:length(wordlist) }" items="${wordlist }">
-            <span class="badge badge-pill badge-info"><A class="badge badge-pill badge-info" href="#">${WordVO.word}</A></span>
-          </c:forEach>
+        <div class="page_id_word">   
+          <c:choose> 
+            <c:when test="${fn:length(wordlist) > 10}">
+		          <c:forEach var="WordVO" begin="${fn:length(wordlist)-10 }"  end="${fn:length(wordlist) }" items="${wordlist }">
+		            <span class="badge badge-pill badge-info"><A class="badge badge-pill badge-info" href="#">${WordVO.word}</A></span>
+		          </c:forEach>
+	          </c:when>
+	          <c:otherwise>
+              <c:forEach var="WordVO" begin="0"  end="${fn:length(wordlist) }" items="${wordlist }">
+                <span class="badge badge-pill badge-info"><A class="badge badge-pill badge-info" href="#">${WordVO.word}</A></span>
+              </c:forEach>
+	          </c:otherwise>
+          </c:choose>
         </div>
       </div>
     </div>

@@ -24,8 +24,8 @@
 
 <body>
 
-<div class="login_root">
-	<DIV class='login'>   
+<div class="login_root2">
+	<DIV class='login2'>   
 	
 	  <FORM name='frm' method='POST' action='./login.do'>
 	  

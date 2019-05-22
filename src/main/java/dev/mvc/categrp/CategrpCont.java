@@ -42,17 +42,11 @@ public class CategrpCont {
     return mav;
   }
 
-  // request.getParameter() 자동 실행
-  // 형변환 자동 실행
-  // CategrpVO 객체 자동 생성
   // http://localhost:9090/tea/categrp/create.do
   @RequestMapping(value="/categrp/create.do", method=RequestMethod.POST)
   public ModelAndView create(CategrpVO categrpVO) {
     ModelAndView mav = new ModelAndView();
-    
     int count = categrpProc.create(categrpVO);
-    
-    //mav.setViewName("redirect:/board/create_message.jsp?count=" + count); // /webapp/categrp/list.jsp
     mav.setViewName("redirect:/categrp/create_message.jsp?count=" + count); // /webapp/categrp/list.jsp
     
     return mav;
@@ -62,12 +56,11 @@ public class CategrpCont {
   @RequestMapping(value="/categrp/create_json.do", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
   public ResponseEntity create_json(CategrpVO categrpVO) {
     HttpHeaders responseHeaders = new HttpHeaders();
-    int count = categrpProc.create(categrpVO);
-    
+        
     JSONObject json = new JSONObject();
     JSONArray msgs = new JSONArray();
     
-    if(count == 1) {
+    if(categrpProc.create(categrpVO) == 1) {
       msgs.put("카테고리 그룹 생성에 성공하였습니다.");
     } else {
       msgs.put("카테고리 그룹 생성에 실패했습니다.");

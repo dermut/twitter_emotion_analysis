@@ -53,15 +53,15 @@
 		              <li class='li_none'>다시한번 시도해주세요.</li>
 		              <li class='li_none'>
 		                <br>
-		                <button type='button' onclick='history.back()'>다시 시도</button>
-		                <button type='button' onclick="location.href='${pageContext.request.contextPath}'">취소</button>
+		                <button type='button' onclick='history.back()' style="color: black;">다시 시도</button>
+		                <button type='button' onclick="location.href='${pageContext.request.contextPath}'" style="color: black;">취소</button>
 		              </li>
 		            </c:when>
 		            <c:when test="${param.count == 1 }">
 		              <li class='li_none'>회원 가입에 성공했습니다.</li>
 		              <li class='li_none'>
 		                <br>
-		                <button type='button' onclick="location.href='./list.do'">확인</button>
+		                <button type='button' onclick="location.href='./list.do'" style="color: black;">확인</button>
 		              </li>          
 		 
 		            </c:when>

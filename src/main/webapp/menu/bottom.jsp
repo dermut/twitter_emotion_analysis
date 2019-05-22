@@ -9,7 +9,7 @@
 <body>
 
 <ul class="bottom_link">
-	<li class="bottom_link_item"><A href="${pageContext.request.contextPath}/about/about.jsp" class="bottom_a_white">ABOUT TEA</A>  </li>
+	<li class="bottom_link_item"><A href="${pageContext.request.contextPath}/about/guide.jsp" class="bottom_a_white">ABOUT TEA</A>  </li>
 	<li class="bottom_link_item"><A href="${pageContext.request.contextPath}/about/privacy.jsp" class="bottom_a_white">개인정보처리방침</A>  </li> 
 	<li class="bottom_link_item"><A href="${pageContext.request.contextPath}/about/help.jsp" class="bottom_a_white">도움말</A>  </li>
 	<li class="bottom_link_item"><A href="${pageContext.request.contextPath}/about/feedback.jsp" class="bottom_a_white">문의/피드백</A></li>

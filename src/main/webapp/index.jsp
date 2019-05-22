@@ -36,11 +36,13 @@
 	    </FORM>
 		  
 	  </div> <!-- contents END -->
+	  
+	  <div class="main_bottom">
+      <c:import url="/menu/bottom.jsp"/>
+    </div>
 	</div> <!-- container END -->
 	
-	<div class="main_bottom">
-<%-- 	  <c:import url="/menu/bottom.jsp"/>
- --%>	</div>
+	
 </div>
 </body>
 </html>

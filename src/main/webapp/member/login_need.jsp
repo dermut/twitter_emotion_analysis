@@ -36,8 +36,8 @@
 	  <DIV class='message' style="color: white">
 	    <H3>로그인이 필요한 페이지입니다.</H3>
 	    <BR><BR>
-	    [<A href='${pageContext.request.contextPath}/member/login.do'>로그인</A>]
-	    [<A href='${pageContext.request.contextPath}/member/create.do'>회원 가입</A>]
+	    [<A href='${pageContext.request.contextPath}/member/login.do' style="color: white;">로그인</A>]
+	    [<A href='${pageContext.request.contextPath}/member/create.do' style="color: white;">회원 가입</A>]
 	  </DIV>
 
   </DIV> <!-- content END -->

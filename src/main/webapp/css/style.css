@@ -14,8 +14,17 @@
     display: block;
   }
   
+  li {
+    list-style: none;
+  }
+  
+  ul {
+    padding-inline-start: 0px;
+  }
+  
   .li_none {
     color: white;
+    padding: 10px 0px 10px 0px;
   }
   
   .title_l {
@@ -32,6 +41,26 @@
   
   .th {
     text-align: center;
+  }
+  
+  .title_line {
+    padding: 20px 0px 10px 0px;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .title_black {
+    padding: 20px 0px 20px 0px;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .message {
+    color: black;
+  }
+  
+  .popup1 {
+    padding: 15px 0px 15px 0px;
   }
   
   /*-----------------------Commons END------------------------*/
@@ -403,13 +432,25 @@
   .login_root {
     height: 100%;
     width: 100%;
+    text-align: center;
   }
   
   .login {
+    height: 100%;
+    width: 20%;
+  }
+  
+  .login_root2 {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .login2 {
     margin: 5% 40% 0% 40%;
     height: 100%;
     width: 20%;
   }
+  
   
   /*-------------------------LOGIN END---------------------------*/
   

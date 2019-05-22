@@ -16,12 +16,16 @@
  
 </head>
 <body>
-<div class="top">
-  <c:import url="/menu/top.jsp"/>
-</div>
 
-<div class="top_second">
+<div class="main_wrapper">
+  <c:import url="/menu/top.jsp"/>
   <c:import url="/menu/top_second.jsp"/>
+  
+  <div class="main_container">
+    <div class="contents" align="center">
+      <img alt="explain" src="./explain.PNG" class="Image">
+    </div>
+  </div>
 </div>
 </body>
 </html>

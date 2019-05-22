@@ -22,44 +22,53 @@
 </head> 
 
 <body>
-<DIV class='container'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>   
-     
-  <ASIDE style='float: left;'>
-    <A href='../board/list.do'>게시판 목록</A>
-    >  
-    <A href='./list_by_boardno.do?boardno=${boardVO.boardno }'>${boardVO.name }</A>
-  </ASIDE>
-  <ASIDE style='float: right;'>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do?boardno=${boardVO.boardno }'>등록</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./list_by_boardno.do?boardno=${boardVO.boardno }&word_find=${word_find}'>목록</A>
-
-  </ASIDE> 
+<div class="main_wrapper" align=center>
+  <c:import url="/menu/top.jsp"/>
+  <c:import url="/menu/top_second.jsp"/>
   
-  <div class='menu_line'></div>
-
-  <FORM name='frm' method='POST' action='./delete.do'>
-      <input type='hidden' name='contentsno' value='${contentsVO.contentsno}'>
-      <input type="hidden" name="boardno" value="${boardVO.boardno }">
-      <input type="hidden" name="nowPage" value="${param.nowPage }">
-            
-      <div class="form-group">   
-        <div class="col-md-12" style='text-align: center; margin: 30px;'>
-          삭제 되는글: ${contentsVO.name }<br><br>
-          삭제하시겠습니까? 삭제하시면 복구 할 수 없습니다.<br>
-          <button type = "submit">삭제 진행</button>
-          <button type = "button" onclick = "history.back()">취소</button>
-        </div>
-      </div>   
-  </FORM>
-
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+	<DIV class='main_container' style="width: 80%;">
+		<DIV class='contents' align="center">
+		   
+		  <div class="member_aside"> 
+			  <ASIDE style='float: left; padding: 15px 0px 15px 0px;'>
+			    <A href='../board/list.do' style="font-weight: bold; color: white;">게시판 목록</A>
+			    >  
+			    <A href='./list_by_boardno.do?boardno=${boardVO.boardno }' style="font-weight: bold; color: white;">${boardVO.name }</A>
+			  </ASIDE>
+			  <ASIDE style='float: right; padding: 15px 0px 15px 0px;'>
+			    <A href="javascript:location.reload();" style="font-weight: bold; color: white;">새로고침</A>
+			    <span class='menu_divide' >│</span> 
+			    <A href='./create.do?boardno=${boardVO.boardno }' style="font-weight: bold; color: white;">등록</A>
+			    <span class='menu_divide' >│</span> 
+			    <A href='./list_by_boardno.do?boardno=${boardVO.boardno }&word_find=${word_find}' style="font-weight: bold; color: white;">목록</A>
+			
+			  </ASIDE> 
+		  </div>
+		  
+		
+		  <FORM name='frm' method='POST' action='./delete.do'>
+		      <input type='hidden' name='contentsno' value='${contentsVO.contentsno}'>
+		      <input type="hidden" name="boardno" value="${boardVO.boardno }">
+		      <input type="hidden" name="nowPage" value="${param.nowPage }">
+		            
+		      <div class="form-group" style="clear: both;">   
+		        <div class="col-md-12" style='text-align: center; margin: 30px; color: white;'>
+		          삭제 되는글: ${contentsVO.name }<br><br>
+		          삭제하시겠습니까? 삭제하시면 복구 할 수 없습니다.<br><br>
+		          <button class='btn btn-danger' type="submit">삭제 진행</button>
+		          <button class='btn btn-default' type="button" onclick = "history.back()">취소</button>
+		        </div>
+		      </div>   
+		  </FORM>
+		
+		</DIV> <!-- content END -->
+	</DIV> <!-- container END -->
+	
+	<div class="main_bottom">
+    <c:import url="/menu/bottom.jsp"/>
+  </div>
+  
+</div>
 </body>
 
 </html> 

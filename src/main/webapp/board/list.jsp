@@ -31,8 +31,6 @@
       type: "get",  // or get
       cache: false,
       dataType: "json", // 응답 데이터 형식, or json
-      // data: "categrpno=" + categrpno, 
-      // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var panel = '';
 
@@ -51,15 +49,13 @@
           panel += "</TD>";
           panel += "</TR>";
         } 
-        // alert(panel);
-        // return;
         $('#tbody_panel').empty();
         $('#tbody_panel').append(panel);
       },
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 450px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
@@ -83,12 +79,12 @@
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 250px;'>";
-        panel += '  알림<br>';
+        panel += "<DIV id='panel' class='popup1'>";
+        panel += '  <font style="font-weight: bold;">알림</font><br><br>';
         for(index=0; index < rdata.msgs.length; index++) {
-          panel += rdata.msgs[index]+'<br>';
+          panel += rdata.msgs[index]+'<br><br>';
         }
-        panel += "  <button type='button' onclick=\"$('#main_panel').hide();\" class='popup_button'>닫기</button>";
+        panel += "  <button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
         panel += "</DIV>";
         
         action_cancel();
@@ -102,7 +98,7 @@
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 450px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
@@ -138,11 +134,11 @@
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 350px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
-        panel += "  <br><button type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
+        panel += "  <br><button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
         panel += "</DIV>";
         
         $('#main_panel').html(panel);
@@ -163,12 +159,12 @@
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 250px;'>";
-        panel += '  알림<br>';
+        panel += "<DIV id='panel' class='popup1'>";
+        panel += '  <font style="font-weight: bold;">알림</font><br><br>';
         for(index=0; index < rdata.msgs.length; index++) {
-          panel += rdata.msgs[index]+'<br>';
+          panel += rdata.msgs[index]+'<br><br>';
         }
-        panel += "  <button type='button' onclick=\"$('#main_panel').hide();\" class='popup_button'>닫기</button>";
+        panel += "  <button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\" class='popup_button'>닫기</button>";
         panel += "</DIV>";
         
         action_cancel();
@@ -182,7 +178,7 @@
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 450px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
@@ -235,7 +231,7 @@
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 350px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
@@ -261,9 +257,9 @@
       success: function(rdata) { // callback 함수
         var panel = '';
         panel += "<DIV id='panel' class='popup1'>";
-        panel += '  알림<br>';
+        panel += '  <font style="font-weight: bold;">알림</font><br><br>';
         for(index=0; index < rdata.msgs.length; index++) {
-          panel += rdata.msgs[index]+'<br>';
+          panel += rdata.msgs[index]+'<br><br>';
         }
         panel += "  <button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\" style='background-image:none;'>닫기</button>";
         panel += "</DIV>";
@@ -280,7 +276,7 @@
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 450px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
@@ -463,11 +459,13 @@
 		 
 	  </DIV> <!-- content END -->
 	  
-	  <div class="main_bottom">
-      <c:import url="/menu/bottom.jsp"/>
-    </div>
+
     
   </DIV> <!-- container END -->
+  
+  <div class="main_bottom">
+    <c:import url="/menu/bottom.jsp"/>
+  </div>
 </div>
 </body>
  

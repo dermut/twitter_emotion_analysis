@@ -19,9 +19,7 @@
     
 <script type="text/javascript">
   $(function() {
-    $('#panel_create').show(); // 등록
-    $('#panel_update').hide(); // 수정
-    $('#panel_delete').hide(); // 삭제
+    action_cancel();
     
     list();  // 모든 카테고리 목록
     
@@ -48,9 +46,9 @@
           panel += "<TD>"+rdata[index].id+"</TD>";
           panel += "<TD>"+rdata[index].rdate.substring(0, 10)+"</TD>";
           panel += "<TD style='text-align: center;'>"; 
-          panel += "  <A href='../contents/create.do?boardno="+rdata[index].boardno+"'><IMG src='./images/create.png' name='등록'></A>";
-          panel += "  <A href=\"javascript:update("+rdata[index].boardno+")\"><IMG src='./images/update.png' name='수정'></A>";  
-          panel += "  <A href=\"javascript:deleteForm("+rdata[index].boardno+")\"><IMG src='./images/delete.png' name='삭제'></A>"; 
+          panel += "  <A href='../contents/create.do?boardno="+rdata[index].boardno+"'><span class='glyphicon glyphicon-pencil' title='등록'></span></A>";
+          panel += "  <A href=\"javascript:update("+rdata[index].boardno+")\"><span class='glyphicon glyphicon-edit' title='수정'></span></A>";  
+          panel += "  <A href=\"javascript:deleteForm("+rdata[index].boardno+")\"><span class='glyphicon glyphicon-remove' title='삭제' ></span></A>"; 
           panel += "</TD>";
           panel += "</TR>";
         } 
@@ -62,7 +60,7 @@
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 450px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
@@ -86,13 +84,15 @@
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 250px;'>";
-        panel += '  알림<br>';
+        panel += "<DIV id='panel' class='popup1'>";
+        panel += '  <font style="font-weight: bold;">알림</font><br><br>';
         for(index=0; index < rdata.msgs.length; index++) {
-          panel += rdata.msgs[index]+'<br>';
+          panel += rdata.msgs[index]+'<br><br>';
         }
-        panel += "  <button type='button' onclick=\"$('#main_panel').hide();\" class='popup_button'>닫기</button>";
+        panel += "  <button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
         panel += "</DIV>";
+        
+        action_cancel();
         
         list();  // 전체 카테고리 목록
         
@@ -116,7 +116,6 @@
     });
   }
   
-  // 수정폼
   function update(boardno) {
     $('#panel_create').hide();
     $('#panel_update').show();
@@ -131,7 +130,7 @@
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var frm_update = $('#frm_update');
-        $('#categrpno', frm_update).val(rdata.categrpno);
+        $('#categrpno', frm_update).val(rdata.categrpno); // SELECT tag
         $('#boardno', frm_update).val(rdata.boardno);        
         $('#name', frm_update).val(rdata.name);
         $('#memberno', frm_update).val(rdata.memberno);        
@@ -139,11 +138,11 @@
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 350px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
-        panel += "  <br><button type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
+        panel += "  <br><button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
         panel += "</DIV>";
         
         $('#main_panel').html(panel);
@@ -152,62 +151,150 @@
       }
     });
   } 
-  
-  function create_update_cancel() {
-    $('#panel_update').hide();
-    $('#panel_create').show();
-    $('#panel_delete').hide();
+
+  // 수정 처리
+  function update_submit() {
+    $.ajax({
+      url: "./update_json.do", // 요청을 보낼주소
+      type: "post",  // or get
+      cache: false,
+      dataType: "json", // 응답 데이터 형식, or json
+      data: $('#frm_update').serialize(), 
+      // Ajax 통신 성공, JSP 정상 처리
+      success: function(rdata) { // callback 함수
+        var panel = '';
+        panel += "<DIV id='panel' class='popup1'>";
+        panel += '  <font style="font-weight: bold;">알림</font><br><br>';
+        for(index=0; index < rdata.msgs.length; index++) {
+          panel += rdata.msgs[index]+'<br><br>';
+        }
+        panel += "  <button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\" class='popup_button'>닫기</button>";
+        panel += "</DIV>";
+        
+        action_cancel();
+        
+        list();  // 전체 게시판 목록
+        
+        $('#main_panel').html(panel);
+        $('#main_panel').show();
+        
+      },
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        var panel = '';
+        panel += "<DIV id='panel' class='popup1'>";
+        panel += '  ERROR<br><br>';
+        panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
+        panel += '  <strong>error</strong><br>'+error + '<hr>';
+        panel += "  <br><button type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
+        panel += "</DIV>";
+        
+        $('#main_panel').html(panel);
+        $('#main_panel').show();
+ 
+      }
+    });
   }
-  
-  //삭제 폼
-  function deleteOne(boardno) {
+
+  function deleteForm(boardno) {
     $('#panel_create').hide();
     $('#panel_update').hide();
     $('#panel_delete').show();
     
     $.ajax({
-      url: "./delete.do", 
-      type: "get", // or get
+      url: "./delete.do", // 요청을 보낼주소
+      type: "get",  // or get
       cache: false,
-      async: true, // true: 비동기
-      dataType: "json", // 응답 형식, html, xml...
-      // data: $('#frm').serialize(),  // 보내는 데이터
-      data: 'boardno='+boardno,
-      success: function(rdata) {
+      dataType: "json", // 응답 데이터 형식, or json
+      data: 'boardno=' +boardno,
+      // Ajax 통신 성공, JSP 정상 처리
+      success: function(rdata) { // callback 함수
         var frm_delete = $('#frm_delete');
-        $('#boardno', frm_delete).val(boardno);
+        $('#categrpno', frm_delete).val(rdata.categrpno); 
+        $('#boardno', frm_delete).val(rdata.boardno);        
         
         var str = '';        
-        // 소속된 게시물 갯수를 출력 예정
+        // 소속된 카테고리 갯수를 출력 예정
         if (rdata.count_by_board > 0) {
-          str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos; 카테고리에 [' + rdata.count_by_board + '] 건의 데이터가 등록되어있습니다.</span><br>';
-          str += '카테고리에 등록된 데이터를 삭제해야 카테고리 삭제가 가능합니다.<br>';
-          str += '<button type="button" onclick="delete_board_by_categrp('+categrpno+')">게시물 삭제</button>';
-          str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>';
+          str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos;  게시판에 [' + rdata.count_by_board + '] 건의 데이터가 등록되어있습니다.</span><br>';
+          str += '카테고리에 등록된 게시물을 삭제해야 게시판 삭제가 가능합니다.<br>';
+          str += '<span class="button-group">'
+          str += '<button class="btn btn-danger" type="button" onclick="delete_contents_by_board('+boardno+')" style="background-image:none;">카테고리 삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>';
+          str += '</span>';
         } else {
           str = '[' + rdata.name + "] 카테고리를 삭제하시겠습니까?<br>";
-          str += "삭제하면 복구 할 수 없습니다.<br>"
-          str += '<button type="submit" id="submit">삭제</button>';
-          str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>'; 
+          str += "삭제하면 복구 할 수 없습니다.<br>";
+          str += '<span class="button-group">';
+          str += '<button class="btn btn-danger" type="button" id="submit" onclick="delete_submit();" style="background-image:none;">삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>';
+          str += '</span>';
         }
-        $('#msg_delete').html(str);
+       $('#msg_delete').html(str);
       },
-      error: function(request, status, error) { // 응답 결과, 상태, 에러 내용
-        var msg = 'ERROR<br><br>';
-        msg += '<strong>request.status</strong><br>'+request.status + '<hr>';
-        msg += '<strong>request.responseText</strong><br>'+request.responseText + '<hr>';
-        msg += '<strong>status</strong><br>'+status + '<hr>';
-        msg += '<strong>error</strong><br>'+error + '<hr>';
-          
-        $('#main_panel').html(msg);
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        var panel = '';
+        panel += "<DIV id='panel' class='popup1'>";
+        panel += '  ERROR<br><br>';
+        panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
+        panel += '  <strong>error</strong><br>'+error + '<hr>';
+        panel += "  <br><button class='btn btn-info' type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
+        panel += "</DIV>";
+        
+        $('#main_panel').html(panel);
+        $('#main_panel').show();
+
+      }
+    });
+  }
+
+  // 삭제 처리
+  function delete_submit() {
+    $.ajax({
+      url: "./delete.do", // 요청을 보낼주소
+      type: "post",  // or get
+      cache: false,
+      dataType: "json", // 응답 데이터 형식, or json
+      data: $('#frm_delete').serialize(), 
+      // Ajax 통신 성공, JSP 정상 처리
+      success: function(rdata) { // callback 함수
+        var panel = '';
+        panel += "<DIV id='panel' class='popup1'>";
+        panel += '  <font style="font-weight: bold;">알림</font><br><br>';
+        for(index=0; index < rdata.msgs.length; index++) {
+          panel += rdata.msgs[index]+'<br><br>';
+        }
+        panel += "  <button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\" style='background-image:none;'>닫기</button>";
+        panel += "</DIV>";
+        
+        action_cancel();
+        
+        list();  // 전체 게시판 목록
+        
+        $('#main_panel').html(panel);
+        $('#main_panel').show();
+        
+        // $('#frm_create')[0].reset(); // id가 frm_create인 첫번째폼을 reset
+      },
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        var panel = '';
+        panel += "<DIV id='panel' class='popup1'>";
+        panel += '  ERROR<br><br>';
+        panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
+        panel += '  <strong>error</strong><br>'+error + '<hr>';
+        panel += "  <br><button class='btn btn-info' type='button' onclick=\"$('#main_panel').hide();\" style='background-image:none;'>닫기</button>";
+        panel += "</DIV>";
+        
+        $('#main_panel').html(panel);
         $('#main_panel').show();
       }
-     });
-
+    });
   }
-  
-  //카테고리에 등록된 게시물 모두 삭제
-  function delete_board_by_categrp(categrpno) {
+
+  //카테고리 그룹에 등록된 카테고리 모두 삭제
+  function delete_contents_by_board(boardno) {
     $.ajax({
       url: "./delete_contents_by_board.do", 
       type: "post", // or get
@@ -222,16 +309,16 @@
         
         var str = '';        
         // 소속된 카테고리 갯수를 출력 예정
-        if (rdata.delete_by_board > 0) {
-          str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos; 카테고리에서 [' + rdata.delete_by_board + '] 건의 데이터를 삭제했습니다.</span><br>';
-          str += '카테고리 삭제를 계속 진행하시겠습니까?<br>';
-          str += '<button type="button" onclick="deleteOne('+boardno+')">카테고리 그룹 삭제</button>';
-          str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>';
+        if (rdata.delete_contents_by_board > 0) {
+          str = '<span style="color: #FF0000;">&apos;'+ rdata.name + '&apos; 카테고리에서 [' + rdata.count_by_board + '] 건의 데이터를 삭제했습니다.</span><br>';
+          str += '컨텐츠 삭제를 계속 진행하시겠습니까?<br>';
+          str += '<button class="btn btn-danger" type="button" onclick="deleteForm('+boardno+')" style="background-image:none;">카테고리 삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>';
         } else {
           str = '[' + rdata.name + "] 카테고리 관련 컨텐츠 삭제에 실패했습니다. 다시 시도하시겠습니까?<br>";
           str += "삭제하면 복구 할 수 없습니다.<br>"
-          str += '<button type="button" onclick="delete_contents_by_board('+board+')">컨텐츠 삭제</button>';
-          str += '&nbsp;<button type="button" onclick="create_update_cancel();">취소</button>'; 
+          str += '<button class="btn btn-danger" type="button" onclick="delete_contents_by_board('+boardno+')" style="background-image:none;">카테고리 삭제</button>';
+          str += '&nbsp;<button class="btn btn-info" type="button" onclick="action_cancel();" style="background-image:none;">취소</button>'; 
         }
         $('#msg_delete').html(str);
       },
@@ -247,6 +334,15 @@
       }
      });
 
+  }
+  
+  function action_cancel() {
+    $('#main_panel').hide();
+    $('#panel_update').hide();
+    $('#panel_delete').hide();
+    $('#panel_create').show();
+
+    $('#frm_create')[0].reset(); // id가 frm_create인 첫번째폼을 reset
   }
 </script>
  
@@ -303,14 +399,8 @@
           </div>
           
           <div class="form-group">
-            <input type='hidden' name='boardno' id='boardno' value=''> 
+            <input type='hidden' name='boardno' id='boardno' value='${boardVO.boardno}'> 
           
-            <label class="control-label" style="padding:5px 61% 5px 0px;">게시판 </label>
-            <select class="form-control" name='categrpno' id='categrpno' style="width:70%;">
-              <c:forEach var="categrpVO" items="${categrp_list}">
-                <option value='${categrpVO.categrpno }'>${categrpVO.name}</option>
-              </c:forEach>
-            </select>
           </div>   
           
           <div class="form-group">

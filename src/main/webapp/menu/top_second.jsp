@@ -1,6 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+
+<%@ page import="java.util.List" %>
+
+<%@ page import="dev.mvc.board.BoardProc" %>
+<%@ page import="dev.mvc.board.Categrp_BoardVO" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<%
+BoardProc boardProc = new BoardProc();
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -87,7 +97,7 @@
 	    <li class="top_second_nav_button">
         <a class="top_second_font" href='${pageContext.request.contextPath}/contents/list_by_board_search_paging.do?boardno=1' style="padding: 12px 12px 12px 12px;">게시판</a>		    
 	    </li>
-      
+	    
 	  </ul>
   </div>
 </div>

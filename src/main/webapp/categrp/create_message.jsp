@@ -40,7 +40,7 @@
 		      </c:choose>
 		      <LI class='li_none'>
 		        <br>
-		        <button type='button' onclick="location.href='./list.do'">목록</button>
+		        <button type='button' onclick="location.href='./list.do'" style="color: black;">목록</button>
 		      </LI>
 		     </UL>
 		  </fieldset>
@@ -48,9 +48,11 @@
 		</DIV>
 		
 		</DIV> <!-- content END -->
-		<jsp:include page="/menu/bottom.jsp" flush='false' />
-		
 	</DIV> <!-- container END -->
+	
+	 <div class="main_bottom">
+      <c:import url="/menu/bottom.jsp"/>
+  </div>
 </div>
 </body>
 

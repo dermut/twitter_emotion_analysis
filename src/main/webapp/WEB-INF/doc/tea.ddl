@@ -705,6 +705,9 @@ DELETE FROM contents
 WHERE contentsno=1;
 
 DELETE FROM contents
+WHERE boardno = 1;
+
+DELETE FROM contents
 WHERE name="°í°í";
 
  
@@ -1068,3 +1071,11 @@ select * from word_crawling;
 select * from word_sentiment;
 select * from word_time_graph;
 select * from categrp;
+
+
+
+SELECT    c.categrpno, c.name as categrp_name,
+          t.boardno, t.name as board_name, t.memberno, t.rdate
+FROM      categrp c, board t
+WHERE     c.categrpno = t.categrpno
+ORDER BY  c.categrpno ASC, t.boardno ASC

@@ -62,7 +62,7 @@
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 450px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
@@ -86,12 +86,12 @@
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 250px;'>";
-        panel += '  알림<br>';
+        panel += "<DIV id='panel' class='popup1' style='padding: 10px 0px 0px 0px;'>";
+        panel += '  <font style="font-weight: bold;">알림</font><br><br>';
         for(index=0; index < rdata.msgs.length; index++) {
-          panel += rdata.msgs[index]+'<br>';
+          panel += rdata.msgs[index]+'<br><br>';
         }
-        panel += "  <button type='button' onclick=\"$('#main_panel').hide();\" class='popup_button'>닫기</button>";
+        panel += "  <button class='btn btn-default' type='button' onclick=\"$('#main_panel').hide();\">닫기</button>";
         panel += "</DIV>";
         
         create_update_cancel();
@@ -105,7 +105,7 @@
       // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
       error: function(request, status, error) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='heigth: 450px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  ERROR<br><br>';
         panel += '  <strong>request.status</strong><br>'+request.status + '<hr>';
         panel += '  <strong>error</strong><br>'+error + '<hr>';
@@ -156,12 +156,12 @@
   
   
   function create_update_cancel() {
+    $('#main_panel').hide();
     $('#panel_update').hide();
     $('#panel_delete').hide();
     $('#panel_create').show();
-    $('#frm_create')[0].reset();
     
-    $('#main_panel').hide();
+    $('#frm_create')[0].reset();
   }
   
   // 삭제 폼
@@ -213,7 +213,6 @@
         $('#main_panel').show();
       }
      });
-
   }
   
   // 카테고리 그룹에 등록된 카테고리 모두 삭제
@@ -304,7 +303,7 @@
           </div>
           
           <div class="form-group">
-            <button class="btn btn-primary btn-info" type="submit" id="submit" style="background-image:none;">저장</button>
+            <button class="btn btn-primary btn-info" type="button" onclick="create();" style="background-image:none;">저장</button>
             <button class="btn btn-secondary btn-info" type="button" onclick="create_update_cancel();" style="background-image:none;">취소</button>
           </div>
 		    </FORM> 

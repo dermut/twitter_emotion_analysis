@@ -24,8 +24,8 @@
 
 <body>
   
-<div class="login_root">
-  <div class="login">
+<div class="login_root2">
+  <div class="login2">
 		
 		  <FORM name='frm' method='GET' action='./find_id.do'>
 		     <!-- 아이디 찾기 div -->

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
- 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
@@ -15,39 +17,44 @@
  
 </head> 
 <body>
-<DIV class='container'>
-<jsp:include page="/menu/top.jsp" flush='false' />
-<DIV class='content'>
- 
-  <ASIDE style='float: left;'>
-      <A href='./member/list.do'>회원 목록</A> > 회원 삭제 
-  </ASIDE>
-  <ASIDE style='float: right;'>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>회원 가입</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./list.do'>목록</A>
-  </ASIDE> 
- 
-  <div class='menu_line'></div>
-<DIV class='title_line'>회원 삭제</DIV>
- 
-<DIV class='content' style='width: 500px; text-align: center;'>
-  <FORM name='frm' method='POST' action='./delete.do'>
-    '${memberVO.name }(${memberVO.id })' 회원을 삭제하면 복구 할 수 없습니다.<br><br>
-    정말로 삭제하시겠습니까?<br><br>         
-    <input type='hidden' name='memberno' value='${memberVO.memberno }'>     
-        
-    <button type="submit">삭제</button>
-    <button type="button" onclick="location.href='./list.do'">취소(목록)</button>
- 
-  </FORM>
-</DIV>
- 
-</DIV> <!-- content END -->
-<jsp:include page="/menu/bottom.jsp" flush='false' />
-</DIV> <!-- container END -->
+<div class="main_wrapper" align=center>
+  <c:import url="/menu/top.jsp"/>
+  <c:import url="/menu/top_second.jsp"/>
+
+	<DIV class='main_container' style="width: 80%;">
+		<DIV class='contents' align="center">
+		 
+		  <div class="member_aside" style="font-weight: bold;">
+			  <ASIDE style='float: left; padding: 15px 0px 15px 0px;'>
+			      <A href='./member/list.do' style="font-weight: bold; color: white;">회원 목록</A> > 회원 삭제 
+			  </ASIDE>
+			  <ASIDE style='float: right; padding: 15px 0px 15px 0px;'>
+			    <A href="javascript:location.reload();" style="font-weight: bold; color: white;">새로고침</A>
+			    <span class='menu_divide' >│</span> 
+			    <A href='./create.do' style="font-weight: bold; color: white;">회원 가입</A>
+			    <span class='menu_divide' >│</span> 
+			    <A href='./list.do'  style="font-weight: bold; color: white;">목록</A>
+			  </ASIDE> 
+	    </div>
+		 
+		<DIV class='title_line' style="clear: both;">회원 삭제</DIV>
+		 
+		<DIV class='content' style='width: 500px; text-align: center;'>
+		  <FORM name='frm' method='POST' action='./delete.do' style="color: white;">
+		    '${memberVO.name }(${memberVO.id })' 회원을 삭제하면 복구 할 수 없습니다.<br><br>
+		    정말로 삭제하시겠습니까?<br><br>         
+		    <input type='hidden' name='memberno' value='${memberVO.memberno }'>     
+		        
+		    <button type="submit" style="color: black;">삭제</button>
+		    <button type="button" onclick="location.href='./list.do'" style="color: black;">취소(목록)</button>
+		 
+		  </FORM>
+		</DIV>
+		 
+		</DIV> <!-- content END -->
+	<jsp:include page="/menu/bottom.jsp" flush='false' />
+	</DIV> <!-- container END -->
+</div>
 </body>
  
 </html> 
