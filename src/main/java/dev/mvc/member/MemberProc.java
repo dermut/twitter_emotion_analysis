@@ -361,4 +361,10 @@ public class MemberProc implements MemberProcInter {
     return num;
   }
 
+  @Override
+  public int delete_member(int memberno) {
+    int count = memberDAO.delete_member(memberno);
+    return count;
+  }
+
 }

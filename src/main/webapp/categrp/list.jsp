@@ -86,7 +86,7 @@
       // Ajax 통신 성공, JSP 정상 처리
       success: function(rdata) { // callback 함수
         var panel = '';
-        panel += "<DIV id='panel' class='popup1' style='padding: 10px 0px 0px 0px;'>";
+        panel += "<DIV id='panel' class='popup1'>";
         panel += '  <font style="font-weight: bold;">알림</font><br><br>';
         for(index=0; index < rdata.msgs.length; index++) {
           panel += rdata.msgs[index]+'<br><br>';

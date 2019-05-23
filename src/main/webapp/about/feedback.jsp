@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>문의/피드백</title>
  
 <link href="${pageContext.request.contextPath}/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -16,12 +16,16 @@
  
 </head>
 <body>
-<div class="top">
+<div class="main_wrapper">
   <c:import url="/menu/top.jsp"/>
+  <c:import url="/menu/top_second.jsp"/>
+    <div class="main_container">
+      피드백
+    </div>
 </div>
 
-<div class="top_second">
-  <c:import url="/menu/top_second.jsp"/>
-</div>
+
+
+
 </body>
 </html>

@@ -155,4 +155,11 @@ public interface MemberProcInter {
   * @return
   */
  public int find_passwd(String id, String name, String email);
+ 
+ /**
+  * 탈퇴
+  * @param int
+  * @return
+  */
+ public int delete_member(int memberno);
 }

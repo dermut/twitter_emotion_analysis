@@ -2,6 +2,8 @@ package dev.mvc.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,17 +57,20 @@ public class BoardCont {
   // {"msgs":["카테고리를 등록했습니다.","등록된 카테고리 등산"]}
   @ResponseBody
   @RequestMapping(value = "/board/create_json.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-  public ResponseEntity create_json(BoardVO boardVO) {
+  public ResponseEntity create_json(BoardVO boardVO, HttpSession session) {
     HttpHeaders responseHeaders = new HttpHeaders();
 
     JSONObject json = new JSONObject();
     JSONArray msgs = new JSONArray();
 
     if (boardProc.create(boardVO) == 1) {
-      msgs.put("카테고리를 등록했습니다.");
-      msgs.put("등록된 카테고리 " + boardVO.getName());
+      msgs.put("게시판을 등록했습니다.");
+      msgs.put("등록된 게시판 : " + boardVO.getName());
+      session.removeAttribute("board_list");
+      List<BoardVO> list = boardProc.list_menu();
+      session.setAttribute("board_list", list);
     } else {
-      msgs.put("카테고리 등록에 실패했습니다.");
+      msgs.put("게시판 등록에 실패했습니다.");
       msgs.put("다시한번 시도해주세요. ☏ 문의: 000-0000-0000");
     }
     json.put("msgs", msgs);
@@ -178,10 +183,13 @@ public class BoardCont {
   // http://localhost:9090/tea/board/update_json.do?categrpno=1&boardno=1&name=네덜란드&memberno=1
   // {"msgs":["카테고리를 등록했습니다.","등록된 카테고리 등산"]}
   @RequestMapping(value = "/board/update.do", method = RequestMethod.POST)
-  public ModelAndView update(BoardVO boardVO) {
+  public ModelAndView update(BoardVO boardVO, HttpSession session) {
     ModelAndView mav = new ModelAndView();
 
     int count = boardProc.update(boardVO);
+    session.removeAttribute("board_list");
+    List<BoardVO> list = boardProc.list_menu();
+    session.setAttribute("board_list", list);
     mav.setViewName("redirect:/board/list.do");
 
     return mav;
@@ -211,7 +219,7 @@ public class BoardCont {
   // http://localhost:9090/tea/board/delete.do?boardno=1
   @ResponseBody
   @RequestMapping(value = "/board/delete.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-  public ResponseEntity delete_proc(int boardno) {
+  public ResponseEntity delete_proc(int boardno, HttpSession session) {
 //    ModelAndView mav = new ModelAndView();
     HttpHeaders responseHeaders = new HttpHeaders();
     
@@ -221,10 +229,13 @@ public class BoardCont {
     JSONObject json = new JSONObject();
     JSONArray msgs = new JSONArray();
     if (count == 1) {
-      msgs.put("카테고리를 삭제했습니다.");
-      msgs.put("삭제된 카테고리:" + name);
+      msgs.put("게시판을 삭제했습니다.");
+      msgs.put("삭제된 게시판:" + name);
+      session.removeAttribute("board_list");
+      List<BoardVO> list = boardProc.list_menu();
+      session.setAttribute("board_list", list);
     } else {
-      msgs.put("카테고리 삭제에 실패했습니다.");
+      msgs.put("게시판 삭제에 실패했습니다.");
       msgs.put("다시한번 시도해주세요. ☏ 문의: 000-0000-0000");
     }
     json.put("msgs", msgs);

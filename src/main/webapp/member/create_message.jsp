@@ -61,7 +61,7 @@
 		              <li class='li_none'>회원 가입에 성공했습니다.</li>
 		              <li class='li_none'>
 		                <br>
-		                <button type='button' onclick="location.href='./list.do'" style="color: black;">확인</button>
+		                <button type='button' onclick="location.href='${pageContext.request.contextPath}/'" style="color: black;">확인</button>
 		              </li>          
 		 
 		            </c:when>

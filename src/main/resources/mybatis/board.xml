@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- record update -->
   <update id="update" parameterType="BoardVO">
     UPDATE  board 
-    SET     name=#{name}, categrpno=#{categrpno}, memberno=#{memberno}
+    SET     name=#{name}, memberno=#{memberno}
     WHERE   boardno=#{boardno}
   </update>
   
@@ -84,6 +84,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT  id
     FROM    member
     WHERE   memberno=#{memberno}
+  </select>
+  
+    <select id="list_menu" resultType="BoardVO">
+    SELECT *
+    FROM board
+    ORDER BY boardno asc    
   </select>
 </mapper>
 

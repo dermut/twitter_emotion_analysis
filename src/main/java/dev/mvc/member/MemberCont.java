@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import dev.mvc.board.BoardProcInter;
+import dev.mvc.board.BoardVO;
+
 @Controller
 @SessionAttributes({"user_memberno", "user_id"})
 public class MemberCont {
@@ -27,6 +30,10 @@ public class MemberCont {
   @Autowired
   @Qualifier("dev.mvc.member.MemberProc")
   private MemberProcInter memberProc = null;
+  
+  @Autowired
+  @Qualifier("dev.mvc.board.BoardProc")
+  private BoardProcInter boardProc = null;
   
   public MemberCont(){
     System.out.println("--> MemberCont created.");
@@ -206,7 +213,7 @@ public class MemberCont {
                                         HttpServletRequest request, int memberno){
     ModelAndView mav = new ModelAndView();
    
-    int count = memberProc.delete(memberno);
+    int count = memberProc.delete_member(memberno);
 
     redirectAttributes.addAttribute("count", count); // 1 or 0
     redirectAttributes.addAttribute("memberno", memberno); // 회원 번호
@@ -299,6 +306,11 @@ public class MemberCont {
    } else { // 패스워드 일치하는 경우
      MemberVO old_memberVO = memberProc.readById(id);
   
+     if(old_memberVO.getGrade().equals("D")){
+       mav.setViewName("redirect:/member/error.jsp");
+       return mav;
+     }
+     
      session.setAttribute("memberno",  old_memberVO.getMemberno()); // session 내부 객체
      session.setAttribute("id", id);
      session.setAttribute("passwd", passwd);
@@ -349,6 +361,9 @@ public class MemberCont {
      response.addCookie(ck_passwd_save);
      // -------------------------------------------------------------------
      
+     List<BoardVO> list = boardProc.list_menu();
+     session.setAttribute("board_list", list);
+     
      mav.setViewName("redirect:/index.do"); // 확장자 명시 
      
      } // else 문 끝
@@ -357,6 +372,7 @@ public class MemberCont {
    }
    
    return mav;
+   
  }
  
  

@@ -210,6 +210,8 @@
         
         reply_by_contents(contentsno);
         
+        location.reload();
+        
         $('#main_panel').html(panel);
         $('#main_panel').show();
       },

@@ -17,17 +17,21 @@
  
 </head>
 <body>
-<div class="container">
-
-  <div class="contents">
-  
+<div class="main_wrapper" align="center">
   <c:import url="/menu/top.jsp"/>
-
-크롤링중 에러 발생
-
-    <c:import url="/menu/bottom.jsp"/>
+  <c:import url="/menu/top_second.jsp"/>
+    <div class="main_container" style="width: 80%;">
+    <div class="title_l" style="font-size: 30px;  ">
+      크롤링 결과가 없습니다. 다른 검색어를 검색해주세요.
+      </div>
+    </div>
+  
     
-  </div> <!-- contents END -->
-</div> <!-- container END -->
+</div>
+
+<c:import url="/menu/bottom.jsp"/>
+
+
+
 </body>
 </html>

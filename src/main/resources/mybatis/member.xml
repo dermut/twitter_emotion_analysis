@@ -40,6 +40,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE memberno=#{memberno}
   </update>
   
+  <update id="delete_member" parameterType="int">
+    UPDATE member 
+    SET grade= 'D'
+    WHERE memberno=#{memberno}
+  </update>
+  
   <update id="passwd_update" parameterType="HashMap">
     UPDATE member
     SET passwd=#{passwd}

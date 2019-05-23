@@ -25,6 +25,11 @@ public class BoardProc implements BoardProcInter {
   public List<Categrp_BoardVO> list() {
     return boardDAO.list();
   }
+  
+  @Override
+  public List<BoardVO> list_menu() {
+    return boardDAO.list_menu(); 
+  }
 
   @Override
   public List<Categrp_BoardVO> list_by_categrp(int categrpno) {

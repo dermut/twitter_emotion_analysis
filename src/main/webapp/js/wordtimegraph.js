@@ -1,11 +1,12 @@
 
-  
+ // 사용하는 변수들
 var totalVisitors = $(chartContainer).data("allfreq");
 var rest = $(chartContainer).data("rest");
 var maxfreq = $(chartContainer).data("maxfreq");
 var word = $(chartContainer).data("word");
 var word2 = "\""+$(chartContainer).data("word")+"\"";
 
+// 그래프들 정보 
 var visitorsData = {
     "New vs Returning Visitors": [{
     click: visitorsChartDrilldownHandler,
@@ -20,13 +21,15 @@ var visitorsData = {
     type: "doughnut",
     dataPoints: [
       // 도넛그래프의 legend
-      { y: maxfreq, name: $(chartContainer).data("word"), color: "#E7823A" },
+      /*{ y: maxfreq, name: $(chartContainer).data("word"), color: "#E7823A" },*/
+      { y: maxfreq, name: "검색한 검색어", color: "#E7823A" },
       { y: rest, name: "나머지 검색어", color: "#546BC1" }
     ]
   }],
   "검색한 검색어": [{
     color: "#E7823A",
-    name: $(chartContainer).data("word"),
+    name: "검색한 검색어",
+    /*name: $(chartContainer).data("word"),*/
     type: "column",
     dataPoints: [
       { x: new Date($(chartContainer).data('ar7')), y: parseInt($(chartContainer).data('arr7')) },
@@ -56,7 +59,7 @@ var visitorsData = {
     ]
   }]
 };
-
+// 메인 그래프 1번 그래프 
 var newVSReturningVisitorsOptions = {
   animationEnabled: true,
   backgroundColor: "#F9F9F9",
@@ -110,9 +113,11 @@ chart.render();
 function visitorsChartDrilldownHandler(e) {
   chart = new CanvasJS.Chart("chartContainer", visitorsDrilldownedChartOptions);
   // 막대그래프의 데이터
-  chart.options.data = visitorsData["검색한 검색어"];
+  chart.options.data = visitorsData[e.dataPoint.name];
+  /*chart.options.data = visitorsData["검색한 검색어"];*/
   // 막대그래프의 제목
-  chart.options.title = { text: $(chartContainer).data("word") }
+  chart.options.title = { text: e.dataPoint.name }
+  /*chart.options.title = { text: $(chartContainer).data("word") }*/
   chart.render();
   $("#backButton").toggleClass("invisible");
 }

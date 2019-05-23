@@ -518,6 +518,16 @@ from board;
 select *
 from categrp;
 
+SELECT *
+FROM board
+ORDER BY boardno asc;    
+
+SELECT    c.categrpno, c.name as categrp_name,
+              t.boardno, t.name as board_name, t.memberno, t.rdate
+    FROM      categrp c, board t
+    WHERE     c.categrpno = t.categrpno
+    ORDER BY  c.categrpno ASC, t.boardno ASC;
+
 /********************* DML 시작 *********************/
 
 /* 한 건 등록 */
@@ -634,7 +644,6 @@ FOREIGN KEY(boardno) REFERENCES board(boardno),
 FOREIGN KEY(memberno) REFERENCES member(memberno)
 );
 
-    
 
 /********************* DML 시작 *********************/
 
@@ -658,6 +667,8 @@ VALUES((SELECT NVL(MAX(contentsno), 0)+1 as contentsno FROM contents), "제목4", 
 /* 모든 레코드 검색 */
 SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno
 FROM contents;
+
+
 
 /* 한 건 조회 */
 SELECT contentsno, name, content, views, replies, fsize, photo, thumb, rdate, boardno, memberno
@@ -703,9 +714,6 @@ WHERE contentsno=1;
 
 DELETE FROM contents
 WHERE contentsno=1;
-
-DELETE FROM contents
-WHERE boardno = 1;
 
 DELETE FROM contents
 WHERE name="고고";
@@ -768,8 +776,9 @@ rdate DATE NOT NULL,
 memberno INT NOT NULL,
 PRIMARY KEY(replyno),
 FOREIGN KEY(memberno) REFERENCES member(memberno),
-FOREIGN KEY(contentsno) REFERENCES contents(contentsno)
+FOREIGN KEY(contentsno) REFERENCES contents(contentsno) on delete cascade
 );
+
 
 
 
@@ -1071,11 +1080,3 @@ select * from word_crawling;
 select * from word_sentiment;
 select * from word_time_graph;
 select * from categrp;
-
-
-
-SELECT    c.categrpno, c.name as categrp_name,
-          t.boardno, t.name as board_name, t.memberno, t.rdate
-FROM      categrp c, board t
-WHERE     c.categrpno = t.categrpno
-ORDER BY  c.categrpno ASC, t.boardno ASC

@@ -121,4 +121,10 @@ public class MemberDAO implements MemberDAOInter {
     int num = sqlSessionTemplate.selectOne("member.find_passwd", hashmap);
     return num;
   }
+
+  @Override
+  public int delete_member(int memberno) {
+    int num = sqlSessionTemplate.update("member.delete_member", memberno);
+    return num;
+  }
 }

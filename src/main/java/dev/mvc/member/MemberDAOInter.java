@@ -48,6 +48,13 @@ public interface MemberDAOInter {
  public int update(MemberVO memberVO);
  
  /**
+  * Å»Åð
+  * @param int
+  * @return
+  */
+ public int delete_member(int memberno);
+ 
+ /**
   * ÆÐ½º¿öµå º¯°æ 
   * @param map
   * @return

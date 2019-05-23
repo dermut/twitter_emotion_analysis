@@ -18,6 +18,12 @@ public interface BoardDAOInter {
   
   /**
    * 목록
+   * @return 메뉴에 표시되는 목록
+   */
+  public List<BoardVO> list_menu();  
+  
+  /**
+   * 목록
    * @param categrpno 카테고리 그룹 번호
    * @return Join 목록
    */

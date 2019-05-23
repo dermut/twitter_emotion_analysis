@@ -2,6 +2,8 @@ package dev.mvc.categrp;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.board.BoardProcInter;
+import dev.mvc.board.BoardVO;
 import dev.mvc.board.Categrp_BoardVO;
 
 
@@ -163,10 +166,15 @@ public class CategrpCont {
 
   // http://localhost:9090/tea/categrp/delete.do -> 角青 林家
   @RequestMapping(value="/categrp/delete.do", method=RequestMethod.POST)
-  public ModelAndView delete_proc(int categrpno) {
+  public ModelAndView delete_proc(int categrpno, HttpSession session) {
     ModelAndView mav = new ModelAndView();
     
     int count = categrpProc.delete(categrpno);
+    
+    session.removeAttribute("board_list");
+    List<BoardVO> list = boardProc.list_menu();
+    session.setAttribute("board_list", list);
+    
     mav.setViewName("/categrp/list"); // /webapp/categrp/create_message.jsp 客 楷搬
 
     return mav;

@@ -119,9 +119,15 @@ $(function(){
 	            <td style='vertical-align: middle;'>${contentsVO.rdate.substring(0, 10)}</td>
 	            <td style='vertical-align: middle;'>${contentsVO.id}</td>
 	            <td style='vertical-align: middle;'>
-	              <a href="./update.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><span class="glyphicon glyphicon-edit" title="수정"></span></a>
-	              <a href="./delete.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><span class="glyphicon glyphicon-remove" title="삭제" ></span></a>
-	            </td>
+                <c:choose>
+                  <c:when test="${sessionScope.grade.equals('A')}">
+                    <a href="./update.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><span class="glyphicon glyphicon-edit" title="수정"></span></a>
+                    <a href="./delete.do?contentsno=${contentsVO.contentsno}&boardno=${contentsVO.boardno}&nowPage=${param.nowPage}&word=${param.word}"><span class="glyphicon glyphicon-remove" title="삭제" ></span></a>
+                  </c:when>
+                      <c:otherwise>
+                      </c:otherwise>
+                 </c:choose>	            
+               </td>
 	          </tr>
 	        </c:forEach>
 	        

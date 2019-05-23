@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>도움말</title>
  
 <link href="${pageContext.request.contextPath}/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -22,9 +22,14 @@
   <c:import url="/menu/top_second.jsp"/>
   
   <div class="main_container">
+  <br>
     <div class="contents" align="center">
       <img alt="explain" src="./explain.PNG" class="Image">
     </div>
+    
+        <div class="main_bottom">
+ <c:import url="/menu/bottom.jsp"/>
+  </div>
   </div>
 </div>
 </body>
